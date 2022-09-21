@@ -1261,6 +1261,222 @@ namespace EM02_E_HalfTester {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rear Camera Power.
+        /// </summary>
+        internal static string Ch1 {
+            get {
+                return ResourceManager.GetString("Ch1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PMU_1V35.
+        /// </summary>
+        internal static string Ch10 {
+            get {
+                return ResourceManager.GetString("Ch10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PMU_1V8.
+        /// </summary>
+        internal static string Ch11 {
+            get {
+                return ResourceManager.GetString("Ch11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PMU_3V3.
+        /// </summary>
+        internal static string Ch12 {
+            get {
+                return ResourceManager.GetString("Ch12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SD card inserted.
+        /// </summary>
+        internal static string Ch13 {
+            get {
+                return ResourceManager.GetString("Ch13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LCD_RST.
+        /// </summary>
+        internal static string Ch14 {
+            get {
+                return ResourceManager.GetString("Ch14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SD card power.
+        /// </summary>
+        internal static string Ch15 {
+            get {
+                return ResourceManager.GetString("Ch15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LCD back light.
+        /// </summary>
+        internal static string Ch16 {
+            get {
+                return ResourceManager.GetString("Ch16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LCD power.
+        /// </summary>
+        internal static string Ch17 {
+            get {
+                return ResourceManager.GetString("Ch17", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TP2825 power.
+        /// </summary>
+        internal static string Ch18 {
+            get {
+                return ResourceManager.GetString("Ch18", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to +12V.
+        /// </summary>
+        internal static string Ch19 {
+            get {
+                return ResourceManager.GetString("Ch19", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Camera 2 Power.
+        /// </summary>
+        internal static string Ch2 {
+            get {
+                return ResourceManager.GetString("Ch2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GND.
+        /// </summary>
+        internal static string Ch20 {
+            get {
+                return ResourceManager.GetString("Ch20", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPS_VBACK.
+        /// </summary>
+        internal static string Ch21 {
+            get {
+                return ResourceManager.GetString("Ch21", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CAN_STBY.
+        /// </summary>
+        internal static string Ch22 {
+            get {
+                return ResourceManager.GetString("Ch22", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to G_SENSOR_INT.
+        /// </summary>
+        internal static string Ch23 {
+            get {
+                return ResourceManager.GetString("Ch23", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to G_SENSOR_POWER.
+        /// </summary>
+        internal static string Ch24 {
+            get {
+                return ResourceManager.GetString("Ch24", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standby power 5V.
+        /// </summary>
+        internal static string Ch3 {
+            get {
+                return ResourceManager.GetString("Ch3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standby power 3.3V.
+        /// </summary>
+        internal static string Ch4 {
+            get {
+                return ResourceManager.GetString("Ch4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ACC input singal.
+        /// </summary>
+        internal static string Ch5 {
+            get {
+                return ResourceManager.GetString("Ch5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main Power.
+        /// </summary>
+        internal static string Ch6 {
+            get {
+                return ResourceManager.GetString("Ch6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Buffer.
+        /// </summary>
+        internal static string Ch7 {
+            get {
+                return ResourceManager.GetString("Ch7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Golden Cap. Voltage.
+        /// </summary>
+        internal static string Ch8 {
+            get {
+                return ResourceManager.GetString("Ch8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PMU_1V0.
+        /// </summary>
+        internal static string Ch9 {
+            get {
+                return ResourceManager.GetString("Ch9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap none {

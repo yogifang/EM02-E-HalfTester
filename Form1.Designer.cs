@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -148,10 +148,15 @@
             this.pictureBox70 = new System.Windows.Forms.PictureBox();
             this.pictureBox71 = new System.Windows.Forms.PictureBox();
             this.pictureBox72 = new System.Windows.Forms.PictureBox();
+            this.btnTest = new System.Windows.Forms.Button();
+            this.btnTest2 = new System.Windows.Forms.Button();
+            this.cbComPorts = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.panelSetting = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -244,6 +249,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox70)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox71)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox72)).BeginInit();
+            this.panelSetting.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -262,23 +268,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rear CAM Power";
             // 
-            // pictureBox1
+            // label1
             // 
-            this.pictureBox1.Image = global::EM02_E_HalfTester.Resource1.none;
-            this.pictureBox1.Location = new System.Drawing.Point(6, 37);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(76, 98);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::EM02_E_HalfTester.Resource1._0d;
-            this.pictureBox2.Location = new System.Drawing.Point(88, 37);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(76, 98);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(252, 105);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 30);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "V";
             // 
             // pictureBox3
             // 
@@ -289,14 +286,23 @@
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
             // 
-            // label1
+            // pictureBox2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(252, 105);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 30);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "V";
+            this.pictureBox2.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox2.Location = new System.Drawing.Point(88, 37);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(76, 98);
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox1.Location = new System.Drawing.Point(6, 37);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(76, 98);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // groupBox2
             // 
@@ -901,6 +907,7 @@
             this.pictureBox37.Location = new System.Drawing.Point(170, 37);
             this.pictureBox37.Name = "pictureBox37";
             this.pictureBox37.Size = new System.Drawing.Size(76, 98);
+            this.pictureBox37.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox37.TabIndex = 2;
             this.pictureBox37.TabStop = false;
             // 
@@ -1494,12 +1501,64 @@
             this.pictureBox72.TabIndex = 0;
             this.pictureBox72.TabStop = false;
             // 
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(1394, 802);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(129, 63);
+            this.btnTest.TabIndex = 24;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
+            // btnTest2
+            // 
+            this.btnTest2.Location = new System.Drawing.Point(1199, 802);
+            this.btnTest2.Name = "btnTest2";
+            this.btnTest2.Size = new System.Drawing.Size(130, 60);
+            this.btnTest2.TabIndex = 25;
+            this.btnTest2.Text = "Test2";
+            this.btnTest2.UseVisualStyleBackColor = true;
+            this.btnTest2.Click += new System.EventHandler(this.btnTest2_Click);
+            // 
+            // cbComPorts
+            // 
+            this.cbComPorts.FormattingEnabled = true;
+            this.cbComPorts.Location = new System.Drawing.Point(86, 23);
+            this.cbComPorts.Name = "cbComPorts";
+            this.cbComPorts.Size = new System.Drawing.Size(198, 31);
+            this.cbComPorts.TabIndex = 1;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(22, 26);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(58, 23);
+            this.label25.TabIndex = 0;
+            this.label25.Text = "COM:";
+            // 
+            // panelSetting
+            // 
+            this.panelSetting.BackColor = System.Drawing.SystemColors.ControlText;
+            this.panelSetting.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelSetting.Controls.Add(this.cbComPorts);
+            this.panelSetting.Controls.Add(this.label25);
+            this.panelSetting.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelSetting.Location = new System.Drawing.Point(20, 938);
+            this.panelSetting.Name = "panelSetting";
+            this.panelSetting.Size = new System.Drawing.Size(1751, 79);
+            this.panelSetting.TabIndex = 27;
+            // 
             // fmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.ClientSize = new System.Drawing.Size(1795, 1039);
+            this.Controls.Add(this.panelSetting);
+            this.Controls.Add(this.btnTest2);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.groupBox13);
             this.Controls.Add(this.groupBox14);
             this.Controls.Add(this.groupBox15);
@@ -1527,11 +1586,12 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "fmMain";
             this.Text = "金戰神EM02-E半測系統V1.0";
+            this.Load += new System.EventHandler(this.fmMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -1647,6 +1707,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox70)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox71)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox72)).EndInit();
+            this.panelSetting.ResumeLayout(false);
+            this.panelSetting.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1773,5 +1835,10 @@
         private PictureBox pictureBox70;
         private PictureBox pictureBox71;
         private PictureBox pictureBox72;
+        private Button btnTest;
+        private Button btnTest2;
+        private ComboBox cbComPorts;
+        private Label label25;
+        private Panel panelSetting;
     }
 }
