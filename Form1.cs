@@ -1,11 +1,16 @@
+using System.Data;
 using System.IO.Ports;
+using System.Text;
 
 namespace EM02_E_HalfTester
 {
     public partial class fmMain : Form
     {
-
-        private String[] chanelNames ;
+        private SerialPort? _barcodePort;
+        private bool Barcode_receiving = false;
+        delegate void GoGetData(string buffer);
+        private Thread t;
+        private string[] chanelNames ;
         private Image[] imgDigiNormal;
         private Image[] imgDigiNormalDot;
         private Image[] imgDigiError;
@@ -15,9 +20,80 @@ namespace EM02_E_HalfTester
             InitializeComponent();
         }
 
+        private void initComBarcode(string sPort)
+        {
+            _barcodePort = new SerialPort()
+            {
+                PortName = sPort,
+                BaudRate = 9600,
+                Parity = Parity.None,
+                DataBits = 8,
+                StopBits = StopBits.One,
+                Handshake = Handshake.None
+            };
+
+            if (_barcodePort.IsOpen == false)
+            {
+                try
+                {
+                    _barcodePort.Open();
+
+                    //開啟 Serial Port
+
+                    Barcode_receiving = true;
+                    //開啟執行續做接收動作
+                    t = new Thread(DoReceive);
+                    t.IsBackground = true;
+                    t.Start();
+
+                }
+                catch (Exception)
+                {
+                    // port will not be open, therefore will become null
+                    MessageBox.Show("無法開啟Barcode Reader!");
+                    Application.Exit();
+                }
+            }
+
+        }
+
+        private void DoReceive()
+        {
+            Byte[] buffer = new Byte[1024];
+
+            try
+            {
+                while (Barcode_receiving)
+                {
+                    if (_barcodePort.BytesToRead > 14 && _barcodePort.BytesToWrite == 0)
+                    {
+                        Int32 length = _barcodePort.Read(buffer, 0, buffer.Length);
+
+                        string buf = Encoding.ASCII.GetString(buffer);
+                        Array.Resize(ref buffer, length);
+                        GoGetData d = new GoGetData(BarcodeShow);
+                        this.Invoke(d, new Object[] { buf });
+                        Array.Resize(ref buffer, 1024);
+                    }
+
+                    Thread.Sleep(20);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void BarcodeShow(string buffer)
+        {
+           
+           MessageBox.Show(buffer);
+        }
+
         private void fmMain_Load(object sender, EventArgs e)
         {
-            chanelNames = new String[24];
+            chanelNames = new string[24];
             imgDigiNormal = new Image[10];
             imgDigiNormalDot = new Image[10];
             imgDigiError = new Image[10];
@@ -105,6 +181,9 @@ namespace EM02_E_HalfTester
 
             string[] ports = SerialPort.GetPortNames();
             cbComPorts.Items.AddRange(ports);
+
+            initComBarcode("COM3");
+
         }
 
         private void displayPictureBox ( PictureBox pb , int iData , bool bErr)
