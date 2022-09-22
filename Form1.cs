@@ -8,13 +8,21 @@ namespace EM02_E_HalfTester
     {
         private SerialPort? _barcodePort;
         private bool Barcode_receiving = false;
-        delegate void GoGetData(string buffer);
-        private Thread t;
+        delegate void GoGetBarcodeData(string buffer);
+        private Thread threadBarcode;
+        private SerialPort? _UT5526Port;
+        private bool UT5526_receiving = false;
+        delegate void GoGetUT5526Data(string buffer);
+        private Thread threadUT5526;
+
         private string[] chanelNames ;
         private Image[] imgDigiNormal;
         private Image[] imgDigiNormalDot;
         private Image[] imgDigiError;
         private Image[] imgDigiErrorDot;
+        private byte[] leadChar = new byte[1];
+        private byte[] endChar = new byte[1];
+
         public fmMain()
         {
             InitializeComponent();
@@ -37,14 +45,12 @@ namespace EM02_E_HalfTester
                 try
                 {
                     _barcodePort.Open();
-
                     //開啟 Serial Port
-
                     Barcode_receiving = true;
                     //開啟執行續做接收動作
-                    t = new Thread(DoReceive);
-                    t.IsBackground = true;
-                    t.Start();
+                    threadBarcode = new Thread(DoReceiveBarcode);
+                    threadBarcode.IsBackground = true;
+                    threadBarcode.Start();
 
                 }
                 catch (Exception)
@@ -54,10 +60,41 @@ namespace EM02_E_HalfTester
                     Application.Exit();
                 }
             }
-
         }
+        private void initComUT5526(string sPort)
+        {
+            _UT5526Port = new SerialPort()
+            {
+                PortName = sPort,
+                BaudRate = 9600,
+                Parity = Parity.None,
+                DataBits = 8,
+                StopBits = StopBits.One,
+                Handshake = Handshake.None
+            };
 
-        private void DoReceive()
+            if (_UT5526Port.IsOpen == false)
+            {
+                try
+                {
+                    _UT5526Port.Open();
+                    //開啟 Serial Port
+                    UT5526_receiving = true;
+                    //開啟執行續做接收動作
+                    threadUT5526 = new Thread(DoReceiveUT5526);
+                    threadUT5526.IsBackground = true;
+                    threadUT5526.Start();
+
+                }
+                catch (Exception)
+                {
+                    // port will not be open, therefore will become null
+                    MessageBox.Show("無法開啟UT5526 Reader!");
+                    Application.Exit();
+                }
+            }
+        }
+        private void DoReceiveBarcode()
         {
             Byte[] buffer = new Byte[1024];
 
@@ -65,18 +102,46 @@ namespace EM02_E_HalfTester
             {
                 while (Barcode_receiving)
                 {
-                    if (_barcodePort.BytesToRead > 14 && _barcodePort.BytesToWrite == 0)
+                    if (_barcodePort?.BytesToRead > 14 && _barcodePort.BytesToWrite == 0)
                     {
                         Int32 length = _barcodePort.Read(buffer, 0, buffer.Length);
 
                         string buf = Encoding.ASCII.GetString(buffer);
                         Array.Resize(ref buffer, length);
-                        GoGetData d = new GoGetData(BarcodeShow);
+                        GoGetBarcodeData d = new GoGetBarcodeData(BarcodeShow);
                         this.Invoke(d, new Object[] { buf });
                         Array.Resize(ref buffer, 1024);
                     }
 
-                    Thread.Sleep(20);
+                    Thread.Sleep(10);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void DoReceiveUT5526()
+        {
+            Byte[] buffer = new Byte[1024];
+
+            try
+            {
+                while (UT5526_receiving)
+                {
+                    if (_UT5526Port?.BytesToRead >= 11  && _UT5526Port.BytesToWrite == 0)
+                    {
+                        Int32 length = _UT5526Port.Read(buffer, 0, buffer.Length);
+
+                        string buf = Encoding.ASCII.GetString(buffer);
+                        Array.Resize(ref buffer, length);
+                        GoGetUT5526Data d = new GoGetUT5526Data(UT5526Show);
+                        this.Invoke(d, new Object[] { buf });
+                        Array.Resize(ref buffer, 1024);
+                    }
+
+                    Thread.Sleep(10);
                 }
             }
             catch (Exception ex)
@@ -89,6 +154,12 @@ namespace EM02_E_HalfTester
         {
            
            MessageBox.Show(buffer);
+        }
+
+        public void UT5526Show(string buffer)
+        {
+
+            MessageBox.Show(buffer);
         }
 
         private void fmMain_Load(object sender, EventArgs e)
@@ -182,7 +253,10 @@ namespace EM02_E_HalfTester
             string[] ports = SerialPort.GetPortNames();
             cbComPorts.Items.AddRange(ports);
 
+            leadChar[0] = 0x01;
+            endChar[0] = 0x04;
             initComBarcode("COM3");
+            initComUT5526("COM4");
 
         }
 
@@ -252,14 +326,23 @@ namespace EM02_E_HalfTester
 
         private void btnTest2_Click(object sender, EventArgs e)
         {
-            foreach (Control ctrl in this.Controls)
-            {
+            string strComData = "01MORDVO8";
+            _UT5526Port?.Write(leadChar, 0, 1);
+            _UT5526Port?.Write(strComData);
+            _UT5526Port?.Write(endChar, 0, 1);
+        }
 
-                if (ctrl is GroupBox)
-                {
-                    displayGroup((GroupBox)ctrl, 321, false);
-                }
+        private void fmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (_barcodePort?.IsOpen == true)
+            {
+                _barcodePort.Close();
             }
+            if(_UT5526Port?.IsOpen == true)
+            {
+                _UT5526Port.Close();
+            }
+
         }
     }
 }

@@ -1586,6 +1586,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "fmMain";
             this.Text = "金戰神EM02-E半測系統V1.0";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.fmMain_FormClosed);
             this.Load += new System.EventHandler(this.fmMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
