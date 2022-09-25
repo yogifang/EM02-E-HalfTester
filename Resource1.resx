@@ -119,75 +119,99 @@
   </resheader>
   <data name="Ch1" xml:space="preserve">
     <value>Rear Camera Power</value>
+    <comment>1</comment>
   </data>
   <data name="Ch10" xml:space="preserve">
     <value>PMU_1V35</value>
+    <comment>10</comment>
   </data>
   <data name="Ch11" xml:space="preserve">
     <value>PMU_1V8</value>
+    <comment>11</comment>
   </data>
   <data name="Ch12" xml:space="preserve">
     <value>PMU_3V3</value>
+    <comment>12</comment>
   </data>
   <data name="Ch13" xml:space="preserve">
     <value>SD card inserted</value>
+    <comment>13</comment>
   </data>
   <data name="Ch14" xml:space="preserve">
     <value>LCD_RST</value>
+    <comment>14</comment>
   </data>
   <data name="Ch15" xml:space="preserve">
     <value>SD card power</value>
+    <comment>15</comment>
   </data>
   <data name="Ch16" xml:space="preserve">
     <value>LCD back light</value>
+    <comment>16</comment>
   </data>
   <data name="Ch17" xml:space="preserve">
     <value>LCD power</value>
+    <comment>17</comment>
   </data>
   <data name="Ch18" xml:space="preserve">
     <value>TP2825 power</value>
-  </data>
-  <data name="Ch19" xml:space="preserve">
-    <value>+12V</value>
+    <comment>18</comment>
   </data>
   <data name="Ch2" xml:space="preserve">
     <value>Camera 2 Power</value>
-  </data>
-  <data name="Ch20" xml:space="preserve">
-    <value>GND</value>
-  </data>
-  <data name="Ch21" xml:space="preserve">
-    <value>GPS_VBACK</value>
-  </data>
-  <data name="Ch22" xml:space="preserve">
-    <value>CAN_STBY</value>
+    <comment>2</comment>
   </data>
   <data name="Ch23" xml:space="preserve">
-    <value>G_SENSOR_INT</value>
+    <value>+12V</value>
+    <comment>23</comment>
   </data>
   <data name="Ch24" xml:space="preserve">
-    <value>G_SENSOR_POWER</value>
+    <value>GND</value>
+    <comment>24</comment>
+  </data>
+  <data name="Ch27" xml:space="preserve">
+    <value>CAN_STBY</value>
+    <comment>27</comment>
+  </data>
+  <data name="Ch28" xml:space="preserve">
+    <value>GPS_VBACK</value>
+    <comment>28</comment>
   </data>
   <data name="Ch3" xml:space="preserve">
     <value>Standby power 5V</value>
+    <comment>3</comment>
+  </data>
+  <data name="Ch31" xml:space="preserve">
+    <value>G_SENSOR_INT</value>
+    <comment>31</comment>
+  </data>
+  <data name="Ch32" xml:space="preserve">
+    <value>G_SENSOR_POWER</value>
+    <comment>32</comment>
   </data>
   <data name="Ch4" xml:space="preserve">
     <value>Standby power 3.3V</value>
+    <comment>4</comment>
   </data>
   <data name="Ch5" xml:space="preserve">
     <value>ACC input singal</value>
+    <comment>5</comment>
   </data>
   <data name="Ch6" xml:space="preserve">
     <value>Main Power</value>
+    <comment>6</comment>
   </data>
   <data name="Ch7" xml:space="preserve">
     <value>Power Buffer</value>
+    <comment>7</comment>
   </data>
   <data name="Ch8" xml:space="preserve">
     <value>Golden Cap. Voltage</value>
+    <comment>8</comment>
   </data>
   <data name="Ch9" xml:space="preserve">
     <value>PMU_1V0</value>
+    <comment>9</comment>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="none" type="System.Resources.ResXFileRef, System.Windows.Forms">

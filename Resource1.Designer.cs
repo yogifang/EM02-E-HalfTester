@@ -1351,15 +1351,6 @@ namespace EM02_E_HalfTester {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +12V.
-        /// </summary>
-        internal static string Ch19 {
-            get {
-                return ResourceManager.GetString("Ch19", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Camera 2 Power.
         /// </summary>
         internal static string Ch2 {
@@ -1369,34 +1360,7 @@ namespace EM02_E_HalfTester {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GND.
-        /// </summary>
-        internal static string Ch20 {
-            get {
-                return ResourceManager.GetString("Ch20", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to GPS_VBACK.
-        /// </summary>
-        internal static string Ch21 {
-            get {
-                return ResourceManager.GetString("Ch21", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to CAN_STBY.
-        /// </summary>
-        internal static string Ch22 {
-            get {
-                return ResourceManager.GetString("Ch22", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to G_SENSOR_INT.
+        ///   Looks up a localized string similar to +12V.
         /// </summary>
         internal static string Ch23 {
             get {
@@ -1405,11 +1369,29 @@ namespace EM02_E_HalfTester {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to G_SENSOR_POWER.
+        ///   Looks up a localized string similar to GND.
         /// </summary>
         internal static string Ch24 {
             get {
                 return ResourceManager.GetString("Ch24", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CAN_STBY.
+        /// </summary>
+        internal static string Ch27 {
+            get {
+                return ResourceManager.GetString("Ch27", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPS_VBACK.
+        /// </summary>
+        internal static string Ch28 {
+            get {
+                return ResourceManager.GetString("Ch28", resourceCulture);
             }
         }
         
@@ -1419,6 +1401,24 @@ namespace EM02_E_HalfTester {
         internal static string Ch3 {
             get {
                 return ResourceManager.GetString("Ch3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to G_SENSOR_INT.
+        /// </summary>
+        internal static string Ch31 {
+            get {
+                return ResourceManager.GetString("Ch31", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to G_SENSOR_POWER.
+        /// </summary>
+        internal static string Ch32 {
+            get {
+                return ResourceManager.GetString("Ch32", resourceCulture);
             }
         }
         

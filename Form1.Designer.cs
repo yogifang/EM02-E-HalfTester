@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -153,6 +154,8 @@
             this.cbComPorts = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.panelSetting = new System.Windows.Forms.Panel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnRead = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -266,6 +269,7 @@
             this.groupBox1.Size = new System.Drawing.Size(290, 150);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Tag = "1";
             this.groupBox1.Text = "Rear CAM Power";
             // 
             // label1
@@ -318,7 +322,8 @@
             this.groupBox2.Size = new System.Drawing.Size(290, 150);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Rear CAM Power";
+            this.groupBox2.Tag = "2";
+            this.groupBox2.Text = "CAM2 Power";
             // 
             // label2
             // 
@@ -370,7 +375,8 @@
             this.groupBox3.Size = new System.Drawing.Size(290, 150);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Rear CAM Power";
+            this.groupBox3.Tag = "3";
+            this.groupBox3.Text = "Standby %V";
             // 
             // label3
             // 
@@ -422,7 +428,8 @@
             this.groupBox4.Size = new System.Drawing.Size(290, 150);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Rear CAM Power";
+            this.groupBox4.Tag = "6";
+            this.groupBox4.Text = "Main Power";
             // 
             // label4
             // 
@@ -474,7 +481,8 @@
             this.groupBox5.Size = new System.Drawing.Size(290, 150);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Rear CAM Power";
+            this.groupBox5.Tag = "5";
+            this.groupBox5.Text = "ACC";
             // 
             // label5
             // 
@@ -526,7 +534,8 @@
             this.groupBox6.Size = new System.Drawing.Size(290, 150);
             this.groupBox6.TabIndex = 3;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Rear CAM Power";
+            this.groupBox6.Tag = "4";
+            this.groupBox6.Text = "Standby3V3";
             // 
             // label6
             // 
@@ -578,7 +587,8 @@
             this.groupBox7.Size = new System.Drawing.Size(290, 150);
             this.groupBox7.TabIndex = 11;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Rear CAM Power";
+            this.groupBox7.Tag = "12";
+            this.groupBox7.Text = "PMU3V3";
             // 
             // label7
             // 
@@ -630,7 +640,8 @@
             this.groupBox8.Size = new System.Drawing.Size(290, 150);
             this.groupBox8.TabIndex = 10;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Rear CAM Power";
+            this.groupBox8.Tag = "11";
+            this.groupBox8.Text = "PMU1V8";
             // 
             // label8
             // 
@@ -682,7 +693,8 @@
             this.groupBox9.Size = new System.Drawing.Size(290, 150);
             this.groupBox9.TabIndex = 9;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Rear CAM Power";
+            this.groupBox9.Tag = "10";
+            this.groupBox9.Text = "PMU1V35";
             // 
             // label9
             // 
@@ -734,7 +746,8 @@
             this.groupBox10.Size = new System.Drawing.Size(290, 150);
             this.groupBox10.TabIndex = 8;
             this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Rear CAM Power";
+            this.groupBox10.Tag = "9";
+            this.groupBox10.Text = "PMU1V0";
             // 
             // label10
             // 
@@ -786,7 +799,8 @@
             this.groupBox11.Size = new System.Drawing.Size(290, 150);
             this.groupBox11.TabIndex = 7;
             this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "Rear CAM Power";
+            this.groupBox11.Tag = "8";
+            this.groupBox11.Text = "Super Cap.";
             // 
             // label11
             // 
@@ -838,7 +852,8 @@
             this.groupBox12.Size = new System.Drawing.Size(290, 150);
             this.groupBox12.TabIndex = 6;
             this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "Rear CAM Power";
+            this.groupBox12.Tag = "7";
+            this.groupBox12.Text = "Power Buffer";
             // 
             // label12
             // 
@@ -890,7 +905,8 @@
             this.groupBox13.Size = new System.Drawing.Size(290, 150);
             this.groupBox13.TabIndex = 23;
             this.groupBox13.TabStop = false;
-            this.groupBox13.Text = "Rear CAM Power";
+            this.groupBox13.Tag = "27";
+            this.groupBox13.Text = "CAN STBY";
             // 
             // label13
             // 
@@ -943,7 +959,8 @@
             this.groupBox14.Size = new System.Drawing.Size(290, 150);
             this.groupBox14.TabIndex = 22;
             this.groupBox14.TabStop = false;
-            this.groupBox14.Text = "Rear CAM Power";
+            this.groupBox14.Tag = "32";
+            this.groupBox14.Text = "GSensor Power";
             // 
             // label14
             // 
@@ -995,7 +1012,8 @@
             this.groupBox15.Size = new System.Drawing.Size(290, 150);
             this.groupBox15.TabIndex = 21;
             this.groupBox15.TabStop = false;
-            this.groupBox15.Text = "Rear CAM Power";
+            this.groupBox15.Tag = "31";
+            this.groupBox15.Text = "GSensor Int";
             // 
             // label15
             // 
@@ -1047,7 +1065,8 @@
             this.groupBox16.Size = new System.Drawing.Size(290, 150);
             this.groupBox16.TabIndex = 20;
             this.groupBox16.TabStop = false;
-            this.groupBox16.Text = "Rear CAM Power";
+            this.groupBox16.Tag = "28";
+            this.groupBox16.Text = "GPS_VBACK";
             // 
             // label16
             // 
@@ -1099,7 +1118,8 @@
             this.groupBox17.Size = new System.Drawing.Size(290, 150);
             this.groupBox17.TabIndex = 19;
             this.groupBox17.TabStop = false;
-            this.groupBox17.Text = "Rear CAM Power";
+            this.groupBox17.Tag = "24";
+            this.groupBox17.Text = "GND";
             // 
             // label17
             // 
@@ -1151,7 +1171,8 @@
             this.groupBox18.Size = new System.Drawing.Size(290, 150);
             this.groupBox18.TabIndex = 18;
             this.groupBox18.TabStop = false;
-            this.groupBox18.Text = "Rear CAM Power";
+            this.groupBox18.Tag = "23";
+            this.groupBox18.Text = "+12V";
             // 
             // label18
             // 
@@ -1203,7 +1224,8 @@
             this.groupBox19.Size = new System.Drawing.Size(290, 150);
             this.groupBox19.TabIndex = 17;
             this.groupBox19.TabStop = false;
-            this.groupBox19.Text = "Rear CAM Power";
+            this.groupBox19.Tag = "18";
+            this.groupBox19.Text = "TP2825 Power";
             // 
             // label19
             // 
@@ -1255,7 +1277,8 @@
             this.groupBox20.Size = new System.Drawing.Size(290, 150);
             this.groupBox20.TabIndex = 16;
             this.groupBox20.TabStop = false;
-            this.groupBox20.Text = "Rear CAM Power";
+            this.groupBox20.Tag = "17";
+            this.groupBox20.Text = "LCD Power";
             // 
             // label20
             // 
@@ -1307,7 +1330,8 @@
             this.groupBox21.Size = new System.Drawing.Size(290, 150);
             this.groupBox21.TabIndex = 15;
             this.groupBox21.TabStop = false;
-            this.groupBox21.Text = "Rear CAM Power";
+            this.groupBox21.Tag = "16";
+            this.groupBox21.Text = "LCD Back Lite";
             // 
             // label21
             // 
@@ -1359,7 +1383,8 @@
             this.groupBox22.Size = new System.Drawing.Size(290, 150);
             this.groupBox22.TabIndex = 14;
             this.groupBox22.TabStop = false;
-            this.groupBox22.Text = "Rear CAM Power";
+            this.groupBox22.Tag = "15";
+            this.groupBox22.Text = "SD Card Power";
             // 
             // label22
             // 
@@ -1411,7 +1436,8 @@
             this.groupBox23.Size = new System.Drawing.Size(290, 150);
             this.groupBox23.TabIndex = 13;
             this.groupBox23.TabStop = false;
-            this.groupBox23.Text = "Rear CAM Power";
+            this.groupBox23.Tag = "14";
+            this.groupBox23.Text = "LCD_RST";
             // 
             // label23
             // 
@@ -1463,7 +1489,8 @@
             this.groupBox24.Size = new System.Drawing.Size(290, 150);
             this.groupBox24.TabIndex = 12;
             this.groupBox24.TabStop = false;
-            this.groupBox24.Text = "Rear CAM Power";
+            this.groupBox24.Tag = "13";
+            this.groupBox24.Text = "SD Card Exist";
             // 
             // label24
             // 
@@ -1550,12 +1577,23 @@
             this.panelSetting.Size = new System.Drawing.Size(1751, 79);
             this.panelSetting.TabIndex = 27;
             // 
+            // btnRead
+            // 
+            this.btnRead.Location = new System.Drawing.Point(903, 806);
+            this.btnRead.Name = "btnRead";
+            this.btnRead.Size = new System.Drawing.Size(141, 52);
+            this.btnRead.TabIndex = 28;
+            this.btnRead.Text = "ReadVolt";
+            this.btnRead.UseVisualStyleBackColor = true;
+            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
+            // 
             // fmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.ClientSize = new System.Drawing.Size(1795, 1039);
+            this.Controls.Add(this.btnRead);
             this.Controls.Add(this.panelSetting);
             this.Controls.Add(this.btnTest2);
             this.Controls.Add(this.btnTest);
@@ -1841,5 +1879,7 @@
         private ComboBox cbComPorts;
         private Label label25;
         private Panel panelSetting;
+        private System.Windows.Forms.Timer timer1;
+        private Button btnRead;
     }
 }

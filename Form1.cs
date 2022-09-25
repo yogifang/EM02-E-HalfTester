@@ -1,6 +1,12 @@
+using System;
 using System.Data;
 using System.IO.Ports;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Forms;
 
 namespace EM02_E_HalfTester
 {
@@ -12,16 +18,36 @@ namespace EM02_E_HalfTester
         private Thread threadBarcode;
         private SerialPort? _UT5526Port;
         private bool UT5526_receiving = false;
-        delegate void GoGetUT5526Data(string buffer);
+        delegate void GoGetUT5526Data(byte[] buffer);
         private Thread threadUT5526;
 
-        private string[] chanelNames ;
+        private byte[] ringBufferUT5526;
+        private int ringCountUT5526 = 0;
+        private int ringOutputUT5526 = 0;
+        private int ringInputUT5526 = 0;
+        private int iIdxRead = 0;  // current read channel 
+
+        private string[] chanelNames;
         private Image[] imgDigiNormal;
         private Image[] imgDigiNormalDot;
         private Image[] imgDigiError;
         private Image[] imgDigiErrorDot;
         private byte[] leadChar = new byte[1];
         private byte[] endChar = new byte[1];
+
+        private bool bCmdReadSend = false;
+
+        class ChannelData
+        {
+            public string ChannelName { get; set; }
+            public string CmdSelected { get; set; }
+            public int PreviousData { get; set; }
+            public int CurrentData { get; set; }
+        }
+
+
+        private List<ChannelData> collectData = new List<ChannelData>();
+
 
         public fmMain()
         {
@@ -130,15 +156,15 @@ namespace EM02_E_HalfTester
             {
                 while (UT5526_receiving)
                 {
-                    if (_UT5526Port?.BytesToRead >= 11  && _UT5526Port.BytesToWrite == 0)
+                    if (_UT5526Port?.BytesToRead >= 1 && _UT5526Port.BytesToWrite == 0)
                     {
                         Int32 length = _UT5526Port.Read(buffer, 0, buffer.Length);
 
                         string buf = Encoding.ASCII.GetString(buffer);
                         Array.Resize(ref buffer, length);
                         GoGetUT5526Data d = new GoGetUT5526Data(UT5526Show);
-                        this.Invoke(d, new Object[] { buf });
-                        Array.Resize(ref buffer, 1024);
+                        this.Invoke(d, new Object[] { buffer });
+                        Array.Resize(ref buffer, length);
                     }
 
                     Thread.Sleep(10);
@@ -150,16 +176,87 @@ namespace EM02_E_HalfTester
             }
         }
 
-        public void BarcodeShow(string buffer)
+        private void setRingUT5526(byte byData)
         {
-           
-           MessageBox.Show(buffer);
+            ringBufferUT5526[ringInputUT5526] = byData;
+            ringCountUT5526++;
+            ringInputUT5526 = (ringInputUT5526 + 1) & 0x001f;
         }
-
-        public void UT5526Show(string buffer)
+        private byte getRingUT5526()
+        {
+            byte byData = ringBufferUT5526[ringOutputUT5526];
+            ringCountUT5526--;
+            if (ringCountUT5526 < 0) ringCountUT5526 = 0;
+            ringOutputUT5526 = (ringOutputUT5526 + 1) & 0x001f;
+            return byData;
+        }
+        public void BarcodeShow(string buffer)
         {
 
             MessageBox.Show(buffer);
+        }
+
+        public void UT5526Show(byte[] buffer)
+        {
+            //  byte[] buf = Encoding.ASCII.GetBytes(buffer);
+            byte[] buf = buffer;
+            for (int i = 0; i < buf.Length; i++)
+            {
+                setRingUT5526(buf[i]);
+            }
+
+        }
+
+
+
+        private void InitializeTimer()
+        {
+            //   timer1 = new System.Timers.Timer();
+            timer1.Interval = 600;
+            this.timer1.Tick += new EventHandler(Timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(Timer1_Tick);
+            // Enable timer.  
+            timer1.Enabled = false;
+
+        }
+        private void Timer1_Tick(object Sender, EventArgs e)
+        {
+
+            while (ringCountUT5526 >= 10 ) 
+            {
+                byte byData;
+                byData = getRingUT5526();
+                if (byData != 0x01)
+                {
+                    break;
+                }else
+                {
+                    byte byTemp;
+                    byTemp =  getRingUT5526();  // range code
+                    byTemp = getRingUT5526(); // address
+                    byTemp = getRingUT5526(); // V code 
+                    int iInt = getRingUT5526() * 10 + getRingUT5526();
+                    int iDot = getRingUT5526() * 100 + getRingUT5526() *10 + getRingUT5526();
+                    byTemp = getRingUT5526(); // bcc code
+                    byTemp = getRingUT5526(); // end code
+                }
+            }
+
+            if (bCmdReadSend)
+            {
+                string strComData = "01MORDVO";  // read current channel data
+                byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+                byte[] byBCC = new byte[1];
+                byBCC[0] = UTBus_LRC(cmdStr, 8);
+
+                _UT5526Port?.Write(leadChar, 0, 1);
+                _UT5526Port?.Write(strComData);
+                _UT5526Port?.Write(byBCC, 0, 1);
+                _UT5526Port?.Write(endChar, 0, 1);
+                timer1.Enabled = false;
+                bCmdReadSend = false;
+            }
+
         }
 
         private void fmMain_Load(object sender, EventArgs e)
@@ -169,98 +266,113 @@ namespace EM02_E_HalfTester
             imgDigiNormalDot = new Image[10];
             imgDigiError = new Image[10];
             imgDigiErrorDot = new Image[10];
+            ringBufferUT5526 = new byte[32];
 
-            chanelNames[0] = EM02_E_HalfTester.Resource1.Ch1;
-            chanelNames[1] = EM02_E_HalfTester.Resource1.Ch2;
-            chanelNames[2] = EM02_E_HalfTester.Resource1.Ch3;
-            chanelNames[3] = EM02_E_HalfTester.Resource1.Ch4;
-            chanelNames[4] = EM02_E_HalfTester.Resource1.Ch5;
-            chanelNames[5] = EM02_E_HalfTester.Resource1.Ch6;
-            chanelNames[6] = EM02_E_HalfTester.Resource1.Ch7;
-            chanelNames[7] = EM02_E_HalfTester.Resource1.Ch8;
-            chanelNames[8] = EM02_E_HalfTester.Resource1.Ch9;
-            chanelNames[9] = EM02_E_HalfTester.Resource1.Ch10;    
-            chanelNames[10] = EM02_E_HalfTester.Resource1.Ch11;
-            chanelNames[11] = EM02_E_HalfTester.Resource1.Ch12;
-            chanelNames[12] = EM02_E_HalfTester.Resource1.Ch13;
-            chanelNames[13] = EM02_E_HalfTester.Resource1.Ch14;
-            chanelNames[14] = EM02_E_HalfTester.Resource1.Ch15;
-            chanelNames[15] = EM02_E_HalfTester.Resource1.Ch16;
-            chanelNames[16] = EM02_E_HalfTester.Resource1.Ch17;
-            chanelNames[17] = EM02_E_HalfTester.Resource1.Ch18;
-            chanelNames[18] = EM02_E_HalfTester.Resource1.Ch19;
-            chanelNames[19] = EM02_E_HalfTester.Resource1.Ch20;
-            chanelNames[20] = EM02_E_HalfTester.Resource1.Ch21;
-            chanelNames[21] = EM02_E_HalfTester.Resource1.Ch22;
-            chanelNames[22] = EM02_E_HalfTester.Resource1.Ch23;
-            chanelNames[23] = EM02_E_HalfTester.Resource1.Ch24;
+            chanelNames[0] = Resource1.Ch1;
+            chanelNames[1] = Resource1.Ch2;
+            chanelNames[2] = Resource1.Ch3;
+            chanelNames[3] = Resource1.Ch4;
+            chanelNames[4] = Resource1.Ch5;
+            chanelNames[5] = Resource1.Ch6;
+            chanelNames[6] = Resource1.Ch7;
+            chanelNames[7] = Resource1.Ch8;
+            chanelNames[8] = Resource1.Ch9;
+            chanelNames[9] = Resource1.Ch10;
+            chanelNames[10] = Resource1.Ch11;
+            chanelNames[11] = Resource1.Ch12;
+            chanelNames[12] = Resource1.Ch13;
+            chanelNames[13] = Resource1.Ch14;
+            chanelNames[14] = Resource1.Ch15;
+            chanelNames[15] = Resource1.Ch16;
+            chanelNames[16] = Resource1.Ch17;
+            chanelNames[17] = Resource1.Ch18;
+            chanelNames[18] = Resource1.Ch23;
+            chanelNames[19] = Resource1.Ch24;
+            chanelNames[20] = Resource1.Ch28;
+            chanelNames[21] = Resource1.Ch27;
+            chanelNames[22] = Resource1.Ch31;
+            chanelNames[23] = Resource1.Ch32;
 
-            int idx = 0;
+         
             foreach (Control ctrl in this.Controls)
             {
-                   
                 if (ctrl is GroupBox)
                 {
-                        ctrl.Text = chanelNames[idx++];
+                  if(ctrl.Tag == null)
+                    {
+                        MessageBox.Show("缺通道設定!");
+                        Application.Exit();
+                    }
+                  string strChannel = ctrl.Tag?.ToString();
+                  int channelInt = int.Parse(strChannel);
+                 if(channelInt > 32 || channelInt < 1)
+                    {
+                        MessageBox.Show("通道設定錯誤!");
+                        Application.Exit();
+                    }
+                 collectData.Add(new ChannelData() { ChannelName = ctrl.Text , CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0 });
                 }
             }
 
-            imgDigiNormal[0] = EM02_E_HalfTester.Resource1._0;
-            imgDigiNormal[1] = EM02_E_HalfTester.Resource1._1;
-            imgDigiNormal[2] = EM02_E_HalfTester.Resource1._2;
-            imgDigiNormal[3] = EM02_E_HalfTester.Resource1._3;
-            imgDigiNormal[4] = EM02_E_HalfTester.Resource1._4;
-            imgDigiNormal[5] = EM02_E_HalfTester.Resource1._5;
-            imgDigiNormal[6] = EM02_E_HalfTester.Resource1._6;
-            imgDigiNormal[7] = EM02_E_HalfTester.Resource1._7;
-            imgDigiNormal[8] = EM02_E_HalfTester.Resource1._8;
-            imgDigiNormal[9] = EM02_E_HalfTester.Resource1._9;
+            imgDigiNormal[0] = Resource1._0;
+            imgDigiNormal[1] = Resource1._1;
+            imgDigiNormal[2] = Resource1._2;
+            imgDigiNormal[3] = Resource1._3;
+            imgDigiNormal[4] = Resource1._4;
+            imgDigiNormal[5] = Resource1._5;
+            imgDigiNormal[6] = Resource1._6;
+            imgDigiNormal[7] = Resource1._7;
+            imgDigiNormal[8] = Resource1._8;
+            imgDigiNormal[9] = Resource1._9;
 
-            imgDigiNormalDot[0] = EM02_E_HalfTester.Resource1._0d;
-            imgDigiNormalDot[1] = EM02_E_HalfTester.Resource1._1d;
-            imgDigiNormalDot[2] = EM02_E_HalfTester.Resource1._2d;
-            imgDigiNormalDot[3] = EM02_E_HalfTester.Resource1._3d;
-            imgDigiNormalDot[4] = EM02_E_HalfTester.Resource1._4d;
-            imgDigiNormalDot[5] = EM02_E_HalfTester.Resource1._5d;
-            imgDigiNormalDot[6] = EM02_E_HalfTester.Resource1._6d;
-            imgDigiNormalDot[7] = EM02_E_HalfTester.Resource1._7d;
-            imgDigiNormalDot[8] = EM02_E_HalfTester.Resource1._8d;
-            imgDigiNormalDot[9] = EM02_E_HalfTester.Resource1._9d;
+            imgDigiNormalDot[0] = Resource1._0d;
+            imgDigiNormalDot[1] = Resource1._1d;
+            imgDigiNormalDot[2] = Resource1._2d;
+            imgDigiNormalDot[3] = Resource1._3d;
+            imgDigiNormalDot[4] = Resource1._4d;
+            imgDigiNormalDot[5] = Resource1._5d;
+            imgDigiNormalDot[6] = Resource1._6d;
+            imgDigiNormalDot[7] = Resource1._7d;
+            imgDigiNormalDot[8] = Resource1._8d;
+            imgDigiNormalDot[9] = Resource1._9d;
 
-            imgDigiError[0] = EM02_E_HalfTester.Resource1._0r;
-            imgDigiError[1] = EM02_E_HalfTester.Resource1._1r;
-            imgDigiError[2] = EM02_E_HalfTester.Resource1._2r;
-            imgDigiError[3] = EM02_E_HalfTester.Resource1._3r;
-            imgDigiError[4] = EM02_E_HalfTester.Resource1._4r;
-            imgDigiError[5] = EM02_E_HalfTester.Resource1._5r;
-            imgDigiError[6] = EM02_E_HalfTester.Resource1._6r;
-            imgDigiError[7] = EM02_E_HalfTester.Resource1._7r;
-            imgDigiError[8] = EM02_E_HalfTester.Resource1._8r;
-            imgDigiError[9] = EM02_E_HalfTester.Resource1._9r;
+            imgDigiError[0] = Resource1._0r;
+            imgDigiError[1] = Resource1._1r;
+            imgDigiError[2] = Resource1._2r;
+            imgDigiError[3] = Resource1._3r;
+            imgDigiError[4] = Resource1._4r;
+            imgDigiError[5] = Resource1._5r;
+            imgDigiError[6] = Resource1._6r;
+            imgDigiError[7] = Resource1._7r;
+            imgDigiError[8] = Resource1._8r;
+            imgDigiError[9] = Resource1._9r;
 
-            
-            imgDigiErrorDot[0] = EM02_E_HalfTester.Resource1._0rd;
-            imgDigiErrorDot[1] = EM02_E_HalfTester.Resource1._1rd;
-            imgDigiErrorDot[2] = EM02_E_HalfTester.Resource1._2rd;
-            imgDigiErrorDot[3] = EM02_E_HalfTester.Resource1._3rd;
-            imgDigiErrorDot[4] = EM02_E_HalfTester.Resource1._4rd;
-            imgDigiErrorDot[5] = EM02_E_HalfTester.Resource1._5rd;
-            imgDigiErrorDot[6] = EM02_E_HalfTester.Resource1._6rd;
-            imgDigiErrorDot[7] = EM02_E_HalfTester.Resource1._7rd;
-            imgDigiErrorDot[8] = EM02_E_HalfTester.Resource1._8rd;
-            imgDigiErrorDot[9] = EM02_E_HalfTester.Resource1._9rd;
+            imgDigiErrorDot[0] = Resource1._0rd;
+            imgDigiErrorDot[1] = Resource1._1rd;
+            imgDigiErrorDot[2] = Resource1._2rd;
+            imgDigiErrorDot[3] = Resource1._3rd;
+            imgDigiErrorDot[4] = Resource1._4rd;
+            imgDigiErrorDot[5] = Resource1._5rd;
+            imgDigiErrorDot[6] = Resource1._6rd;
+            imgDigiErrorDot[7] = Resource1._7rd;
+            imgDigiErrorDot[8] = Resource1._8rd;
+            imgDigiErrorDot[9] = Resource1._9rd;
 
             string[] ports = SerialPort.GetPortNames();
             cbComPorts.Items.AddRange(ports);
 
             leadChar[0] = 0x01;
             endChar[0] = 0x04;
+
+            InitializeTimer();
             initComBarcode("COM3");
             initComUT5526("COM4");
 
+
+
         }
 
-        private void displayPictureBox ( PictureBox pb , int iData , bool bErr)
+        private void displayPictureBox(PictureBox pb, int iData, bool bErr)
         {
             pb.SizeMode = PictureBoxSizeMode.StretchImage;
             pb.Image = bErr ? imgDigiError[iData] : imgDigiNormal[iData];
@@ -273,7 +385,7 @@ namespace EM02_E_HalfTester
             pb.Image = bErr ? imgDigiErrorDot[iData] : imgDigiNormalDot[iData];
         }
 
-        private void displayGroup( GroupBox gb , int iData , bool bErr)
+        private void displayGroup(GroupBox gb, int iData, bool bErr)
         {
             // find 3 picture box in GroupBox and check their left right place
 
@@ -281,19 +393,21 @@ namespace EM02_E_HalfTester
             PictureBox pbR = new PictureBox();
             PictureBox pbM = new PictureBox();
             int gbWidth = gb.Width;
-    
+
             foreach (Control ctrl in gb.Controls)
             {
-                if ( ctrl is PictureBox)
+                if (ctrl is PictureBox)
                 {
                     Point l = ctrl.Location;
-                    if(l.X > gbWidth/2)
+                    if (l.X > gbWidth / 2)
                     {
                         pbR = (PictureBox)ctrl;
-                    } else if(l.X > gbWidth/4)
+                    }
+                    else if (l.X > gbWidth / 4)
                     {
                         pbM = (PictureBox)ctrl;
-                    } else
+                    }
+                    else
                     {
                         pbL = (PictureBox)ctrl;
                     }
@@ -304,45 +418,90 @@ namespace EM02_E_HalfTester
             int iMid = (iData - (iLeft * 100)) / 10;
             int iRight = iData % 10;
 
-            displayPictureBox(pbL, iLeft , bErr);
-            displayPictureBoxDot(pbM , iMid , bErr);
-            displayPictureBox(pbR , iRight , bErr);
+            displayPictureBox(pbL, iLeft, bErr);
+            displayPictureBoxDot(pbM, iMid, bErr);
+            displayPictureBox(pbR, iRight, bErr);
 
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-       
+
+            byte byTest = ringBufferUT5526[0];
 
             foreach (Control ctrl in this.Controls)
             {
 
                 if (ctrl is GroupBox)
                 {
-                    displayGroup((GroupBox)ctrl, 123 , true);
+                    displayGroup((GroupBox)ctrl, 123, true);
                 }
             }
         }
 
+        private byte UTBus_LRC(byte[] str, int len)
+
+        {
+            byte uchLRC = 0x00;
+            int index;
+
+            for (index = 0; index < len; index++)
+            {
+                uchLRC += str[index];
+            }
+
+            if ((uchLRC & 0x7F) <= 0x20)
+            {
+                uchLRC += 0x20;
+            }
+
+            uchLRC &= 0x7F;
+            return uchLRC;
+        }
+
         private void btnTest2_Click(object sender, EventArgs e)
         {
-            string strComData = "01MORDVO8";
+            // string strComData = "01MORDVO";
+            string strComData = "01MORG02";  // set range = 20V
+            byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+            byte[] byBCC = new byte[1];
+            byBCC[0] = UTBus_LRC(cmdStr, 8);
+
             _UT5526Port?.Write(leadChar, 0, 1);
             _UT5526Port?.Write(strComData);
+            _UT5526Port?.Write(byBCC, 0, 1);
             _UT5526Port?.Write(endChar, 0, 1);
         }
 
         private void fmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
+            timer1.Stop();
             if (_barcodePort?.IsOpen == true)
             {
                 _barcodePort.Close();
             }
-            if(_UT5526Port?.IsOpen == true)
+            if (_UT5526Port?.IsOpen == true)
             {
                 _UT5526Port.Close();
             }
 
+        }
+
+        private void btnRead_Click(object sender, EventArgs e)
+        {
+         
+            iIdxRead = 0;
+            // string strComData = "01MOCH01";  // select channel 1
+            string strComData = collectData[iIdxRead].CmdSelected;
+            byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+            byte[] byBCC = new byte[1];
+            byBCC[0] = UTBus_LRC(cmdStr, 8);
+            _UT5526Port?.Write(leadChar, 0, 1);
+            _UT5526Port?.Write(strComData);
+            _UT5526Port?.Write(byBCC, 0, 1);
+            _UT5526Port?.Write(endChar, 0, 1);
+            bCmdReadSend = true;
+            timer1.Enabled = true;
         }
     }
 }
