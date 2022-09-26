@@ -289,24 +289,27 @@
             this.pictureBox3.Size = new System.Drawing.Size(76, 98);
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
+            this.pictureBox3.Tag = "0";
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox2.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox2.Location = new System.Drawing.Point(88, 37);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(76, 98);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Tag = "0";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox1.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox1.Location = new System.Drawing.Point(6, 37);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(76, 98);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Tag = "5";
             // 
             // groupBox2
             // 
@@ -342,24 +345,27 @@
             this.pictureBox4.Size = new System.Drawing.Size(76, 98);
             this.pictureBox4.TabIndex = 2;
             this.pictureBox4.TabStop = false;
+            this.pictureBox4.Tag = "0";
             // 
             // pictureBox5
             // 
-            this.pictureBox5.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox5.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox5.Location = new System.Drawing.Point(88, 37);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(76, 98);
             this.pictureBox5.TabIndex = 1;
             this.pictureBox5.TabStop = false;
+            this.pictureBox5.Tag = "0";
             // 
             // pictureBox6
             // 
-            this.pictureBox6.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox6.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox6.Location = new System.Drawing.Point(6, 37);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(76, 98);
             this.pictureBox6.TabIndex = 0;
             this.pictureBox6.TabStop = false;
+            this.pictureBox6.Tag = "5";
             // 
             // groupBox3
             // 
@@ -376,7 +382,7 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Tag = "3";
-            this.groupBox3.Text = "Standby %V";
+            this.groupBox3.Text = "Standby 5V";
             // 
             // label3
             // 
@@ -395,24 +401,27 @@
             this.pictureBox7.Size = new System.Drawing.Size(76, 98);
             this.pictureBox7.TabIndex = 2;
             this.pictureBox7.TabStop = false;
+            this.pictureBox7.Tag = "0";
             // 
             // pictureBox8
             // 
-            this.pictureBox8.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox8.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox8.Location = new System.Drawing.Point(88, 37);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(76, 98);
             this.pictureBox8.TabIndex = 1;
             this.pictureBox8.TabStop = false;
+            this.pictureBox8.Tag = "0";
             // 
             // pictureBox9
             // 
-            this.pictureBox9.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox9.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox9.Location = new System.Drawing.Point(6, 37);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(76, 98);
             this.pictureBox9.TabIndex = 0;
             this.pictureBox9.TabStop = false;
+            this.pictureBox9.Tag = "5";
             // 
             // groupBox4
             // 
@@ -448,24 +457,27 @@
             this.pictureBox10.Size = new System.Drawing.Size(76, 98);
             this.pictureBox10.TabIndex = 2;
             this.pictureBox10.TabStop = false;
+            this.pictureBox10.Tag = "0";
             // 
             // pictureBox11
             // 
-            this.pictureBox11.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox11.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox11.Location = new System.Drawing.Point(88, 37);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(76, 98);
             this.pictureBox11.TabIndex = 1;
             this.pictureBox11.TabStop = false;
+            this.pictureBox11.Tag = "5";
             // 
             // pictureBox12
             // 
-            this.pictureBox12.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox12.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox12.Location = new System.Drawing.Point(6, 37);
             this.pictureBox12.Name = "pictureBox12";
             this.pictureBox12.Size = new System.Drawing.Size(76, 98);
             this.pictureBox12.TabIndex = 0;
             this.pictureBox12.TabStop = false;
+            this.pictureBox12.Tag = "5";
             // 
             // groupBox5
             // 
@@ -501,24 +513,27 @@
             this.pictureBox13.Size = new System.Drawing.Size(76, 98);
             this.pictureBox13.TabIndex = 2;
             this.pictureBox13.TabStop = false;
+            this.pictureBox13.Tag = "0";
             // 
             // pictureBox14
             // 
-            this.pictureBox14.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox14.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox14.Location = new System.Drawing.Point(88, 37);
             this.pictureBox14.Name = "pictureBox14";
             this.pictureBox14.Size = new System.Drawing.Size(76, 98);
             this.pictureBox14.TabIndex = 1;
             this.pictureBox14.TabStop = false;
+            this.pictureBox14.Tag = "3";
             // 
             // pictureBox15
             // 
-            this.pictureBox15.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox15.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox15.Location = new System.Drawing.Point(6, 37);
             this.pictureBox15.Name = "pictureBox15";
             this.pictureBox15.Size = new System.Drawing.Size(76, 98);
             this.pictureBox15.TabIndex = 0;
             this.pictureBox15.TabStop = false;
+            this.pictureBox15.Tag = "3";
             // 
             // groupBox6
             // 
@@ -554,24 +569,27 @@
             this.pictureBox16.Size = new System.Drawing.Size(76, 98);
             this.pictureBox16.TabIndex = 2;
             this.pictureBox16.TabStop = false;
+            this.pictureBox16.Tag = "0";
             // 
             // pictureBox17
             // 
-            this.pictureBox17.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox17.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox17.Location = new System.Drawing.Point(88, 37);
             this.pictureBox17.Name = "pictureBox17";
             this.pictureBox17.Size = new System.Drawing.Size(76, 98);
             this.pictureBox17.TabIndex = 1;
             this.pictureBox17.TabStop = false;
+            this.pictureBox17.Tag = "3";
             // 
             // pictureBox18
             // 
-            this.pictureBox18.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox18.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox18.Location = new System.Drawing.Point(6, 37);
             this.pictureBox18.Name = "pictureBox18";
             this.pictureBox18.Size = new System.Drawing.Size(76, 98);
             this.pictureBox18.TabIndex = 0;
             this.pictureBox18.TabStop = false;
+            this.pictureBox18.Tag = "3";
             // 
             // groupBox7
             // 
@@ -607,24 +625,27 @@
             this.pictureBox19.Size = new System.Drawing.Size(76, 98);
             this.pictureBox19.TabIndex = 2;
             this.pictureBox19.TabStop = false;
+            this.pictureBox19.Tag = "0";
             // 
             // pictureBox20
             // 
-            this.pictureBox20.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox20.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox20.Location = new System.Drawing.Point(88, 37);
             this.pictureBox20.Name = "pictureBox20";
             this.pictureBox20.Size = new System.Drawing.Size(76, 98);
             this.pictureBox20.TabIndex = 1;
             this.pictureBox20.TabStop = false;
+            this.pictureBox20.Tag = "3";
             // 
             // pictureBox21
             // 
-            this.pictureBox21.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox21.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox21.Location = new System.Drawing.Point(6, 37);
             this.pictureBox21.Name = "pictureBox21";
             this.pictureBox21.Size = new System.Drawing.Size(76, 98);
             this.pictureBox21.TabIndex = 0;
             this.pictureBox21.TabStop = false;
+            this.pictureBox21.Tag = "3";
             // 
             // groupBox8
             // 
@@ -660,24 +681,27 @@
             this.pictureBox22.Size = new System.Drawing.Size(76, 98);
             this.pictureBox22.TabIndex = 2;
             this.pictureBox22.TabStop = false;
+            this.pictureBox22.Tag = "0";
             // 
             // pictureBox23
             // 
-            this.pictureBox23.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox23.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox23.Location = new System.Drawing.Point(88, 37);
             this.pictureBox23.Name = "pictureBox23";
             this.pictureBox23.Size = new System.Drawing.Size(76, 98);
             this.pictureBox23.TabIndex = 1;
             this.pictureBox23.TabStop = false;
+            this.pictureBox23.Tag = "8";
             // 
             // pictureBox24
             // 
-            this.pictureBox24.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox24.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox24.Location = new System.Drawing.Point(6, 37);
             this.pictureBox24.Name = "pictureBox24";
             this.pictureBox24.Size = new System.Drawing.Size(76, 98);
             this.pictureBox24.TabIndex = 0;
             this.pictureBox24.TabStop = false;
+            this.pictureBox24.Tag = "1";
             // 
             // groupBox9
             // 
@@ -713,24 +737,27 @@
             this.pictureBox25.Size = new System.Drawing.Size(76, 98);
             this.pictureBox25.TabIndex = 2;
             this.pictureBox25.TabStop = false;
+            this.pictureBox25.Tag = "5";
             // 
             // pictureBox26
             // 
-            this.pictureBox26.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox26.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox26.Location = new System.Drawing.Point(88, 37);
             this.pictureBox26.Name = "pictureBox26";
             this.pictureBox26.Size = new System.Drawing.Size(76, 98);
             this.pictureBox26.TabIndex = 1;
             this.pictureBox26.TabStop = false;
+            this.pictureBox26.Tag = "3";
             // 
             // pictureBox27
             // 
-            this.pictureBox27.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox27.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox27.Location = new System.Drawing.Point(6, 37);
             this.pictureBox27.Name = "pictureBox27";
             this.pictureBox27.Size = new System.Drawing.Size(76, 98);
             this.pictureBox27.TabIndex = 0;
             this.pictureBox27.TabStop = false;
+            this.pictureBox27.Tag = "1";
             // 
             // groupBox10
             // 
@@ -766,24 +793,27 @@
             this.pictureBox28.Size = new System.Drawing.Size(76, 98);
             this.pictureBox28.TabIndex = 2;
             this.pictureBox28.TabStop = false;
+            this.pictureBox28.Tag = "0";
             // 
             // pictureBox29
             // 
-            this.pictureBox29.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox29.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox29.Location = new System.Drawing.Point(88, 37);
             this.pictureBox29.Name = "pictureBox29";
             this.pictureBox29.Size = new System.Drawing.Size(76, 98);
             this.pictureBox29.TabIndex = 1;
             this.pictureBox29.TabStop = false;
+            this.pictureBox29.Tag = "0";
             // 
             // pictureBox30
             // 
-            this.pictureBox30.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox30.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox30.Location = new System.Drawing.Point(6, 37);
             this.pictureBox30.Name = "pictureBox30";
             this.pictureBox30.Size = new System.Drawing.Size(76, 98);
             this.pictureBox30.TabIndex = 0;
             this.pictureBox30.TabStop = false;
+            this.pictureBox30.Tag = "1";
             // 
             // groupBox11
             // 
@@ -819,24 +849,27 @@
             this.pictureBox31.Size = new System.Drawing.Size(76, 98);
             this.pictureBox31.TabIndex = 2;
             this.pictureBox31.TabStop = false;
+            this.pictureBox31.Tag = "0";
             // 
             // pictureBox32
             // 
-            this.pictureBox32.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox32.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox32.Location = new System.Drawing.Point(88, 37);
             this.pictureBox32.Name = "pictureBox32";
             this.pictureBox32.Size = new System.Drawing.Size(76, 98);
             this.pictureBox32.TabIndex = 1;
             this.pictureBox32.TabStop = false;
+            this.pictureBox32.Tag = "4";
             // 
             // pictureBox33
             // 
-            this.pictureBox33.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox33.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox33.Location = new System.Drawing.Point(6, 37);
             this.pictureBox33.Name = "pictureBox33";
             this.pictureBox33.Size = new System.Drawing.Size(76, 98);
             this.pictureBox33.TabIndex = 0;
             this.pictureBox33.TabStop = false;
+            this.pictureBox33.Tag = "2";
             // 
             // groupBox12
             // 
@@ -872,24 +905,27 @@
             this.pictureBox34.Size = new System.Drawing.Size(76, 98);
             this.pictureBox34.TabIndex = 2;
             this.pictureBox34.TabStop = false;
+            this.pictureBox34.Tag = "0";
             // 
             // pictureBox35
             // 
-            this.pictureBox35.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox35.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox35.Location = new System.Drawing.Point(88, 37);
             this.pictureBox35.Name = "pictureBox35";
             this.pictureBox35.Size = new System.Drawing.Size(76, 98);
             this.pictureBox35.TabIndex = 1;
             this.pictureBox35.TabStop = false;
+            this.pictureBox35.Tag = "0";
             // 
             // pictureBox36
             // 
-            this.pictureBox36.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox36.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox36.Location = new System.Drawing.Point(6, 37);
             this.pictureBox36.Name = "pictureBox36";
             this.pictureBox36.Size = new System.Drawing.Size(76, 98);
             this.pictureBox36.TabIndex = 0;
             this.pictureBox36.TabStop = false;
+            this.pictureBox36.Tag = "5";
             // 
             // groupBox13
             // 
@@ -926,24 +962,27 @@
             this.pictureBox37.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox37.TabIndex = 2;
             this.pictureBox37.TabStop = false;
+            this.pictureBox37.Tag = "0";
             // 
             // pictureBox38
             // 
-            this.pictureBox38.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox38.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox38.Location = new System.Drawing.Point(88, 37);
             this.pictureBox38.Name = "pictureBox38";
             this.pictureBox38.Size = new System.Drawing.Size(76, 98);
             this.pictureBox38.TabIndex = 1;
             this.pictureBox38.TabStop = false;
+            this.pictureBox38.Tag = "3";
             // 
             // pictureBox39
             // 
-            this.pictureBox39.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox39.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox39.Location = new System.Drawing.Point(6, 37);
             this.pictureBox39.Name = "pictureBox39";
             this.pictureBox39.Size = new System.Drawing.Size(76, 98);
             this.pictureBox39.TabIndex = 0;
             this.pictureBox39.TabStop = false;
+            this.pictureBox39.Tag = "3";
             // 
             // groupBox14
             // 
@@ -979,24 +1018,27 @@
             this.pictureBox40.Size = new System.Drawing.Size(76, 98);
             this.pictureBox40.TabIndex = 2;
             this.pictureBox40.TabStop = false;
+            this.pictureBox40.Tag = "0";
             // 
             // pictureBox41
             // 
-            this.pictureBox41.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox41.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox41.Location = new System.Drawing.Point(88, 37);
             this.pictureBox41.Name = "pictureBox41";
             this.pictureBox41.Size = new System.Drawing.Size(76, 98);
             this.pictureBox41.TabIndex = 1;
             this.pictureBox41.TabStop = false;
+            this.pictureBox41.Tag = "3";
             // 
             // pictureBox42
             // 
-            this.pictureBox42.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox42.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox42.Location = new System.Drawing.Point(6, 37);
             this.pictureBox42.Name = "pictureBox42";
             this.pictureBox42.Size = new System.Drawing.Size(76, 98);
             this.pictureBox42.TabIndex = 0;
             this.pictureBox42.TabStop = false;
+            this.pictureBox42.Tag = "3";
             // 
             // groupBox15
             // 
@@ -1032,24 +1074,27 @@
             this.pictureBox43.Size = new System.Drawing.Size(76, 98);
             this.pictureBox43.TabIndex = 2;
             this.pictureBox43.TabStop = false;
+            this.pictureBox43.Tag = "0";
             // 
             // pictureBox44
             // 
-            this.pictureBox44.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox44.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox44.Location = new System.Drawing.Point(88, 37);
             this.pictureBox44.Name = "pictureBox44";
             this.pictureBox44.Size = new System.Drawing.Size(76, 98);
             this.pictureBox44.TabIndex = 1;
             this.pictureBox44.TabStop = false;
+            this.pictureBox44.Tag = "0";
             // 
             // pictureBox45
             // 
-            this.pictureBox45.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox45.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox45.Location = new System.Drawing.Point(6, 37);
             this.pictureBox45.Name = "pictureBox45";
             this.pictureBox45.Size = new System.Drawing.Size(76, 98);
             this.pictureBox45.TabIndex = 0;
             this.pictureBox45.TabStop = false;
+            this.pictureBox45.Tag = "3";
             // 
             // groupBox16
             // 
@@ -1085,24 +1130,27 @@
             this.pictureBox46.Size = new System.Drawing.Size(76, 98);
             this.pictureBox46.TabIndex = 2;
             this.pictureBox46.TabStop = false;
+            this.pictureBox46.Tag = "0";
             // 
             // pictureBox47
             // 
-            this.pictureBox47.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox47.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox47.Location = new System.Drawing.Point(88, 37);
             this.pictureBox47.Name = "pictureBox47";
             this.pictureBox47.Size = new System.Drawing.Size(76, 98);
             this.pictureBox47.TabIndex = 1;
             this.pictureBox47.TabStop = false;
+            this.pictureBox47.Tag = "0";
             // 
             // pictureBox48
             // 
-            this.pictureBox48.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox48.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox48.Location = new System.Drawing.Point(6, 37);
             this.pictureBox48.Name = "pictureBox48";
             this.pictureBox48.Size = new System.Drawing.Size(76, 98);
             this.pictureBox48.TabIndex = 0;
             this.pictureBox48.TabStop = false;
+            this.pictureBox48.Tag = "3";
             // 
             // groupBox17
             // 
@@ -1138,24 +1186,27 @@
             this.pictureBox49.Size = new System.Drawing.Size(76, 98);
             this.pictureBox49.TabIndex = 2;
             this.pictureBox49.TabStop = false;
+            this.pictureBox49.Tag = "0";
             // 
             // pictureBox50
             // 
-            this.pictureBox50.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox50.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox50.Location = new System.Drawing.Point(88, 37);
             this.pictureBox50.Name = "pictureBox50";
             this.pictureBox50.Size = new System.Drawing.Size(76, 98);
             this.pictureBox50.TabIndex = 1;
             this.pictureBox50.TabStop = false;
+            this.pictureBox50.Tag = "0";
             // 
             // pictureBox51
             // 
-            this.pictureBox51.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox51.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox51.Location = new System.Drawing.Point(6, 37);
             this.pictureBox51.Name = "pictureBox51";
             this.pictureBox51.Size = new System.Drawing.Size(76, 98);
             this.pictureBox51.TabIndex = 0;
             this.pictureBox51.TabStop = false;
+            this.pictureBox51.Tag = "0";
             // 
             // groupBox18
             // 
@@ -1191,6 +1242,7 @@
             this.pictureBox52.Size = new System.Drawing.Size(76, 98);
             this.pictureBox52.TabIndex = 2;
             this.pictureBox52.TabStop = false;
+            this.pictureBox52.Tag = "0";
             // 
             // pictureBox53
             // 
@@ -1200,6 +1252,7 @@
             this.pictureBox53.Size = new System.Drawing.Size(76, 98);
             this.pictureBox53.TabIndex = 1;
             this.pictureBox53.TabStop = false;
+            this.pictureBox53.Tag = "2";
             // 
             // pictureBox54
             // 
@@ -1209,6 +1262,7 @@
             this.pictureBox54.Size = new System.Drawing.Size(76, 98);
             this.pictureBox54.TabIndex = 0;
             this.pictureBox54.TabStop = false;
+            this.pictureBox54.Tag = "1";
             // 
             // groupBox19
             // 
@@ -1244,24 +1298,27 @@
             this.pictureBox55.Size = new System.Drawing.Size(76, 98);
             this.pictureBox55.TabIndex = 2;
             this.pictureBox55.TabStop = false;
+            this.pictureBox55.Tag = "0";
             // 
             // pictureBox56
             // 
-            this.pictureBox56.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox56.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox56.Location = new System.Drawing.Point(88, 37);
             this.pictureBox56.Name = "pictureBox56";
             this.pictureBox56.Size = new System.Drawing.Size(76, 98);
             this.pictureBox56.TabIndex = 1;
             this.pictureBox56.TabStop = false;
+            this.pictureBox56.Tag = "3";
             // 
             // pictureBox57
             // 
-            this.pictureBox57.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox57.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox57.Location = new System.Drawing.Point(6, 37);
             this.pictureBox57.Name = "pictureBox57";
             this.pictureBox57.Size = new System.Drawing.Size(76, 98);
             this.pictureBox57.TabIndex = 0;
             this.pictureBox57.TabStop = false;
+            this.pictureBox57.Tag = "3";
             // 
             // groupBox20
             // 
@@ -1297,24 +1354,27 @@
             this.pictureBox58.Size = new System.Drawing.Size(76, 98);
             this.pictureBox58.TabIndex = 2;
             this.pictureBox58.TabStop = false;
+            this.pictureBox58.Tag = "0";
             // 
             // pictureBox59
             // 
-            this.pictureBox59.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox59.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox59.Location = new System.Drawing.Point(88, 37);
             this.pictureBox59.Name = "pictureBox59";
             this.pictureBox59.Size = new System.Drawing.Size(76, 98);
             this.pictureBox59.TabIndex = 1;
             this.pictureBox59.TabStop = false;
+            this.pictureBox59.Tag = "0";
             // 
             // pictureBox60
             // 
-            this.pictureBox60.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox60.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox60.Location = new System.Drawing.Point(6, 37);
             this.pictureBox60.Name = "pictureBox60";
             this.pictureBox60.Size = new System.Drawing.Size(76, 98);
             this.pictureBox60.TabIndex = 0;
             this.pictureBox60.TabStop = false;
+            this.pictureBox60.Tag = "5";
             // 
             // groupBox21
             // 
@@ -1350,24 +1410,27 @@
             this.pictureBox61.Size = new System.Drawing.Size(76, 98);
             this.pictureBox61.TabIndex = 2;
             this.pictureBox61.TabStop = false;
+            this.pictureBox61.Tag = "0";
             // 
             // pictureBox62
             // 
-            this.pictureBox62.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox62.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox62.Location = new System.Drawing.Point(88, 37);
             this.pictureBox62.Name = "pictureBox62";
             this.pictureBox62.Size = new System.Drawing.Size(76, 98);
             this.pictureBox62.TabIndex = 1;
             this.pictureBox62.TabStop = false;
+            this.pictureBox62.Tag = "0";
             // 
             // pictureBox63
             // 
-            this.pictureBox63.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox63.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox63.Location = new System.Drawing.Point(6, 37);
             this.pictureBox63.Name = "pictureBox63";
             this.pictureBox63.Size = new System.Drawing.Size(76, 98);
             this.pictureBox63.TabIndex = 0;
             this.pictureBox63.TabStop = false;
+            this.pictureBox63.Tag = "3";
             // 
             // groupBox22
             // 
@@ -1403,24 +1466,27 @@
             this.pictureBox64.Size = new System.Drawing.Size(76, 98);
             this.pictureBox64.TabIndex = 2;
             this.pictureBox64.TabStop = false;
+            this.pictureBox64.Tag = "0";
             // 
             // pictureBox65
             // 
-            this.pictureBox65.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox65.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox65.Location = new System.Drawing.Point(88, 37);
             this.pictureBox65.Name = "pictureBox65";
             this.pictureBox65.Size = new System.Drawing.Size(76, 98);
             this.pictureBox65.TabIndex = 1;
             this.pictureBox65.TabStop = false;
+            this.pictureBox65.Tag = "3";
             // 
             // pictureBox66
             // 
-            this.pictureBox66.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox66.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox66.Location = new System.Drawing.Point(6, 37);
             this.pictureBox66.Name = "pictureBox66";
             this.pictureBox66.Size = new System.Drawing.Size(76, 98);
             this.pictureBox66.TabIndex = 0;
             this.pictureBox66.TabStop = false;
+            this.pictureBox66.Tag = "3";
             // 
             // groupBox23
             // 
@@ -1456,24 +1522,27 @@
             this.pictureBox67.Size = new System.Drawing.Size(76, 98);
             this.pictureBox67.TabIndex = 2;
             this.pictureBox67.TabStop = false;
+            this.pictureBox67.Tag = "0";
             // 
             // pictureBox68
             // 
-            this.pictureBox68.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox68.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox68.Location = new System.Drawing.Point(88, 37);
             this.pictureBox68.Name = "pictureBox68";
             this.pictureBox68.Size = new System.Drawing.Size(76, 98);
             this.pictureBox68.TabIndex = 1;
             this.pictureBox68.TabStop = false;
+            this.pictureBox68.Tag = "3";
             // 
             // pictureBox69
             // 
-            this.pictureBox69.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox69.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox69.Location = new System.Drawing.Point(6, 37);
             this.pictureBox69.Name = "pictureBox69";
             this.pictureBox69.Size = new System.Drawing.Size(76, 98);
             this.pictureBox69.TabIndex = 0;
             this.pictureBox69.TabStop = false;
+            this.pictureBox69.Tag = "3";
             // 
             // groupBox24
             // 
@@ -1509,24 +1578,27 @@
             this.pictureBox70.Size = new System.Drawing.Size(76, 98);
             this.pictureBox70.TabIndex = 2;
             this.pictureBox70.TabStop = false;
+            this.pictureBox70.Tag = "0";
             // 
             // pictureBox71
             // 
-            this.pictureBox71.Image = global::EM02_E_HalfTester.Resource1._0d;
+            this.pictureBox71.Image = global::EM02_E_HalfTester.Resource1._0;
             this.pictureBox71.Location = new System.Drawing.Point(88, 37);
             this.pictureBox71.Name = "pictureBox71";
             this.pictureBox71.Size = new System.Drawing.Size(76, 98);
             this.pictureBox71.TabIndex = 1;
             this.pictureBox71.TabStop = false;
+            this.pictureBox71.Tag = "3";
             // 
             // pictureBox72
             // 
-            this.pictureBox72.Image = global::EM02_E_HalfTester.Resource1.none;
+            this.pictureBox72.Image = global::EM02_E_HalfTester.Resource1._0d;
             this.pictureBox72.Location = new System.Drawing.Point(6, 37);
             this.pictureBox72.Name = "pictureBox72";
             this.pictureBox72.Size = new System.Drawing.Size(76, 98);
             this.pictureBox72.TabIndex = 0;
             this.pictureBox72.TabStop = false;
+            this.pictureBox72.Tag = "3";
             // 
             // btnTest
             // 
