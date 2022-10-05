@@ -20,23 +20,38 @@ namespace EM02_E_HalfTester
     {
         private SerialPort? _barcodePort;
         private bool Barcode_receiving = false;
-        delegate void GoGetBarcodeData(string buffer);
+        delegate void GoGetBarcodeData(byte[] buffer);
         private Thread threadBarcode;
         private SerialPort? _UT5526Port;
         private bool UT5526_receiving = false;
         delegate void GoGetUT5526Data(byte[] buffer);
         private Thread threadUT5526;
 
+        private const uint lenBufUT5526 = 32;
         private byte[] ringBufferUT5526;
         private int ringCountUT5526 = 0;
         private int ringOutputUT5526 = 0;
         private int ringInputUT5526 = 0;
-        private int iIdxRead = 0;  // current read channel 
-        private int iCntRead = 0;  // read how many channels
-        private int iCurrentRead = 0;
-        private int iCntWait = 0;
+        private int iIdxReadUT5526 = 0;  // current read channel 
+        private int iCntReadUT5526 = 0;  // read how many channels
+        private int iCurrentReadUT5526 = 0;
+        private int iCntWaitUT5526 = 0;
 
         private int iState = 0;
+
+
+        private const uint lenBufBarCode = 32;
+        private byte[] ringBufferBarCode;
+        private int ringCountBarCode = 0;
+        private int ringOutputBarCode = 0;
+        private int ringInputBarCode = 0;
+        private int iIdxReadBarCode = 0;  // current read channel 
+        private int iCntReadBarCode = 0;  // read how many channels
+        private int iCurrentReadBarCode = 0;
+        private int iCntWaitBarCode = 0;
+        private int iStateBarCode = 0;
+
+
 
         private string[] chanelNames;
         private Image[] imgDigiNormal;
@@ -134,7 +149,7 @@ namespace EM02_E_HalfTester
         }
         private void DoReceiveBarcode()
         {
-            Byte[] buffer = new Byte[1024];
+            Byte[] buffer = new Byte[256];
 
             try
             {
@@ -147,7 +162,8 @@ namespace EM02_E_HalfTester
                         string buf = Encoding.ASCII.GetString(buffer);
                         Array.Resize(ref buffer, length);
                         GoGetBarcodeData d = new GoGetBarcodeData(BarcodeShow);
-                        this.Invoke(d, new Object[] { buf });
+                        this.Invoke(d, new Object[] { buffer });
+                      
                         Array.Resize(ref buffer, 1024);
                     }
 
@@ -187,6 +203,20 @@ namespace EM02_E_HalfTester
                 MessageBox.Show(ex.Message);
             }
         }
+        private void setRingBarCode(byte byData)
+        {
+            ringBufferBarCode[ringInputBarCode] = byData;
+            ringCountBarCode++;
+            ringInputBarCode = (ringInputBarCode + 1) & (int)(lenBufBarCode - 1);
+        }
+        private byte getRingBarCode()
+        {
+            byte byData = ringBufferBarCode[ringOutputBarCode];
+            ringCountBarCode--;
+            if (ringCountBarCode < 0) ringCountBarCode = 0;
+            ringOutputBarCode = (ringOutputBarCode + 1) & (int)(lenBufBarCode - 1);
+            return byData;
+        }
 
         private void setRingUT5526(byte byData)
         {
@@ -202,10 +232,14 @@ namespace EM02_E_HalfTester
             ringOutputUT5526 = (ringOutputUT5526 + 1) & 0x001f;
             return byData;
         }
-        public void BarcodeShow(string buffer)
+        public void BarcodeShow(byte[] buffer)
         {
 
-            MessageBox.Show(buffer);
+            byte[] buf = buffer;
+            for (int i = 0; i < buf.Length; i++)
+            {
+                setRingBarCode(buf[i]);
+            }
         }
 
         public void UT5526Show(byte[] buffer)
@@ -226,7 +260,7 @@ namespace EM02_E_HalfTester
             //   timer1 = new System.Timers.Timer();
             timer1.Interval = 100;
             this.timer1.Tick += new EventHandler(Timer1_Tick);
-            this.timer1.Tick += new System.EventHandler(Timer1_Tick);
+         //  this.timer1.Tick += new System.EventHandler(Timer1_Tick);
             // Enable timer.  
             timer1.Enabled = false;
 
@@ -235,15 +269,15 @@ namespace EM02_E_HalfTester
         {
             const byte SOH = 0x01;
             const byte EOT = 0x04;
-            if (iCntWait > 0) iCntWait--;
+            if (iCntWaitUT5526 > 0) iCntWaitUT5526--;
 
             switch (iState)
             {
                 case 0:
-                    if (iCntRead > 0 && iCntWait == 0)
+                    if (iCntReadUT5526 > 0 && iCntWaitUT5526 == 0)
                     {
                       //  iCntRead--;
-                        string strComData = collectData[iIdxRead].CmdSelected;   // send channel select comand
+                        string strComData = collectData[iIdxReadUT5526].CmdSelected;   // send channel select comand
                         byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
                         byte[] byBCC = new byte[1];
                         byBCC[0] = UTBus_LRC(cmdStr, 8);
@@ -251,7 +285,7 @@ namespace EM02_E_HalfTester
                         _UT5526Port?.Write(strComData);
                         _UT5526Port?.Write(byBCC, 0, 1);
                         _UT5526Port?.Write(endChar, 0, 1);
-                        iCntWait = 7;
+                        iCntWaitUT5526 = 7;
                         iState = 1;
                     }
                     break;
@@ -267,9 +301,9 @@ namespace EM02_E_HalfTester
                     }
                     break;
                 case 2:
-                    if (iCntRead > 0 && iCntRead != iCurrentRead && iCntWait == 0)
+                    if (iCntReadUT5526 > 0 && iCntReadUT5526 != iCurrentReadUT5526 && iCntWaitUT5526 == 0)
                     {
-                        iCurrentRead = iCntRead;
+                        iCurrentReadUT5526 = iCntReadUT5526;
                         string strComData = "01MORDVO";  // read current channel data
                         byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
                         byte[] byBCC = new byte[1];
@@ -291,7 +325,7 @@ namespace EM02_E_HalfTester
                             byte byTemp = getRingUT5526(); ;
                             if (byTemp == SOH)
                             {
-                                iCntRead--;
+                                iCntReadUT5526--;
                                 byTemp = getRingUT5526();  // range code
                                 byTemp = getRingUT5526(); // address
                                 byTemp = getRingUT5526(); // V code 
@@ -300,27 +334,27 @@ namespace EM02_E_HalfTester
                                 byTemp = getRingUT5526(); // bcc code
                                 byTemp = getRingUT5526(); // end code
                                 iState = 0;
-                                collectData[iIdxRead].PreviousData = collectData[iIdxRead].CurrentData;
-                                collectData[iIdxRead].CurrentData = iInt * 100 + iDot/10;
+                                collectData[iIdxReadUT5526].PreviousData = collectData[iIdxReadUT5526].CurrentData;
+                                collectData[iIdxReadUT5526].CurrentData = iInt * 100 + iDot/10;
                               
 
                                 foreach (Control ctrl in this.Controls)
                                 {
                                     if (ctrl is GroupBox)
                                     {
-                                        if (ctrl.Text == collectData[iIdxRead].ChannelName)
+                                        if (ctrl.Text == collectData[iIdxReadUT5526].ChannelName)
                                         {
-                                            int iOffset = collectData[iIdxRead].CurrentData - collectData[iIdxRead].StandardData;
+                                            int iOffset = collectData[iIdxReadUT5526].CurrentData - collectData[iIdxReadUT5526].StandardData;
                                             if (iOffset < 0) iOffset = 0 - (iOffset); 
-                                            bool bErr = (iOffset > (collectData[iIdxRead].StandardData/10))? true : false;
+                                            bool bErr = (iOffset > (collectData[iIdxReadUT5526].StandardData/10))? true : false;
 
-                                            displayGroup((GroupBox)ctrl, collectData[iIdxRead].CurrentData, bErr);
+                                            displayGroup((GroupBox)ctrl, collectData[iIdxReadUT5526].CurrentData, bErr);
                                         }
                                     }
                                        
                                        
                                 }
-                                iIdxRead++;  // move to next
+                                iIdxReadUT5526++;  // move to next
 
                             }
                         } while (ringCountUT5526 >= 10);
@@ -337,38 +371,12 @@ namespace EM02_E_HalfTester
 
         private void fmMain_Load(object sender, EventArgs e)
         {
-            chanelNames = new string[24];
+     
             imgDigiNormal = new Image[10];
             imgDigiNormalDot = new Image[10];
             imgDigiError = new Image[10];
             imgDigiErrorDot = new Image[10];
             ringBufferUT5526 = new byte[32];
-
-            chanelNames[0] = Resource1.Ch1;
-            chanelNames[1] = Resource1.Ch2;
-            chanelNames[2] = Resource1.Ch3;
-            chanelNames[3] = Resource1.Ch4;
-            chanelNames[4] = Resource1.Ch5;
-            chanelNames[5] = Resource1.Ch6;
-            chanelNames[6] = Resource1.Ch7;
-            chanelNames[7] = Resource1.Ch8;
-            chanelNames[8] = Resource1.Ch9;
-            chanelNames[9] = Resource1.Ch10;
-            chanelNames[10] = Resource1.Ch11;
-            chanelNames[11] = Resource1.Ch12;
-            chanelNames[12] = Resource1.Ch13;
-            chanelNames[13] = Resource1.Ch14;
-            chanelNames[14] = Resource1.Ch15;
-            chanelNames[15] = Resource1.Ch16;
-            chanelNames[16] = Resource1.Ch17;
-            chanelNames[17] = Resource1.Ch18;
-            chanelNames[18] = Resource1.Ch23;
-            chanelNames[19] = Resource1.Ch24;
-            chanelNames[20] = Resource1.Ch28;
-            chanelNames[21] = Resource1.Ch27;
-            chanelNames[22] = Resource1.Ch31;
-            chanelNames[23] = Resource1.Ch32;
-
          
             foreach (Control ctrl in this.Controls)
             {
@@ -591,11 +599,11 @@ namespace EM02_E_HalfTester
         private void btnRead_Click(object sender, EventArgs e)
         {
          
-            iIdxRead = 0;
+            iIdxReadUT5526 = 0;
        
             timer1.Enabled = true;
             bCmdReadSend = true;
-            iCntRead = 24;
+            iCntReadUT5526 = 24;
           
         }
     }
