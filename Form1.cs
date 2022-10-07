@@ -475,7 +475,7 @@ namespace EM02_E_HalfTester
 
             InitializeTimer();
             initComBarcode("COM3");
-            initComUT5526("COM4");
+            initComUT5526("COM6");
 
 
 
