@@ -22,25 +22,32 @@ namespace EM02_E_HalfTester
         private bool Barcode_receiving = false;
         delegate void GoGetBarcodeData(byte[] buffer);
         private Thread threadBarcode;
+
         private SerialPort? _UT5526Port;
         private bool UT5526_receiving = false;
         delegate void GoGetUT5526Data(byte[] buffer);
         private Thread threadUT5526;
 
-        private const uint lenBufUT5526 = 32;
+        private SerialPort? _MESPort;
+        private bool MES_receiving = false;
+        delegate void GoGetMESData(byte[] buffer);
+        private Thread threadMES;
+
+        private const UInt16 lenBufUT5526 = 256;
         private byte[] ringBufferUT5526;
         private int ringCountUT5526 = 0;
         private int ringOutputUT5526 = 0;
         private int ringInputUT5526 = 0;
-        private int iIdxReadUT5526 = 0;  // current read channel 
-        private int iCntReadUT5526 = 0;  // read how many channels
-        private int iCurrentReadUT5526 = 0;
+        private int iIdxGetUT5526 = 0;  // current read channel 
+        private int iCntGetUT5526 = 0;  // read how many channels
+ 
+        private int iCurrentGetUT5526 = 0;
         private int iCntWaitUT5526 = 0;
+        private bool bErrorUT5526 = false;
+        private int iStateUT5526 = 0;
 
-        private int iState = 0;
 
-
-        private const uint lenBufBarCode = 32;
+        private const UInt16 lenBufBarCode = 32;
         private byte[] ringBufferBarCode;
         private int ringCountBarCode = 0;
         private int ringOutputBarCode = 0;
@@ -52,6 +59,16 @@ namespace EM02_E_HalfTester
         private int iStateBarCode = 0;
 
 
+        private const UInt16 lenBufMES = 256;
+        private byte[] ringBufferMES;
+        private int ringCountMES = 0;
+        private int ringOutputMES = 0;
+        private int ringInputMES = 0;
+        private int iIdxReadMES = 0;  // current read channel 
+        private int iCntReadMES = 0;  // read how many channels
+        private int iCurrentReadMES = 0;
+        private int iCntWaitMES = 0;
+
 
         private string[] chanelNames;
         private Image[] imgDigiNormal;
@@ -62,6 +79,10 @@ namespace EM02_E_HalfTester
         private byte[] endChar = new byte[1];
 
         private bool bCmdReadSend = false;
+
+
+        DateTime time00;
+        DateTime time01;
 
         class ChannelData
         {
@@ -147,6 +168,40 @@ namespace EM02_E_HalfTester
                 }
             }
         }
+
+        private void initComMES(string sPort)
+        {
+            _MESPort = new SerialPort()
+            {
+                PortName = sPort,
+                BaudRate = 9600,
+                Parity = Parity.None,
+                DataBits = 8,
+                StopBits = StopBits.One,
+                Handshake = Handshake.None
+            };
+
+            if (_MESPort.IsOpen == false)
+            {
+                try
+                {
+                    _MESPort.Open();
+                    //開啟 Serial Port
+                    MES_receiving = true;
+                    //開啟執行續做接收動作
+                    threadMES = new Thread(DoReceiveMES);
+                    threadMES.IsBackground = true;
+                    threadMES.Start();
+
+                }
+                catch (Exception)
+                {
+                    // port will not be open, therefore will become null
+                    MessageBox.Show("無法開啟MES Port!");
+                    Application.Exit();
+                }
+            }
+        }
         private void DoReceiveBarcode()
         {
             Byte[] buffer = new Byte[256];
@@ -203,33 +258,92 @@ namespace EM02_E_HalfTester
                 MessageBox.Show(ex.Message);
             }
         }
-        private void setRingBarCode(byte byData)
+
+
+        private void DoReceiveMES()
+        {
+            Byte[] buffer = new Byte[256];
+
+            try
+            {
+                while (MES_receiving)
+                {
+                    if (_MESPort?.BytesToRead >= 1 && _MESPort.BytesToWrite == 0)
+                    {
+                        Int32 length = _MESPort.Read(buffer, 0, buffer.Length);
+
+                        string buf = Encoding.ASCII.GetString(buffer);
+                        Array.Resize(ref buffer, length);
+                        GoGetMESData d = new GoGetMESData(MESShow);
+                        this.Invoke(d, new Object[] { buffer });
+                        Array.Resize(ref buffer, length);
+                    }
+
+                    Thread.Sleep(10);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SetRingBarCode(byte byData)
         {
             ringBufferBarCode[ringInputBarCode] = byData;
             ringCountBarCode++;
-            ringInputBarCode = (ringInputBarCode + 1) & (int)(lenBufBarCode - 1);
+            ringInputBarCode = (ringInputBarCode + 1) & (lenBufBarCode - 1);
         }
-        private byte getRingBarCode()
+        private byte GetRingBarCode()
         {
             byte byData = ringBufferBarCode[ringOutputBarCode];
             ringCountBarCode--;
             if (ringCountBarCode < 0) ringCountBarCode = 0;
-            ringOutputBarCode = (ringOutputBarCode + 1) & (int)(lenBufBarCode - 1);
+            ringOutputBarCode = (ringOutputBarCode + 1) & (lenBufBarCode - 1);
             return byData;
         }
 
-        private void setRingUT5526(byte byData)
+        private void SetRingUT5526(byte byData)
         {
             ringBufferUT5526[ringInputUT5526] = byData;
             ringCountUT5526++;
-            ringInputUT5526 = (ringInputUT5526 + 1) & 0x001f;
+            ringInputUT5526 = (ringInputUT5526 + 1) & (lenBufUT5526 - 1);
         }
-        private byte getRingUT5526()
+        private byte GetRingUT5526()
         {
             byte byData = ringBufferUT5526[ringOutputUT5526];
             ringCountUT5526--;
             if (ringCountUT5526 < 0) ringCountUT5526 = 0;
-            ringOutputUT5526 = (ringOutputUT5526 + 1) & 0x001f;
+            ringOutputUT5526 = (ringOutputUT5526 + 1) & (lenBufUT5526 - 1);
+            return byData;
+        }
+        private byte CheckTopByteUT5526()
+        {
+            return ringBufferUT5526[ringOutputUT5526];
+        }
+        private void SetUT5526VoltRange()
+        {
+            string strComData = "01MORG03";  // set range = 200V
+            byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+            byte[] byBCC = new byte[1];
+            byBCC[0] = UTBus_LRC(cmdStr, 8);
+            _UT5526Port?.Write(leadChar, 0, 1);
+            _UT5526Port?.Write(strComData);
+            _UT5526Port?.Write(byBCC, 0, 1);
+            _UT5526Port?.Write(endChar, 0, 1);
+        }
+        private void setRingMES(byte byData)
+        {
+            ringBufferMES[ringInputMES] = byData;
+            ringCountMES++;
+            ringInputMES = (ringInputMES + 1) & (lenBufMES - 1);
+        }
+        private byte getRingMES()
+        {
+            byte byData = ringBufferMES[ringOutputMES];
+            ringCountMES--;
+            if (ringCountMES < 0) ringCountMES = 0;
+            ringOutputMES = (ringOutputUT5526 + 1) & (lenBufMES - 1);
             return byData;
         }
         public void BarcodeShow(byte[] buffer)
@@ -238,7 +352,7 @@ namespace EM02_E_HalfTester
             byte[] buf = buffer;
             for (int i = 0; i < buf.Length; i++)
             {
-                setRingBarCode(buf[i]);
+                SetRingBarCode(buf[i]);
             }
         }
 
@@ -248,62 +362,92 @@ namespace EM02_E_HalfTester
             byte[] buf = buffer;
             for (int i = 0; i < buf.Length; i++)
             {
-                setRingUT5526(buf[i]);
+                SetRingUT5526(buf[i]);
+            }
+        }
+
+        public void MESShow(byte[] buffer)
+        {
+            //  byte[] buf = Encoding.ASCII.GetBytes(buffer);
+            byte[] buf = buffer;
+            for (int i = 0; i < buf.Length; i++)
+            {
+                setRingMES(buf[i]);
             }
 
         }
 
-
-
         private void InitializeTimer()
         {
             //   timer1 = new System.Timers.Timer();
-            timer1.Interval = 100;
+            timer1.Interval = 10;
             this.timer1.Tick += new EventHandler(Timer1_Tick);
-         //  this.timer1.Tick += new System.EventHandler(Timer1_Tick);
-            // Enable timer.  
-            timer1.Enabled = false;
+        
+            timer1.Enabled = true;
 
         }
-        private void Timer1_Tick(object Sender, EventArgs e)
+        private void procUT5526()
         {
             const byte SOH = 0x01;
             const byte EOT = 0x04;
-            if (iCntWaitUT5526 > 0) iCntWaitUT5526--;
 
-            switch (iState)
+            if (bErrorUT5526)
+            {
+                iCntWaitUT5526 = 0;
+                iStateUT5526 = 0;
+                iCurrentGetUT5526 = 0;
+                return;
+            }
+
+
+
+
+            if (iCntWaitUT5526 > 0) iCntWaitUT5526--;
+            //    pictureBoxButton1.Image = Resource1.led_a;
+            switch (iStateUT5526)
             {
                 case 0:
-                    if (iCntReadUT5526 > 0 && iCntWaitUT5526 == 0)
+                    if (iCntGetUT5526 > 0)
                     {
-                      //  iCntRead--;
-                        string strComData = collectData[iIdxReadUT5526].CmdSelected;   // send channel select comand
-                        byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
-                        byte[] byBCC = new byte[1];
-                        byBCC[0] = UTBus_LRC(cmdStr, 8);
-                        _UT5526Port?.Write(leadChar, 0, 1);
-                        _UT5526Port?.Write(strComData);
-                        _UT5526Port?.Write(byBCC, 0, 1);
-                        _UT5526Port?.Write(endChar, 0, 1);
-                        iCntWaitUT5526 = 7;
-                        iState = 1;
+                        time00 = DateTime.Now;
+                        //  iCntRead--;
+                        if (collectData.Count > iIdxGetUT5526)
+                        {
+                            string strComData = collectData[iIdxGetUT5526].CmdSelected;   // send channel select comand
+                            byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+                            byte[] byBCC = new byte[1];
+                            byBCC[0] = UTBus_LRC(cmdStr, 8);
+                            _UT5526Port?.Write(leadChar, 0, 1);
+                            _UT5526Port?.Write(strComData);
+                            _UT5526Port?.Write(byBCC, 0, 1);
+                            _UT5526Port?.Write(endChar, 0, 1);
+                            iCntWaitUT5526 = 60;
+                            iStateUT5526++;
+                            iCurrentGetUT5526 = 0;
+                        }
+
                     }
                     break;
                 case 1:                                             // wait 1ER0
                     if (ringCountUT5526 >= 4)
                     {
-                        byte byTemp = getRingUT5526(); ;
-                        byTemp = getRingUT5526();  // range code
-                        byTemp = getRingUT5526(); // address
-                        byTemp = getRingUT5526(); // V code 
-                        iState = 2;
-                     
+                        if (GetRingUT5526() == '1' && GetRingUT5526() == 'E' && GetRingUT5526() == 'R' && GetRingUT5526() == '0')
+                        {
+                            iCntWaitUT5526 = 40;
+                            iStateUT5526++;
+                        }
+                        else
+                        {
+                            iStateUT5526 = 0;
+
+                        }
+
+
                     }
                     break;
-                case 2:
-                    if (iCntReadUT5526 > 0 && iCntReadUT5526 != iCurrentReadUT5526 && iCntWaitUT5526 == 0)
+                case 3:
+                    if (iCntWaitUT5526 == 0)
                     {
-                        iCurrentReadUT5526 = iCntReadUT5526;
                         string strComData = "01MORDVO";  // read current channel data
                         byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
                         byte[] byBCC = new byte[1];
@@ -312,60 +456,105 @@ namespace EM02_E_HalfTester
                         _UT5526Port?.Write(strComData);
                         _UT5526Port?.Write(byBCC, 0, 1);
                         _UT5526Port?.Write(endChar, 0, 1);
-                        timer1.Enabled = true;
-                        bCmdReadSend = false;
-                        iState = 3;
+                        //  iCntWaitUT5526 = 40;
+                        iStateUT5526++;
                     }
                     break;
-                case 3:
+                case 2:
+                    if (iCntGetUT5526 > 0 && iCntGetUT5526 != iCurrentGetUT5526 && iCntWaitUT5526 == 0)
+                    {
+                        time01 = DateTime.Now;
+                        lblTime.Text = (time01 - time00).TotalMilliseconds.ToString();
+                        iCurrentGetUT5526 = iCntGetUT5526;
+                        string strComData = "01MORDVO";  // read current channel data
+                        byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+                        byte[] byBCC = new byte[1];
+                        byBCC[0] = UTBus_LRC(cmdStr, 8);
+                        _UT5526Port?.Write(leadChar, 0, 1);
+                        _UT5526Port?.Write(strComData);
+                        _UT5526Port?.Write(byBCC, 0, 1);
+                        _UT5526Port?.Write(endChar, 0, 1);
+                        //  iCntWaitUT5526 = 40;
+                        iStateUT5526++;
+                    }
+                    break;
+                case 4:
                     if (ringCountUT5526 >= 11)
                     {
                         do
                         {
-                            byte byTemp = getRingUT5526(); ;
+                            byte byTemp = GetRingUT5526(); ;
                             if (byTemp == SOH)
                             {
-                                iCntReadUT5526--;
-                                byTemp = getRingUT5526();  // range code
-                                byTemp = getRingUT5526(); // address
-                                byTemp = getRingUT5526(); // V code 
-                                int iInt = getRingUT5526() * 10 + getRingUT5526();
-                                int iDot = getRingUT5526() * 100 + getRingUT5526() * 10 + getRingUT5526();
-                                byTemp = getRingUT5526(); // bcc code
-                                byTemp = getRingUT5526(); // end code
-                                iState = 0;
-                                collectData[iIdxReadUT5526].PreviousData = collectData[iIdxReadUT5526].CurrentData;
-                                collectData[iIdxReadUT5526].CurrentData = iInt * 100 + iDot/10;
-                              
-
-                                foreach (Control ctrl in this.Controls)
+                                iCntGetUT5526--;
+                                byTemp = GetRingUT5526();  // range code
+                                byTemp = GetRingUT5526(); // address
+                                byTemp = GetRingUT5526(); // V code 
+                                int iInt = GetRingUT5526() * 100 + GetRingUT5526() * 10 + GetRingUT5526(); // 3 digis integer
+                                int iDot = GetRingUT5526() * 10 + GetRingUT5526(); // 2 digi
+                                byTemp = GetRingUT5526(); // bcc code
+                                byTemp = GetRingUT5526(); // end code
+                                iStateUT5526++;
+                                if (collectData.Count <= iIdxGetUT5526)
                                 {
-                                    if (ctrl is GroupBox)
+                                    int iTest = iCntGetUT5526;
+                                }
+                                collectData[iIdxGetUT5526].PreviousData = collectData[iIdxGetUT5526].CurrentData;
+                                collectData[iIdxGetUT5526].CurrentData = iInt * 100 + iDot;
+                                if (iIdxGetUT5526 > 0) // skip dummy read 
+                                {
+                                    foreach (Control ctrl in this.panelDisplay.Controls)
                                     {
-                                        if (ctrl.Text == collectData[iIdxReadUT5526].ChannelName)
+                                        if (ctrl is GroupBox)
                                         {
-                                            int iOffset = collectData[iIdxReadUT5526].CurrentData - collectData[iIdxReadUT5526].StandardData;
-                                            if (iOffset < 0) iOffset = 0 - (iOffset); 
-                                            bool bErr = (iOffset > (collectData[iIdxReadUT5526].StandardData/10))? true : false;
+                                            if (ctrl.Text == collectData[iIdxGetUT5526].ChannelName)
+                                            {
+                                                int iCurrentData = collectData[iIdxGetUT5526].CurrentData;
+                                                iCurrentData = (iCurrentData > 999) ? iCurrentData / 10 : iCurrentData;
+                                                int iOffset = iCurrentData - (collectData[iIdxGetUT5526].StandardData);
+                                                if (iOffset < 0) iOffset = 0 - (iOffset);
+                                                bool bErr = (iOffset > (collectData[iIdxGetUT5526].StandardData / 10)) ? true : false;
 
-                                            displayGroup((GroupBox)ctrl, collectData[iIdxReadUT5526].CurrentData, bErr);
+                                                displayGroup((GroupBox)ctrl, collectData[iIdxGetUT5526].CurrentData, bErr);
+                                            }
                                         }
                                     }
-                                       
-                                       
+
                                 }
-                                iIdxReadUT5526++;  // move to next
+
+
+                                iIdxGetUT5526++;  // move to next
+                                if (iCntGetUT5526 == 0)
+                                {
+                                   // string strWriteMAC = "$TH02,MAC," + lblMAC.Text.Remove(lblMAC.Text.Length - 1);
+                                  //  _TH02Port?.Write(strWriteMAC);
+                                  //  _TH02Port?.DiscardInBuffer();
+                                   // ClearRingTH02();
+                                   // btnWriteMAC.Visible = true;
+                                    //    pictureBoxResult.Enabled = true;
+                                    //    pictureBoxResult.Image = Resource1.pass;
+                                   // bWritingMAC = true;
+                                    iIdxGetUT5526 = 0;
+                                }
 
                             }
                         } while (ringCountUT5526 >= 10);
                     }
 
                     break;
+                case 5:
+                    iStateUT5526++;
+
+                    break;
                 default:
-                    iState = 0;
+                    iStateUT5526 = 0;
                     break;
             }
 
+        }
+        private void Timer1_Tick(object Sender, EventArgs e)
+        {
+            procUT5526();
          
         }
 
@@ -474,7 +663,7 @@ namespace EM02_E_HalfTester
             endChar[0] = 0x04;
 
             InitializeTimer();
-            initComBarcode("COM3");
+          //  initComBarcode("COM3");
             initComUT5526("COM6");
 
 
@@ -593,18 +782,28 @@ namespace EM02_E_HalfTester
             {
                 _UT5526Port.Close();
             }
+            if (_MESPort?.IsOpen == true)
+            {
+                _MESPort.Close();
+            }
+            Environment.Exit(Environment.ExitCode);
 
         }
 
         private void btnRead_Click(object sender, EventArgs e)
         {
          
-            iIdxReadUT5526 = 0;
+            iIdxGetUT5526 = 0;
        
             timer1.Enabled = true;
             bCmdReadSend = true;
-            iCntReadUT5526 = 24;
+            iCntGetUT5526 = 24;
           
+        }
+
+        private void label25_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
