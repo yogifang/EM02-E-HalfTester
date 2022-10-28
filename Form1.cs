@@ -1,4 +1,5 @@
-using System;
+ï»¿using System;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO.Ports;
@@ -18,10 +19,7 @@ namespace EM02_E_HalfTester
    
     public partial class fmMain : Form
     {
-        private SerialPort? _barcodePort;
-        private bool Barcode_receiving = false;
-        delegate void GoGetBarcodeData(byte[] buffer);
-        private Thread threadBarcode;
+       
 
         private SerialPort? _UT5526Port;
         private bool UT5526_receiving = false;
@@ -32,6 +30,11 @@ namespace EM02_E_HalfTester
         private bool MES_receiving = false;
         delegate void GoGetMESData(byte[] buffer);
         private Thread threadMES;
+
+        private SerialPort? _EM02Port;
+        private bool EM02_receiving = false;
+        delegate void GoGetEM02Data(byte[] buffer);
+        private Thread threadEM02;
 
         private const UInt16 lenBufUT5526 = 256;
         private byte[] ringBufferUT5526;
@@ -47,16 +50,16 @@ namespace EM02_E_HalfTester
         private int iStateUT5526 = 0;
 
 
-        private const UInt16 lenBufBarCode = 32;
-        private byte[] ringBufferBarCode;
-        private int ringCountBarCode = 0;
-        private int ringOutputBarCode = 0;
-        private int ringInputBarCode = 0;
-        private int iIdxReadBarCode = 0;  // current read channel 
-        private int iCntReadBarCode = 0;  // read how many channels
-        private int iCurrentReadBarCode = 0;
-        private int iCntWaitBarCode = 0;
-        private int iStateBarCode = 0;
+        private const UInt16 lenBufEM02 = 32;
+        private byte[] ringBufferEM02;
+        private int ringCountEM02 = 0;
+        private int ringOutputEM02 = 0;
+        private int ringInputEM02 = 0;
+        private int iIdxReadBarEM02 = 0;  // current read channel 
+        private int iCntReadEM02 = 0;  // read how many channels
+        private int iCurrentReadEM02 = 0;
+        private int iCntWaitEM02 = 0;
+        private int iStateEM02 = 0;
 
 
         private const UInt16 lenBufMES = 256;
@@ -81,6 +84,10 @@ namespace EM02_E_HalfTester
         private bool bCmdReadSend = false;
 
 
+      
+        string comUT5526 = "";
+        string comEM02 = "";
+        string comMES = "";
         DateTime time00;
         DateTime time01;
 
@@ -102,39 +109,7 @@ namespace EM02_E_HalfTester
             InitializeComponent();
         }
 
-        private void initComBarcode(string sPort)
-        {
-            _barcodePort = new SerialPort()
-            {
-                PortName = sPort,
-                BaudRate = 9600,
-                Parity = Parity.None,
-                DataBits = 8,
-                StopBits = StopBits.One,
-                Handshake = Handshake.None
-            };
-
-            if (_barcodePort.IsOpen == false)
-            {
-                try
-                {
-                    _barcodePort.Open();
-                    //¶}±Ò Serial Port
-                    Barcode_receiving = true;
-                    //¶}±Ò°õ¦æÄò°µ±µ¦¬°Ê§@
-                    threadBarcode = new Thread(DoReceiveBarcode);
-                    threadBarcode.IsBackground = true;
-                    threadBarcode.Start();
-
-                }
-                catch (Exception)
-                {
-                    // port will not be open, therefore will become null
-                    MessageBox.Show("µLªk¶}±ÒBarcode Reader!");
-                    Application.Exit();
-                }
-            }
-        }
+       
         private void initComUT5526(string sPort)
         {
             _UT5526Port = new SerialPort()
@@ -152,9 +127,9 @@ namespace EM02_E_HalfTester
                 try
                 {
                     _UT5526Port.Open();
-                    //¶}±Ò Serial Port
+                    //é–‹å•Ÿ Serial Port
                     UT5526_receiving = true;
-                    //¶}±Ò°õ¦æÄò°µ±µ¦¬°Ê§@
+                    //é–‹å•ŸåŸ·è¡ŒçºŒåšæŽ¥æ”¶å‹•ä½œ
                     threadUT5526 = new Thread(DoReceiveUT5526);
                     threadUT5526.IsBackground = true;
                     threadUT5526.Start();
@@ -163,7 +138,7 @@ namespace EM02_E_HalfTester
                 catch (Exception)
                 {
                     // port will not be open, therefore will become null
-                    MessageBox.Show("µLªk¶}±ÒUT5526 Reader!");
+                    MessageBox.Show("ç„¡æ³•é–‹å•ŸUT5526 Reader!");
                     Application.Exit();
                 }
             }
@@ -186,9 +161,9 @@ namespace EM02_E_HalfTester
                 try
                 {
                     _MESPort.Open();
-                    //¶}±Ò Serial Port
+                    //é–‹å•Ÿ Serial Port
                     MES_receiving = true;
-                    //¶}±Ò°õ¦æÄò°µ±µ¦¬°Ê§@
+                    //é–‹å•ŸåŸ·è¡ŒçºŒåšæŽ¥æ”¶å‹•ä½œ
                     threadMES = new Thread(DoReceiveMES);
                     threadMES.IsBackground = true;
                     threadMES.Start();
@@ -197,40 +172,45 @@ namespace EM02_E_HalfTester
                 catch (Exception)
                 {
                     // port will not be open, therefore will become null
-                    MessageBox.Show("µLªk¶}±ÒMES Port!");
+                    MessageBox.Show("ç„¡æ³•é–‹å•ŸMES Port!");
                     Application.Exit();
                 }
             }
         }
-        private void DoReceiveBarcode()
+
+        private void initComEM02(string sPort)
         {
-            Byte[] buffer = new Byte[256];
-
-            try
+            _EM02Port = new SerialPort()
             {
-                while (Barcode_receiving)
+                PortName = sPort,
+                BaudRate = 9600,
+                Parity = Parity.None,
+                DataBits = 8,
+                StopBits = StopBits.One,
+                Handshake = Handshake.None
+            };
+
+            if (_EM02Port.IsOpen == false)
+            {
+                try
                 {
-                    if (_barcodePort?.BytesToRead > 14 && _barcodePort.BytesToWrite == 0)
-                    {
-                        Int32 length = _barcodePort.Read(buffer, 0, buffer.Length);
+                    _EM02Port.Open();
+                    //é–‹å•Ÿ Serial Port
+                    MES_receiving = true;
+                    //é–‹å•ŸåŸ·è¡ŒçºŒåšæŽ¥æ”¶å‹•ä½œ
+                    threadMES = new Thread(DoReceiveEM02);
+                    threadMES.IsBackground = true;
+                    threadMES.Start();
 
-                        string buf = Encoding.ASCII.GetString(buffer);
-                        Array.Resize(ref buffer, length);
-                        GoGetBarcodeData d = new GoGetBarcodeData(BarcodeShow);
-                        this.Invoke(d, new Object[] { buffer });
-                      
-                        Array.Resize(ref buffer, 1024);
-                    }
-
-                    Thread.Sleep(10);
+                }
+                catch (Exception)
+                {
+                    // port will not be open, therefore will become null
+                    MessageBox.Show("ç„¡æ³•é–‹å•ŸEM02 Port!");
+                    Application.Exit();
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
-
         private void DoReceiveUT5526()
         {
             Byte[] buffer = new Byte[256];
@@ -288,18 +268,46 @@ namespace EM02_E_HalfTester
             }
         }
 
-        private void SetRingBarCode(byte byData)
+        private void DoReceiveEM02()
         {
-            ringBufferBarCode[ringInputBarCode] = byData;
-            ringCountBarCode++;
-            ringInputBarCode = (ringInputBarCode + 1) & (lenBufBarCode - 1);
+            Byte[] buffer = new Byte[256];
+
+            try
+            {
+                while (EM02_receiving)
+                {
+                    if (_EM02Port?.BytesToRead >= 1 && _EM02Port.BytesToWrite == 0)
+                    {
+                        Int32 length = _EM02Port.Read(buffer, 0, buffer.Length);
+
+                        string buf = Encoding.ASCII.GetString(buffer);
+                        Array.Resize(ref buffer, length);
+                        GoGetEM02Data d = new GoGetEM02Data(EM02Show);
+                        this.Invoke(d, new Object[] { buffer });
+                        Array.Resize(ref buffer, length);
+                    }
+
+                    Thread.Sleep(10);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-        private byte GetRingBarCode()
+
+        private void SetRingEM02(byte byData)
         {
-            byte byData = ringBufferBarCode[ringOutputBarCode];
-            ringCountBarCode--;
-            if (ringCountBarCode < 0) ringCountBarCode = 0;
-            ringOutputBarCode = (ringOutputBarCode + 1) & (lenBufBarCode - 1);
+            ringBufferEM02[ringInputEM02] = byData;
+            ringCountEM02++;
+            ringInputEM02 = (ringInputEM02 + 1) & (lenBufEM02 - 1);
+        }
+        private byte GetRingEM02()
+        {
+            byte byData = ringBufferEM02[ringOutputEM02];
+            ringCountEM02--;
+            if (ringCountEM02 < 0) ringCountEM02 = 0;
+            ringOutputEM02 = (ringOutputEM02 + 1) & (lenBufEM02 - 1);
             return byData;
         }
 
@@ -346,13 +354,13 @@ namespace EM02_E_HalfTester
             ringOutputMES = (ringOutputUT5526 + 1) & (lenBufMES - 1);
             return byData;
         }
-        public void BarcodeShow(byte[] buffer)
+        public void EM02Show(byte[] buffer)
         {
 
             byte[] buf = buffer;
             for (int i = 0; i < buf.Length; i++)
             {
-                SetRingBarCode(buf[i]);
+                SetRingEM02(buf[i]);
             }
         }
 
@@ -376,17 +384,28 @@ namespace EM02_E_HalfTester
             }
 
         }
+        private void ResetLedDisplay()
+        {
 
+            foreach (Control ctrl in this.panelDisplay.Controls)
+            {
+
+                if (ctrl is GroupBox)
+                {
+                    DisplayGroup((GroupBox)ctrl, 0, false);
+                }
+            }
+        }
         private void InitializeTimer()
         {
-            //   timer1 = new System.Timers.Timer();
+           
             timer1.Interval = 10;
-            this.timer1.Tick += new EventHandler(Timer1_Tick);
-        
+            EventHandler timer1_Tick = Timer1_Tick;
+            this.timer1.Tick += new EventHandler(timer1_Tick);
             timer1.Enabled = true;
 
         }
-        private void procUT5526()
+        private void ProcUT5526()
         {
             const byte SOH = 0x01;
             const byte EOT = 0x04;
@@ -421,7 +440,7 @@ namespace EM02_E_HalfTester
                             _UT5526Port?.Write(strComData);
                             _UT5526Port?.Write(byBCC, 0, 1);
                             _UT5526Port?.Write(endChar, 0, 1);
-                            iCntWaitUT5526 = 60;
+                            iCntWaitUT5526 = 1;
                             iStateUT5526++;
                             iCurrentGetUT5526 = 0;
                         }
@@ -429,37 +448,28 @@ namespace EM02_E_HalfTester
                     }
                     break;
                 case 1:                                             // wait 1ER0
-                    if (ringCountUT5526 >= 4)
+                    if (ringCountUT5526 >= 4 )
                     {
-                        if (GetRingUT5526() == '1' && GetRingUT5526() == 'E' && GetRingUT5526() == 'R' && GetRingUT5526() == '0')
-                        {
-                            iCntWaitUT5526 = 40;
-                            iStateUT5526++;
-                        }
-                        else
-                        {
-                            iStateUT5526 = 0;
-
-                        }
-
-
+                      do {
+                            if (GetRingUT5526() == '1')
+                            {
+                                if (GetRingUT5526() == 'E')
+                                {
+                                    if (GetRingUT5526() == 'R')
+                                    {
+                                        if (GetRingUT5526() == '0')
+                                        {
+                                            iCntWaitUT5526 = 30;
+                                            iStateUT5526++;
+                                            break;
+                                        }
+                                    }
+                                }
+                            };
+                        } while (ringCountUT5526 >= 4);
                     }
                     break;
-                case 3:
-                    if (iCntWaitUT5526 == 0)
-                    {
-                        string strComData = "01MORDVO";  // read current channel data
-                        byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
-                        byte[] byBCC = new byte[1];
-                        byBCC[0] = UTBus_LRC(cmdStr, 8);
-                        _UT5526Port?.Write(leadChar, 0, 1);
-                        _UT5526Port?.Write(strComData);
-                        _UT5526Port?.Write(byBCC, 0, 1);
-                        _UT5526Port?.Write(endChar, 0, 1);
-                        //  iCntWaitUT5526 = 40;
-                        iStateUT5526++;
-                    }
-                    break;
+              
                 case 2:
                     if (iCntGetUT5526 > 0 && iCntGetUT5526 != iCurrentGetUT5526 && iCntWaitUT5526 == 0)
                     {
@@ -474,12 +484,27 @@ namespace EM02_E_HalfTester
                         _UT5526Port?.Write(strComData);
                         _UT5526Port?.Write(byBCC, 0, 1);
                         _UT5526Port?.Write(endChar, 0, 1);
-                        //  iCntWaitUT5526 = 40;
+                        iCntWaitUT5526 = 1;
+                        iStateUT5526++;
+                    }
+                    break;
+                case 3:
+                    if (iCntWaitUT5526 == 0)
+                    {
+                    //    string strComData = "01MORDVO";  // read current channel data
+                    //    byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+                    //    byte[] byBCC = new byte[1];
+                    //    byBCC[0] = UTBus_LRC(cmdStr, 8);
+                    //    _UT5526Port?.Write(leadChar, 0, 1);
+                    //    _UT5526Port?.Write(strComData);
+                    //    _UT5526Port?.Write(byBCC, 0, 1);
+                     //   _UT5526Port?.Write(endChar, 0, 1);
+                     //  iCntWaitUT5526 = 60;
                         iStateUT5526++;
                     }
                     break;
                 case 4:
-                    if (ringCountUT5526 >= 11)
+                    if (ringCountUT5526 >= 11 )
                     {
                         do
                         {
@@ -515,7 +540,7 @@ namespace EM02_E_HalfTester
                                                 if (iOffset < 0) iOffset = 0 - (iOffset);
                                                 bool bErr = (iOffset > (collectData[iIdxGetUT5526].StandardData / 10)) ? true : false;
 
-                                                displayGroup((GroupBox)ctrl, collectData[iIdxGetUT5526].CurrentData, bErr);
+                                                DisplayGroup((GroupBox)ctrl, collectData[iIdxGetUT5526].CurrentData, bErr);
                                             }
                                         }
                                     }
@@ -538,7 +563,7 @@ namespace EM02_E_HalfTester
                                 }
 
                             }
-                        } while (ringCountUT5526 >= 10);
+                        } while (ringCountUT5526 >= 11);
                     }
 
                     break;
@@ -554,62 +579,78 @@ namespace EM02_E_HalfTester
         }
         private void Timer1_Tick(object Sender, EventArgs e)
         {
-            procUT5526();
+            ProcUT5526();
          
         }
 
-        private void fmMain_Load(object sender, EventArgs e)
+        private void FmMain_Load(object sender, EventArgs e)
         {
      
             imgDigiNormal = new Image[10];
             imgDigiNormalDot = new Image[10];
             imgDigiError = new Image[10];
             imgDigiErrorDot = new Image[10];
-            ringBufferUT5526 = new byte[32];
-         
+            ringBufferUT5526 = new byte[lenBufUT5526];
+            ringBufferEM02 = new byte[lenBufEM02];
+
             foreach (Control ctrl in this.Controls)
             {
-                if (ctrl is GroupBox)
+                if (ctrl is Panel)
                 {
-                  if(ctrl.Tag == null)
+                    Panel panel = (Panel)ctrl;
+                    if (panel.Name == "panelDisplay")
                     {
-                        MessageBox.Show("¯Ê³q¹D³]©w!");
-                        Application.Exit();
-                    }
-                  string strChannel = ctrl.Tag?.ToString();
-                  int channelInt = int.Parse(strChannel);
-                 if(channelInt > 32 || channelInt < 1)
-                    {
-                        MessageBox.Show("³q¹D³]©w¿ù»~!");
-                        Application.Exit();
-                    }
-                 GroupBox grp = (GroupBox)ctrl;
-                    int iLeft = 0;
-                    int iMid = 0;
-                    int iRight = 0;
-                    int gbWidth = grp.Width;
-                    foreach (Control cctrl in grp.Controls)
-                    {
-                        if (cctrl is PictureBox)
+                        foreach (Control ctrlGp in panel.Controls)
                         {
-                            Point l = cctrl.Location;
-                            if (l.X > gbWidth / 2)
+                            if (ctrlGp is GroupBox)
                             {
-                                iRight = int.Parse((string)cctrl.Tag);
-                            }
-                            else if (l.X > gbWidth / 4)
-                            {
-                                iMid = int.Parse((string)cctrl.Tag);
-                            }
-                            else
-                            {
-                                iLeft = int.Parse((string)cctrl.Tag);
+                                if (ctrlGp.Tag == null)
+                                {
+                                    MessageBox.Show("ç¼ºé€šé“è¨­å®š!");
+                                    Application.Exit();
+                                }
+                                string strChannel = ctrlGp.Tag?.ToString();
+                                int channelInt = int.Parse(strChannel);
+                                if (channelInt > 32 || channelInt < 1)
+                                {
+                                    MessageBox.Show("é€šé“è¨­å®šéŒ¯èª¤!");
+                                    Application.Exit();
+                                }
+                                GroupBox grp = (GroupBox)ctrlGp;
+                                int iLeft = 0;
+                                int iMid = 0;
+                                int iRight = 0;
+                                int gbWidth = grp.Width;
+                                foreach (Control cctrl in grp.Controls)
+                                {
+                                    if (cctrl is PictureBox)
+                                    {
+                                        Point l = cctrl.Location;
+                                        if (l.X > gbWidth / 2)
+                                        {
+                                            iRight = int.Parse((string)cctrl.Tag);
+                                        }
+                                        else if (l.X > gbWidth / 4)
+                                        {
+                                            iMid = int.Parse((string)cctrl.Tag);
+                                        }
+                                        else
+                                        {
+                                            iLeft = int.Parse((string)cctrl.Tag);
+                                        }
+                                    }
+                                }
+                                int iStandard = iLeft * 100 + iMid * 10 + iRight;
+                                if (collectData.Count == 0)  // add a dummy line
+                                {
+                                    collectData.Add(new ChannelData() { ChannelName = ctrlGp.Text, CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0, StandardData = iStandard });
+                                }
+                                collectData.Add(new ChannelData() { ChannelName = ctrlGp.Text, CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0, StandardData = iStandard });
                             }
                         }
                     }
-                    int iStandard = iLeft * 100 + iMid * 10 + iRight;
-                    collectData.Add(new ChannelData() { ChannelName = ctrl.Text , CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0 , StandardData=iStandard});
                 }
+        
             }
 
             imgDigiNormal[0] = Resource1._0;
@@ -656,8 +697,55 @@ namespace EM02_E_HalfTester
             imgDigiErrorDot[8] = Resource1._8rd;
             imgDigiErrorDot[9] = Resource1._9rd;
 
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+
+            string[] allkeys = config.AppSettings.Settings.AllKeys;
+
+
+            var results = Array.Find(allkeys, s => s.Equals("UT5526"));
+            if (results == null)
+            {
+                config.AppSettings.Settings.Add("UT5526", "COM5");
+            }
+            else
+            {
+                comUT5526 = config.AppSettings.Settings["UT5526"].Value;
+            }
+
+            results = Array.Find(allkeys, s => s.Equals("EM02"));
+            if (results == null)
+            {
+                config.AppSettings.Settings.Add("EM02", "COM4");
+            }
+            else
+            {
+                comEM02 = config.AppSettings.Settings["EM02"].Value;
+
+            }
+            results = Array.Find(allkeys, s => s.Equals("MES"));
+            if (results == null)
+            {
+                config.AppSettings.Settings.Add("MES", "COM2");
+            }
+            else
+            {
+                comMES = config.AppSettings.Settings["MES"].Value;
+
+            }
+            config.Save(ConfigurationSaveMode.Modified);
+
+
+
             string[] ports = SerialPort.GetPortNames();
-            cbComPorts.Items.AddRange(ports);
+            cbMES.Items.AddRange(ports);
+            cbUT5526.Items.AddRange(ports);
+            cbEM02.Items.AddRange(ports);
+
+            cbMES.SelectedItem = cbMES;
+            cbEM02.SelectedItem = comEM02;
+            cbUT5526.SelectedItem = comUT5526;
+
+
 
             leadChar[0] = 0x01;
             endChar[0] = 0x04;
@@ -666,24 +754,40 @@ namespace EM02_E_HalfTester
           //  initComBarcode("COM3");
             initComUT5526("COM6");
 
-
+            if (bErrorUT5526 == false)
+            {
+                SetUT5526VoltRange();
+            }
 
         }
 
-        private void displayPictureBox(PictureBox pb, int iData, bool bErr)
+        private void DisplayPictureBox(PictureBox pb, int iData, bool bErr)
         {
-            pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            pb.Image = bErr ? imgDigiError[iData] : imgDigiNormal[iData];
-            pb.SizeMode = PictureBoxSizeMode.StretchImage;
+            if (iData <= 9)
+            {
+                pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                pb.Image = bErr ? imgDigiError[iData] : imgDigiNormal[iData];
+            }
+            else
+            {
+                pb.Image = Resource1.none;
+            }
 
         }
-        private void displayPictureBoxDot(PictureBox pb, int iData, bool bErr)
+        private void DisplayPictureBoxDot(PictureBox pb, int iData, bool bErr)
         {
-            pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            pb.Image = bErr ? imgDigiErrorDot[iData] : imgDigiNormalDot[iData];
+            if (iData <= 9)
+            {
+                pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                pb.Image = bErr ? imgDigiErrorDot[iData] : imgDigiNormalDot[iData];
+            }
+            else
+            {
+                pb.Image = Resource1.none;
+            }
         }
 
-        private void displayGroup(GroupBox gb, int iData, bool bErr)
+        private void DisplayGroup(GroupBox gb, int iData, bool bErr)
         {
             // find 3 picture box in GroupBox and check their left right place
 
@@ -712,17 +816,42 @@ namespace EM02_E_HalfTester
                 }
             }
 
-            int iLeft = iData / 100;
-            int iMid = (iData - (iLeft * 100)) / 10;
-            int iRight = iData % 10;
+            // auto range 0.00 ~ 9.00  or  10.0 ~ 99.0
 
-            displayPictureBoxDot(pbL, iLeft, bErr);
-            displayPictureBox(pbM, iMid, bErr);
-            displayPictureBox(pbR, iRight, bErr);
+            if (iData > 999)
+            {
+                int iLeft = iData / 1000;
+                int iMid = (iData - (iLeft * 1000)) / 100;
+                int iRight = (iData - (iLeft * 1000) - (iMid * 100)) / 10;
+
+                DisplayPictureBox(pbL, iLeft, bErr);
+                DisplayPictureBoxDot(pbM, iMid, bErr);
+                DisplayPictureBox(pbR, iRight, bErr);
+            }
+            else
+            {
+                int iLeft = iData / 100;
+                int iMid = (iData - (iLeft * 100)) / 10;
+                int iRight = iData % 10;
+                bErr = false;
+                if (iRight == 0 && iLeft == 0 && iMid == 0)
+                {
+                    DisplayPictureBoxDot(pbL, 10, bErr);
+                    DisplayPictureBox(pbM, 10, bErr);
+                    DisplayPictureBox(pbR, iRight, bErr);
+                }
+                else
+                {
+                    DisplayPictureBoxDot(pbL, iLeft, bErr);
+                    DisplayPictureBox(pbM, iMid, bErr);
+                    DisplayPictureBox(pbR, iRight, bErr);
+                }
+
+            }
 
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
+        private void BtnTest_Click(object sender, EventArgs e)
         {
 
             byte byTest = ringBufferUT5526[0];
@@ -732,12 +861,12 @@ namespace EM02_E_HalfTester
 
                 if (ctrl is GroupBox)
                 {
-                    displayGroup((GroupBox)ctrl, 123, true);
+                    DisplayGroup((GroupBox)ctrl, 123, true);
                 }
             }
         }
 
-        private byte UTBus_LRC(byte[] str, int len)
+        private static byte UTBus_LRC(byte[] str, int len)
 
         {
             byte uchLRC = 0x00;
@@ -757,10 +886,10 @@ namespace EM02_E_HalfTester
             return uchLRC;
         }
 
-        private void btnTest2_Click(object sender, EventArgs e)
+        private void BtnTest2_Click(object sender, EventArgs e)
         {
             // string strComData = "01MORDVO";
-            string strComData = "01MORG02";  // set range = 20V
+            string strComData = "01MORG03";  // set range = 200V
             byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
             byte[] byBCC = new byte[1];
             byBCC[0] = UTBus_LRC(cmdStr, 8);
@@ -771,13 +900,10 @@ namespace EM02_E_HalfTester
             _UT5526Port?.Write(endChar, 0, 1);
         }
 
-        private void fmMain_FormClosed(object sender, FormClosedEventArgs e)
+        private void FmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             timer1.Stop();
-            if (_barcodePort?.IsOpen == true)
-            {
-                _barcodePort.Close();
-            }
+           
             if (_UT5526Port?.IsOpen == true)
             {
                 _UT5526Port.Close();
@@ -790,20 +916,56 @@ namespace EM02_E_HalfTester
 
         }
 
-        private void btnRead_Click(object sender, EventArgs e)
+        private void BtnRead_Click(object sender, EventArgs e)
         {
          
+            ResetLedDisplay();
             iIdxGetUT5526 = 0;
-       
+     
             timer1.Enabled = true;
             bCmdReadSend = true;
-            iCntGetUT5526 = 24;
+            iCntGetUT5526 = 25;
           
         }
 
-        private void label25_Click(object sender, EventArgs e)
+        private void resetComPorts()
         {
+            if (_MESPort?.IsOpen == true)
+            {
+                _MESPort?.Close();
+            };
+            if (_EM02Port?.IsOpen == true)
+            {
+                _EM02Port?.Close();
+            }
+            if (_UT5526Port?.IsOpen == true)
+            {
+                _UT5526Port?.Close();
+            }
+      
+            initComEM02(comEM02);
+            initComUT5526(comUT5526);
+        }
+        private void btnSaveSetting_Click(object sender, EventArgs e)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            config.AppSettings.Settings.Remove("MES");
+            config.AppSettings.Settings.Add("MES", cbMES.SelectedItem.ToString());
+            config.Save(ConfigurationSaveMode.Modified);
+            MessageBox.Show("Com Port ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½!");
+        }
 
+        private void btnGetSetting_Click(object sender, EventArgs e)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            comEM02 = config.AppSettings.Settings["EM02"].Value;
+            comUT5526 = config.AppSettings.Settings["UT5526"].Value;
+            comEM02 = config.AppSettings.Settings["TH02"].Value;
+            cbMES.SelectedItem = comMES;
+            cbUT5526.SelectedItem = comUT5526;
+            cbEM02.SelectedItem = comEM02;
+            MessageBox.Show("Com Port Åªï¿½ï¿½OK!");
+            resetComPorts();
         }
     }
 }

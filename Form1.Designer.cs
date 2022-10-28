@@ -151,12 +151,12 @@
             this.pictureBox72 = new System.Windows.Forms.PictureBox();
             this.btnTest = new System.Windows.Forms.Button();
             this.btnTest2 = new System.Windows.Forms.Button();
-            this.cbComPorts = new System.Windows.Forms.ComboBox();
+            this.cbMES = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.panelSetting = new System.Windows.Forms.Panel();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cbEM02 = new System.Windows.Forms.ComboBox();
             this.label29 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbUT5526 = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnRead = new System.Windows.Forms.Button();
@@ -165,6 +165,8 @@
             this.lblSerialNo = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.panelDisplay = new System.Windows.Forms.Panel();
+            this.btnSaveSetting = new System.Windows.Forms.Button();
+            this.btnGetSetting = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -262,6 +264,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox71)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox72)).BeginInit();
             this.panelSetting.SuspendLayout();
+            this.panelDisplay.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -273,7 +276,7 @@
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox1.Location = new System.Drawing.Point(7, 147);
+            this.groupBox1.Location = new System.Drawing.Point(15, 22);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
@@ -338,7 +341,7 @@
             this.groupBox2.Controls.Add(this.pictureBox6);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox2.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox2.Location = new System.Drawing.Point(195, 147);
+            this.groupBox2.Location = new System.Drawing.Point(203, 22);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
@@ -403,7 +406,7 @@
             this.groupBox3.Controls.Add(this.pictureBox9);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox3.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox3.Location = new System.Drawing.Point(384, 147);
+            this.groupBox3.Location = new System.Drawing.Point(392, 22);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
@@ -468,7 +471,7 @@
             this.groupBox4.Controls.Add(this.pictureBox12);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox4.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox4.Location = new System.Drawing.Point(950, 147);
+            this.groupBox4.Location = new System.Drawing.Point(958, 22);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
@@ -533,7 +536,7 @@
             this.groupBox5.Controls.Add(this.pictureBox15);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox5.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox5.Location = new System.Drawing.Point(761, 147);
+            this.groupBox5.Location = new System.Drawing.Point(769, 22);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
@@ -598,7 +601,7 @@
             this.groupBox6.Controls.Add(this.pictureBox18);
             this.groupBox6.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox6.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox6.Location = new System.Drawing.Point(573, 147);
+            this.groupBox6.Location = new System.Drawing.Point(581, 22);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(2);
@@ -663,7 +666,7 @@
             this.groupBox7.Controls.Add(this.pictureBox21);
             this.groupBox7.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox7.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox7.Location = new System.Drawing.Point(950, 249);
+            this.groupBox7.Location = new System.Drawing.Point(958, 124);
             this.groupBox7.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Padding = new System.Windows.Forms.Padding(2);
@@ -728,7 +731,7 @@
             this.groupBox8.Controls.Add(this.pictureBox24);
             this.groupBox8.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox8.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox8.Location = new System.Drawing.Point(761, 249);
+            this.groupBox8.Location = new System.Drawing.Point(769, 124);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Padding = new System.Windows.Forms.Padding(2);
@@ -793,7 +796,7 @@
             this.groupBox9.Controls.Add(this.pictureBox27);
             this.groupBox9.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox9.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox9.Location = new System.Drawing.Point(573, 249);
+            this.groupBox9.Location = new System.Drawing.Point(581, 124);
             this.groupBox9.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Padding = new System.Windows.Forms.Padding(2);
@@ -858,7 +861,7 @@
             this.groupBox10.Controls.Add(this.pictureBox30);
             this.groupBox10.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox10.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox10.Location = new System.Drawing.Point(384, 249);
+            this.groupBox10.Location = new System.Drawing.Point(392, 124);
             this.groupBox10.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Padding = new System.Windows.Forms.Padding(2);
@@ -923,7 +926,7 @@
             this.groupBox11.Controls.Add(this.pictureBox33);
             this.groupBox11.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox11.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox11.Location = new System.Drawing.Point(195, 249);
+            this.groupBox11.Location = new System.Drawing.Point(203, 124);
             this.groupBox11.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Padding = new System.Windows.Forms.Padding(2);
@@ -988,7 +991,7 @@
             this.groupBox12.Controls.Add(this.pictureBox36);
             this.groupBox12.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox12.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox12.Location = new System.Drawing.Point(7, 249);
+            this.groupBox12.Location = new System.Drawing.Point(15, 124);
             this.groupBox12.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Padding = new System.Windows.Forms.Padding(2);
@@ -1053,7 +1056,7 @@
             this.groupBox13.Controls.Add(this.pictureBox39);
             this.groupBox13.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox13.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox13.Location = new System.Drawing.Point(950, 452);
+            this.groupBox13.Location = new System.Drawing.Point(958, 327);
             this.groupBox13.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Padding = new System.Windows.Forms.Padding(2);
@@ -1118,7 +1121,7 @@
             this.groupBox14.Controls.Add(this.pictureBox42);
             this.groupBox14.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox14.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox14.Location = new System.Drawing.Point(761, 452);
+            this.groupBox14.Location = new System.Drawing.Point(769, 327);
             this.groupBox14.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Padding = new System.Windows.Forms.Padding(2);
@@ -1183,7 +1186,7 @@
             this.groupBox15.Controls.Add(this.pictureBox45);
             this.groupBox15.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox15.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox15.Location = new System.Drawing.Point(573, 452);
+            this.groupBox15.Location = new System.Drawing.Point(581, 327);
             this.groupBox15.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox15.Name = "groupBox15";
             this.groupBox15.Padding = new System.Windows.Forms.Padding(2);
@@ -1248,7 +1251,7 @@
             this.groupBox16.Controls.Add(this.pictureBox48);
             this.groupBox16.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox16.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox16.Location = new System.Drawing.Point(384, 452);
+            this.groupBox16.Location = new System.Drawing.Point(392, 327);
             this.groupBox16.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox16.Name = "groupBox16";
             this.groupBox16.Padding = new System.Windows.Forms.Padding(2);
@@ -1313,7 +1316,7 @@
             this.groupBox17.Controls.Add(this.pictureBox51);
             this.groupBox17.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox17.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox17.Location = new System.Drawing.Point(195, 452);
+            this.groupBox17.Location = new System.Drawing.Point(203, 327);
             this.groupBox17.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.Padding = new System.Windows.Forms.Padding(2);
@@ -1378,7 +1381,7 @@
             this.groupBox18.Controls.Add(this.pictureBox54);
             this.groupBox18.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox18.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox18.Location = new System.Drawing.Point(7, 452);
+            this.groupBox18.Location = new System.Drawing.Point(15, 327);
             this.groupBox18.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Padding = new System.Windows.Forms.Padding(2);
@@ -1443,7 +1446,7 @@
             this.groupBox19.Controls.Add(this.pictureBox57);
             this.groupBox19.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox19.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox19.Location = new System.Drawing.Point(950, 350);
+            this.groupBox19.Location = new System.Drawing.Point(958, 225);
             this.groupBox19.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.Padding = new System.Windows.Forms.Padding(2);
@@ -1508,7 +1511,7 @@
             this.groupBox20.Controls.Add(this.pictureBox60);
             this.groupBox20.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox20.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox20.Location = new System.Drawing.Point(761, 350);
+            this.groupBox20.Location = new System.Drawing.Point(769, 225);
             this.groupBox20.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.Padding = new System.Windows.Forms.Padding(2);
@@ -1573,7 +1576,7 @@
             this.groupBox21.Controls.Add(this.pictureBox63);
             this.groupBox21.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox21.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox21.Location = new System.Drawing.Point(573, 350);
+            this.groupBox21.Location = new System.Drawing.Point(581, 225);
             this.groupBox21.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox21.Name = "groupBox21";
             this.groupBox21.Padding = new System.Windows.Forms.Padding(2);
@@ -1638,7 +1641,7 @@
             this.groupBox22.Controls.Add(this.pictureBox66);
             this.groupBox22.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox22.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox22.Location = new System.Drawing.Point(384, 350);
+            this.groupBox22.Location = new System.Drawing.Point(392, 225);
             this.groupBox22.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox22.Name = "groupBox22";
             this.groupBox22.Padding = new System.Windows.Forms.Padding(2);
@@ -1703,7 +1706,7 @@
             this.groupBox23.Controls.Add(this.pictureBox69);
             this.groupBox23.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox23.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox23.Location = new System.Drawing.Point(195, 350);
+            this.groupBox23.Location = new System.Drawing.Point(203, 225);
             this.groupBox23.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox23.Name = "groupBox23";
             this.groupBox23.Padding = new System.Windows.Forms.Padding(2);
@@ -1768,7 +1771,7 @@
             this.groupBox24.Controls.Add(this.pictureBox72);
             this.groupBox24.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox24.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox24.Location = new System.Drawing.Point(7, 350);
+            this.groupBox24.Location = new System.Drawing.Point(15, 225);
             this.groupBox24.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.Padding = new System.Windows.Forms.Padding(2);
@@ -1826,34 +1829,34 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(815, 601);
+            this.btnTest.Location = new System.Drawing.Point(1078, 525);
             this.btnTest.Margin = new System.Windows.Forms.Padding(2);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(82, 41);
             this.btnTest.TabIndex = 24;
             this.btnTest.Text = "Test";
             this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            this.btnTest.Click += new System.EventHandler(this.BtnTest_Click);
             // 
             // btnTest2
             // 
-            this.btnTest2.Location = new System.Drawing.Point(707, 608);
+            this.btnTest2.Location = new System.Drawing.Point(991, 526);
             this.btnTest2.Margin = new System.Windows.Forms.Padding(2);
             this.btnTest2.Name = "btnTest2";
             this.btnTest2.Size = new System.Drawing.Size(83, 39);
             this.btnTest2.TabIndex = 25;
             this.btnTest2.Text = "Test2";
             this.btnTest2.UseVisualStyleBackColor = true;
-            this.btnTest2.Click += new System.EventHandler(this.btnTest2_Click);
+            this.btnTest2.Click += new System.EventHandler(this.BtnTest2_Click);
             // 
-            // cbComPorts
+            // cbMES
             // 
-            this.cbComPorts.FormattingEnabled = true;
-            this.cbComPorts.Location = new System.Drawing.Point(54, 14);
-            this.cbComPorts.Margin = new System.Windows.Forms.Padding(2);
-            this.cbComPorts.Name = "cbComPorts";
-            this.cbComPorts.Size = new System.Drawing.Size(72, 23);
-            this.cbComPorts.TabIndex = 1;
+            this.cbMES.FormattingEnabled = true;
+            this.cbMES.Location = new System.Drawing.Point(54, 14);
+            this.cbMES.Margin = new System.Windows.Forms.Padding(2);
+            this.cbMES.Name = "cbMES";
+            this.cbMES.Size = new System.Drawing.Size(72, 23);
+            this.cbMES.TabIndex = 1;
             // 
             // label25
             // 
@@ -1864,33 +1867,34 @@
             this.label25.Size = new System.Drawing.Size(36, 15);
             this.label25.TabIndex = 0;
             this.label25.Text = "MES:";
-            this.label25.Click += new System.EventHandler(this.label25_Click);
             // 
             // panelSetting
             // 
             this.panelSetting.BackColor = System.Drawing.SystemColors.ControlText;
             this.panelSetting.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panelSetting.Controls.Add(this.comboBox2);
+            this.panelSetting.Controls.Add(this.btnGetSetting);
+            this.panelSetting.Controls.Add(this.btnSaveSetting);
+            this.panelSetting.Controls.Add(this.cbEM02);
             this.panelSetting.Controls.Add(this.label29);
-            this.panelSetting.Controls.Add(this.comboBox1);
+            this.panelSetting.Controls.Add(this.cbUT5526);
             this.panelSetting.Controls.Add(this.label28);
-            this.panelSetting.Controls.Add(this.cbComPorts);
+            this.panelSetting.Controls.Add(this.cbMES);
             this.panelSetting.Controls.Add(this.label25);
             this.panelSetting.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.panelSetting.Location = new System.Drawing.Point(5, 594);
+            this.panelSetting.Location = new System.Drawing.Point(12, 515);
             this.panelSetting.Margin = new System.Windows.Forms.Padding(2);
             this.panelSetting.Name = "panelSetting";
-            this.panelSetting.Size = new System.Drawing.Size(550, 53);
+            this.panelSetting.Size = new System.Drawing.Size(766, 53);
             this.panelSetting.TabIndex = 27;
             // 
-            // comboBox2
+            // cbEM02
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(369, 15);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(72, 23);
-            this.comboBox2.TabIndex = 5;
+            this.cbEM02.FormattingEnabled = true;
+            this.cbEM02.Location = new System.Drawing.Point(369, 15);
+            this.cbEM02.Margin = new System.Windows.Forms.Padding(2);
+            this.cbEM02.Name = "cbEM02";
+            this.cbEM02.Size = new System.Drawing.Size(72, 23);
+            this.cbEM02.TabIndex = 5;
             // 
             // label29
             // 
@@ -1902,14 +1906,14 @@
             this.label29.TabIndex = 4;
             this.label29.Text = "EM-02:";
             // 
-            // comboBox1
+            // cbUT5526
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(219, 15);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(72, 23);
-            this.comboBox1.TabIndex = 3;
+            this.cbUT5526.FormattingEnabled = true;
+            this.cbUT5526.Location = new System.Drawing.Point(219, 15);
+            this.cbUT5526.Margin = new System.Windows.Forms.Padding(2);
+            this.cbUT5526.Name = "cbUT5526";
+            this.cbUT5526.Size = new System.Drawing.Size(72, 23);
+            this.cbUT5526.TabIndex = 3;
             // 
             // label28
             // 
@@ -1923,21 +1927,21 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(585, 608);
+            this.btnRead.Location = new System.Drawing.Point(889, 527);
             this.btnRead.Margin = new System.Windows.Forms.Padding(2);
             this.btnRead.Name = "btnRead";
-            this.btnRead.Size = new System.Drawing.Size(90, 34);
+            this.btnRead.Size = new System.Drawing.Size(98, 39);
             this.btnRead.TabIndex = 28;
             this.btnRead.Text = "ReadVolt";
             this.btnRead.UseVisualStyleBackColor = true;
-            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
+            this.btnRead.Click += new System.EventHandler(this.BtnRead_Click);
             // 
             // label26
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Microsoft JhengHei UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label26.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label26.Location = new System.Drawing.Point(21, 26);
+            this.label26.Location = new System.Drawing.Point(17, 26);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(40, 24);
             this.label26.TabIndex = 29;
@@ -1959,7 +1963,7 @@
             this.lblSerialNo.AutoSize = true;
             this.lblSerialNo.Font = new System.Drawing.Font("Microsoft JhengHei UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblSerialNo.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblSerialNo.Location = new System.Drawing.Point(67, 26);
+            this.lblSerialNo.Location = new System.Drawing.Point(61, 28);
             this.lblSerialNo.Name = "lblSerialNo";
             this.lblSerialNo.Size = new System.Drawing.Size(18, 24);
             this.lblSerialNo.TabIndex = 31;
@@ -1969,7 +1973,7 @@
             // 
             this.lblTime.AutoSize = true;
             this.lblTime.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTime.Location = new System.Drawing.Point(1021, 68);
+            this.lblTime.Location = new System.Drawing.Point(1020, 35);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(12, 15);
             this.lblTime.TabIndex = 32;
@@ -1977,17 +1981,63 @@
             // 
             // panelDisplay
             // 
-            this.panelDisplay.Location = new System.Drawing.Point(5, 103);
+            this.panelDisplay.Controls.Add(this.groupBox5);
+            this.panelDisplay.Controls.Add(this.groupBox1);
+            this.panelDisplay.Controls.Add(this.groupBox2);
+            this.panelDisplay.Controls.Add(this.groupBox3);
+            this.panelDisplay.Controls.Add(this.groupBox6);
+            this.panelDisplay.Controls.Add(this.groupBox4);
+            this.panelDisplay.Controls.Add(this.groupBox12);
+            this.panelDisplay.Controls.Add(this.groupBox11);
+            this.panelDisplay.Controls.Add(this.groupBox13);
+            this.panelDisplay.Controls.Add(this.groupBox10);
+            this.panelDisplay.Controls.Add(this.groupBox14);
+            this.panelDisplay.Controls.Add(this.groupBox9);
+            this.panelDisplay.Controls.Add(this.groupBox15);
+            this.panelDisplay.Controls.Add(this.groupBox8);
+            this.panelDisplay.Controls.Add(this.groupBox16);
+            this.panelDisplay.Controls.Add(this.groupBox7);
+            this.panelDisplay.Controls.Add(this.groupBox17);
+            this.panelDisplay.Controls.Add(this.groupBox24);
+            this.panelDisplay.Controls.Add(this.groupBox18);
+            this.panelDisplay.Controls.Add(this.groupBox23);
+            this.panelDisplay.Controls.Add(this.groupBox19);
+            this.panelDisplay.Controls.Add(this.groupBox22);
+            this.panelDisplay.Controls.Add(this.groupBox20);
+            this.panelDisplay.Controls.Add(this.groupBox21);
+            this.panelDisplay.Location = new System.Drawing.Point(12, 55);
             this.panelDisplay.Name = "panelDisplay";
-            this.panelDisplay.Size = new System.Drawing.Size(1139, 458);
+            this.panelDisplay.Size = new System.Drawing.Size(1154, 444);
             this.panelDisplay.TabIndex = 33;
+            // 
+            // btnSaveSetting
+            // 
+            this.btnSaveSetting.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnSaveSetting.Location = new System.Drawing.Point(550, 10);
+            this.btnSaveSetting.Name = "btnSaveSetting";
+            this.btnSaveSetting.Size = new System.Drawing.Size(75, 31);
+            this.btnSaveSetting.TabIndex = 6;
+            this.btnSaveSetting.Text = "儲存設定";
+            this.btnSaveSetting.UseVisualStyleBackColor = true;
+            this.btnSaveSetting.Click += new System.EventHandler(this.btnSaveSetting_Click);
+            // 
+            // btnGetSetting
+            // 
+            this.btnGetSetting.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnGetSetting.Location = new System.Drawing.Point(660, 10);
+            this.btnGetSetting.Name = "btnGetSetting";
+            this.btnGetSetting.Size = new System.Drawing.Size(75, 31);
+            this.btnGetSetting.TabIndex = 7;
+            this.btnGetSetting.Text = "讀取設定";
+            this.btnGetSetting.UseVisualStyleBackColor = true;
+            this.btnGetSetting.Click += new System.EventHandler(this.btnGetSetting_Click);
             // 
             // fmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
-            this.ClientSize = new System.Drawing.Size(1142, 678);
+            this.ClientSize = new System.Drawing.Size(1178, 589);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblSerialNo);
             this.Controls.Add(this.label27);
@@ -1996,37 +2046,13 @@
             this.Controls.Add(this.panelSetting);
             this.Controls.Add(this.btnTest2);
             this.Controls.Add(this.btnTest);
-            this.Controls.Add(this.groupBox13);
-            this.Controls.Add(this.groupBox14);
-            this.Controls.Add(this.groupBox15);
-            this.Controls.Add(this.groupBox16);
-            this.Controls.Add(this.groupBox17);
-            this.Controls.Add(this.groupBox18);
-            this.Controls.Add(this.groupBox19);
-            this.Controls.Add(this.groupBox20);
-            this.Controls.Add(this.groupBox21);
-            this.Controls.Add(this.groupBox22);
-            this.Controls.Add(this.groupBox23);
-            this.Controls.Add(this.groupBox24);
-            this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupBox8);
-            this.Controls.Add(this.groupBox9);
-            this.Controls.Add(this.groupBox10);
-            this.Controls.Add(this.groupBox11);
-            this.Controls.Add(this.groupBox12);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panelDisplay);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "fmMain";
             this.Text = "金戰神EM02-E半測系統V1.0";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.fmMain_FormClosed);
-            this.Load += new System.EventHandler(this.fmMain_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FmMain_FormClosed);
+            this.Load += new System.EventHandler(this.FmMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -2149,6 +2175,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox72)).EndInit();
             this.panelSetting.ResumeLayout(false);
             this.panelSetting.PerformLayout();
+            this.panelDisplay.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2278,7 +2305,7 @@
         private PictureBox pictureBox72;
         private Button btnTest;
         private Button btnTest2;
-        private ComboBox cbComPorts;
+        private ComboBox cbMES;
         private Label label25;
         private Panel panelSetting;
         private System.Windows.Forms.Timer timer1;
@@ -2286,11 +2313,13 @@
         private Label label26;
         private Label label27;
         private Label lblSerialNo;
-        private ComboBox comboBox2;
+        private ComboBox cbEM02;
         private Label label29;
-        private ComboBox comboBox1;
+        private ComboBox cbUT5526;
         private Label label28;
         private Label lblTime;
         private Panel panelDisplay;
+        private Button btnGetSetting;
+        private Button btnSaveSetting;
     }
 }
