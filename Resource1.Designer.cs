@@ -1485,5 +1485,15 @@ namespace EM02_E_HalfTester {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap red_button_spam {
+            get {
+                object obj = ResourceManager.GetObject("red_button_spam", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

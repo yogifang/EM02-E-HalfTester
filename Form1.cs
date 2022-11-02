@@ -48,6 +48,7 @@ namespace EM02_E_HalfTester
         private int iCntWaitUT5526 = 0;
         private bool bErrorUT5526 = false;
         private int iStateUT5526 = 0;
+        private bool bWaitACC = false;
 
 
         private const UInt16 lenBufEM02 = 32;
@@ -551,15 +552,166 @@ namespace EM02_E_HalfTester
                                 iIdxGetUT5526++;  // move to next
                                 if (iCntGetUT5526 == 0)
                                 {
-                                   // string strWriteMAC = "$TH02,MAC," + lblMAC.Text.Remove(lblMAC.Text.Length - 1);
-                                  //  _TH02Port?.Write(strWriteMAC);
-                                  //  _TH02Port?.DiscardInBuffer();
-                                   // ClearRingTH02();
-                                   // btnWriteMAC.Visible = true;
-                                    //    pictureBoxResult.Enabled = true;
-                                    //    pictureBoxResult.Image = Resource1.pass;
-                                   // bWritingMAC = true;
+                                 
+                                  // MessageBox.Show("Done");
+                                    bWaitACC = true;
+                                    pbPushButton.Visible= true;
+                                    iCntGetUT5526 = 1;
                                     iIdxGetUT5526 = 0;
+                                }
+
+                            }
+                        } while (ringCountUT5526 >= 11);
+                    }
+
+                    break;
+                case 5:
+                    iStateUT5526++;
+
+                    break;
+                default:
+                    iStateUT5526 = 0;
+                    break;
+            }
+
+        }
+        private void ProcUT5526ACC()
+        {
+            const byte SOH = 0x01;
+            const byte EOT = 0x04;
+
+            if (bErrorUT5526)
+            {
+                iCntWaitUT5526 = 0;
+                iStateUT5526 = 0;
+                iCurrentGetUT5526 = 0;
+                return;
+            }
+
+
+          
+
+            if (iCntWaitUT5526 > 0) iCntWaitUT5526--;
+            //    pictureBoxButton1.Image = Resource1.led_a;
+            switch (iStateUT5526)
+            {
+                case 0:
+                  
+                        time00 = DateTime.Now;
+                        //  iCntRead--;
+                        if (collectData.Count > iIdxGetUT5526)
+                        {
+                            iIdxGetUT5526 = collectData.FindIndex(x => x.ChannelName == "ACC");  
+                            string strComData = collectData[iIdxGetUT5526].CmdSelected;   // send channel select comand                                                                //  string strComData = "01MOCH05";   // send channel for ACC channel comand
+                            byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+                            byte[] byBCC = new byte[1];
+                            byBCC[0] = UTBus_LRC(cmdStr, 8);
+                            _UT5526Port?.Write(leadChar, 0, 1);
+                            _UT5526Port?.Write(strComData);
+                            _UT5526Port?.Write(byBCC, 0, 1);
+                            _UT5526Port?.Write(endChar, 0, 1);
+                            iCntWaitUT5526 = 1;
+                            iStateUT5526++;
+                            iCurrentGetUT5526 = 0;
+                        }
+                    break;
+                case 1:                                             // wait 1ER0
+                    if (ringCountUT5526 >= 4)
+                    {
+                        do
+                        {
+                            if (GetRingUT5526() == '1')
+                            {
+                                if (GetRingUT5526() == 'E')
+                                {
+                                    if (GetRingUT5526() == 'R')
+                                    {
+                                        if (GetRingUT5526() == '0')
+                                        {
+                                            iCntWaitUT5526 = 30;
+                                            iStateUT5526++;
+                                            break;
+                                        }
+                                    }
+                                }
+                            };
+                        } while (ringCountUT5526 >= 4);
+                    }
+                    break;
+
+                case 2:
+                    if (iCntWaitUT5526 == 0)
+                    {
+                        time01 = DateTime.Now;
+                        lblTime.Text = (time01 - time00).TotalMilliseconds.ToString();
+                        iCurrentGetUT5526 = iCntGetUT5526;
+                        string strComData = "01MORDVO";  // read current channel data
+                        byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+                        byte[] byBCC = new byte[1];
+                        byBCC[0] = UTBus_LRC(cmdStr, 8);
+                        _UT5526Port?.Write(leadChar, 0, 1);
+                        _UT5526Port?.Write(strComData);
+                        _UT5526Port?.Write(byBCC, 0, 1);
+                        _UT5526Port?.Write(endChar, 0, 1);
+                        iCntWaitUT5526 = 1;
+                        iStateUT5526++;
+                    }
+                    break;
+                case 3:
+                    if (iCntWaitUT5526 == 0)
+                    {
+                        iStateUT5526++;
+                    }
+                    break;
+                case 4:
+                    if (ringCountUT5526 >= 11)
+                    {
+                        do
+                        {
+                            byte byTemp = GetRingUT5526(); ;
+                            if (byTemp == SOH)
+                            {
+                                iCntGetUT5526--;
+                                byTemp = GetRingUT5526();  // range code
+                                byTemp = GetRingUT5526(); // address
+                                byTemp = GetRingUT5526(); // V code 
+                                int iInt = GetRingUT5526() * 100 + GetRingUT5526() * 10 + GetRingUT5526(); // 3 digis integer
+                                int iDot = GetRingUT5526() * 10 + GetRingUT5526(); // 2 digi
+                                byTemp = GetRingUT5526(); // bcc code
+                                byTemp = GetRingUT5526(); // end code
+                                iStateUT5526++;
+                        
+                                collectData[iIdxGetUT5526].PreviousData = collectData[iIdxGetUT5526].CurrentData;
+                                collectData[iIdxGetUT5526].CurrentData = iInt * 100 + iDot;
+                                if (iIdxGetUT5526 > 0) // skip dummy read 
+                                {
+                                    foreach (Control ctrl in this.panelDisplay.Controls)
+                                    {
+                                        if (ctrl is GroupBox)
+                                        {
+                                            if (ctrl.Text == collectData[iIdxGetUT5526].ChannelName)
+                                            {
+                                                int iCurrentData = collectData[iIdxGetUT5526].CurrentData;
+                                                iCurrentData = (iCurrentData > 999) ? iCurrentData / 10 : iCurrentData;
+                                                int iOffset = iCurrentData - (collectData[iIdxGetUT5526].StandardData);
+                                                if (iOffset < 0) iOffset = 0 - (iOffset);
+                                                bool bErr = (iOffset > (collectData[iIdxGetUT5526].StandardData / 10)) ? true : false;
+
+                                                DisplayGroup((GroupBox)ctrl, collectData[iIdxGetUT5526].CurrentData, bErr);
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                if (collectData[iIdxGetUT5526].CurrentData <= 100)
+                                {
+                                    bWaitACC = false;
+                                    pbPushButton.Visible = false;
+                                    iIdxGetUT5526 = 0;
+                                } else
+                                {
+                                    iCntGetUT5526 = 1;
                                 }
 
                             }
@@ -579,7 +731,16 @@ namespace EM02_E_HalfTester
         }
         private void Timer1_Tick(object Sender, EventArgs e)
         {
-            ProcUT5526();
+
+            if (bWaitACC == false)
+            {
+                ProcUT5526();
+            }
+            else
+            {
+                ProcUT5526ACC();
+            }
+          
          
         }
 
@@ -643,7 +804,7 @@ namespace EM02_E_HalfTester
                                 int iStandard = iLeft * 100 + iMid * 10 + iRight;
                                 if (collectData.Count == 0)  // add a dummy line
                                 {
-                                    collectData.Add(new ChannelData() { ChannelName = ctrlGp.Text, CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0, StandardData = iStandard });
+                                    collectData.Add(new ChannelData() { ChannelName = "Dummy", CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0, StandardData = iStandard });
                                 }
                                 collectData.Add(new ChannelData() { ChannelName = ctrlGp.Text, CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0, StandardData = iStandard });
                             }
@@ -960,7 +1121,7 @@ namespace EM02_E_HalfTester
             Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
             comEM02 = config.AppSettings.Settings["EM02"].Value;
             comUT5526 = config.AppSettings.Settings["UT5526"].Value;
-            comEM02 = config.AppSettings.Settings["TH02"].Value;
+            comEM02 = config.AppSettings.Settings["MES"].Value;
             cbMES.SelectedItem = comMES;
             cbUT5526.SelectedItem = comUT5526;
             cbEM02.SelectedItem = comEM02;

@@ -79,6 +79,7 @@
             this.pictureBox28 = new System.Windows.Forms.PictureBox();
             this.pictureBox29 = new System.Windows.Forms.PictureBox();
             this.pictureBox30 = new System.Windows.Forms.PictureBox();
+            this.pbPushButton = new System.Windows.Forms.PictureBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.pictureBox31 = new System.Windows.Forms.PictureBox();
@@ -154,6 +155,8 @@
             this.cbMES = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.panelSetting = new System.Windows.Forms.Panel();
+            this.btnGetSetting = new System.Windows.Forms.Button();
+            this.btnSaveSetting = new System.Windows.Forms.Button();
             this.cbEM02 = new System.Windows.Forms.ComboBox();
             this.label29 = new System.Windows.Forms.Label();
             this.cbUT5526 = new System.Windows.Forms.ComboBox();
@@ -165,8 +168,6 @@
             this.lblSerialNo = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.panelDisplay = new System.Windows.Forms.Panel();
-            this.btnSaveSetting = new System.Windows.Forms.Button();
-            this.btnGetSetting = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -207,6 +208,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox28)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox29)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox30)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPushButton)).BeginInit();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox31)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox32)).BeginInit();
@@ -916,6 +918,17 @@
             this.pictureBox30.TabIndex = 0;
             this.pictureBox30.TabStop = false;
             this.pictureBox30.Tag = "1";
+            // 
+            // pbPushButton
+            // 
+            this.pbPushButton.Image = global::EM02_E_HalfTester.Resource1.red_button_spam;
+            this.pbPushButton.Location = new System.Drawing.Point(904, 505);
+            this.pbPushButton.Name = "pbPushButton";
+            this.pbPushButton.Size = new System.Drawing.Size(96, 72);
+            this.pbPushButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbPushButton.TabIndex = 34;
+            this.pbPushButton.TabStop = false;
+            this.pbPushButton.Visible = false;
             // 
             // groupBox11
             // 
@@ -1829,7 +1842,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(1078, 525);
+            this.btnTest.Location = new System.Drawing.Point(667, 9);
             this.btnTest.Margin = new System.Windows.Forms.Padding(2);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(82, 41);
@@ -1840,7 +1853,7 @@
             // 
             // btnTest2
             // 
-            this.btnTest2.Location = new System.Drawing.Point(991, 526);
+            this.btnTest2.Location = new System.Drawing.Point(767, 9);
             this.btnTest2.Margin = new System.Windows.Forms.Padding(2);
             this.btnTest2.Name = "btnTest2";
             this.btnTest2.Size = new System.Drawing.Size(83, 39);
@@ -1887,6 +1900,28 @@
             this.panelSetting.Size = new System.Drawing.Size(766, 53);
             this.panelSetting.TabIndex = 27;
             // 
+            // btnGetSetting
+            // 
+            this.btnGetSetting.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnGetSetting.Location = new System.Drawing.Point(660, 10);
+            this.btnGetSetting.Name = "btnGetSetting";
+            this.btnGetSetting.Size = new System.Drawing.Size(75, 31);
+            this.btnGetSetting.TabIndex = 7;
+            this.btnGetSetting.Text = "讀取設定";
+            this.btnGetSetting.UseVisualStyleBackColor = true;
+            this.btnGetSetting.Click += new System.EventHandler(this.btnGetSetting_Click);
+            // 
+            // btnSaveSetting
+            // 
+            this.btnSaveSetting.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnSaveSetting.Location = new System.Drawing.Point(550, 10);
+            this.btnSaveSetting.Name = "btnSaveSetting";
+            this.btnSaveSetting.Size = new System.Drawing.Size(75, 31);
+            this.btnSaveSetting.TabIndex = 6;
+            this.btnSaveSetting.Text = "儲存設定";
+            this.btnSaveSetting.UseVisualStyleBackColor = true;
+            this.btnSaveSetting.Click += new System.EventHandler(this.btnSaveSetting_Click);
+            // 
             // cbEM02
             // 
             this.cbEM02.FormattingEnabled = true;
@@ -1927,7 +1962,7 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(889, 527);
+            this.btnRead.Location = new System.Drawing.Point(863, 9);
             this.btnRead.Margin = new System.Windows.Forms.Padding(2);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(98, 39);
@@ -2010,34 +2045,13 @@
             this.panelDisplay.Size = new System.Drawing.Size(1154, 444);
             this.panelDisplay.TabIndex = 33;
             // 
-            // btnSaveSetting
-            // 
-            this.btnSaveSetting.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnSaveSetting.Location = new System.Drawing.Point(550, 10);
-            this.btnSaveSetting.Name = "btnSaveSetting";
-            this.btnSaveSetting.Size = new System.Drawing.Size(75, 31);
-            this.btnSaveSetting.TabIndex = 6;
-            this.btnSaveSetting.Text = "儲存設定";
-            this.btnSaveSetting.UseVisualStyleBackColor = true;
-            this.btnSaveSetting.Click += new System.EventHandler(this.btnSaveSetting_Click);
-            // 
-            // btnGetSetting
-            // 
-            this.btnGetSetting.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnGetSetting.Location = new System.Drawing.Point(660, 10);
-            this.btnGetSetting.Name = "btnGetSetting";
-            this.btnGetSetting.Size = new System.Drawing.Size(75, 31);
-            this.btnGetSetting.TabIndex = 7;
-            this.btnGetSetting.Text = "讀取設定";
-            this.btnGetSetting.UseVisualStyleBackColor = true;
-            this.btnGetSetting.Click += new System.EventHandler(this.btnGetSetting_Click);
-            // 
             // fmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.ClientSize = new System.Drawing.Size(1178, 589);
+            this.Controls.Add(this.pbPushButton);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblSerialNo);
             this.Controls.Add(this.label27);
@@ -2103,6 +2117,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox28)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox29)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox30)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPushButton)).EndInit();
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox31)).EndInit();
@@ -2321,5 +2336,6 @@
         private Panel panelDisplay;
         private Button btnGetSetting;
         private Button btnSaveSetting;
+        private PictureBox pbPushButton;
     }
 }
