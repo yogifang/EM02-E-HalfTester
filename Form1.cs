@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO.Ports;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Resources;
@@ -26,10 +27,10 @@ namespace EM02_E_HalfTester
         delegate void GoGetUT5526Data(byte[] buffer);
         private Thread threadUT5526;
 
-        private SerialPort? _MESPort;
-        private bool MES_receiving = false;
-        delegate void GoGetMESData(byte[] buffer);
-        private Thread threadMES;
+        private SerialPort? _BarCodePort;
+        private bool BarCode_receiving = false;
+        delegate void GoGetBarCodeData(byte[] buffer);
+        private Thread threadBarCode;
 
         private SerialPort? _EM02Port;
         private bool EM02_receiving = false;
@@ -51,7 +52,7 @@ namespace EM02_E_HalfTester
         private bool bWaitACC = false;
 
 
-        private const UInt16 lenBufEM02 = 32;
+        private const UInt16 lenBufEM02 = 8192;
         private byte[] ringBufferEM02;
         private int ringCountEM02 = 0;
         private int ringOutputEM02 = 0;
@@ -61,18 +62,20 @@ namespace EM02_E_HalfTester
         private int iCurrentReadEM02 = 0;
         private int iCntWaitEM02 = 0;
         private int iStateEM02 = 0;
+        private int iCntEM02 = 0;
 
 
-        private const UInt16 lenBufMES = 256;
-        private byte[] ringBufferMES;
-        private int ringCountMES = 0;
-        private int ringOutputMES = 0;
-        private int ringInputMES = 0;
-        private int iIdxReadMES = 0;  // current read channel 
-        private int iCntReadMES = 0;  // read how many channels
-        private int iCurrentReadMES = 0;
-        private int iCntWaitMES = 0;
-
+        private const UInt16 lenBufBarCode = 256;
+        private byte[] ringBufferBarCode;
+        private int ringCountBarCode = 0;
+        private int ringOutputBarCode = 0;
+        private int ringInputBarCode = 0;
+        private int iIdxReadBarCode = 0;  // current read channel 
+        private int iCntReadBarCode = 0;  // read how many channels
+        private int iCurrentReadBarCode = 0;
+        private int iCntWaitBarCode = 0;
+        private int iStateBarCode = 0;
+        private bool bErrorBarcode = false;
 
         private string[] chanelNames;
         private Image[] imgDigiNormal;
@@ -88,9 +91,22 @@ namespace EM02_E_HalfTester
       
         string comUT5526 = "";
         string comEM02 = "";
-        string comMES = "";
+        string comBarCode = "";
         DateTime time00;
         DateTime time01;
+
+        class EM02DBGTYPE
+        {
+            public string code { get; set; }
+            public string name { get; set; }
+        }
+        private List<EM02DBGTYPE> car_type = new List<EM02DBGTYPE>();
+
+        private List<EM02DBGTYPE> gpsStatus = new List<EM02DBGTYPE>();
+        private List<EM02DBGTYPE> gSensorStatus = new List<EM02DBGTYPE>();
+        private List<EM02DBGTYPE> sdCardStatus = new List<EM02DBGTYPE>();
+        private List<EM02DBGTYPE> cameraStatus = new List<EM02DBGTYPE>();
+       
 
         class ChannelData
         {
@@ -145,9 +161,10 @@ namespace EM02_E_HalfTester
             }
         }
 
-        private void initComMES(string sPort)
+        private void initComBarCode(string sPort)
         {
-            _MESPort = new SerialPort()
+
+            _BarCodePort = new SerialPort()
             {
                 PortName = sPort,
                 BaudRate = 9600,
@@ -157,23 +174,23 @@ namespace EM02_E_HalfTester
                 Handshake = Handshake.None
             };
 
-            if (_MESPort.IsOpen == false)
+            if (_BarCodePort.IsOpen == false)
             {
                 try
                 {
-                    _MESPort.Open();
+                    _BarCodePort.Open();
                     //開啟 Serial Port
-                    MES_receiving = true;
+                    BarCode_receiving = true;
                     //開啟執行續做接收動作
-                    threadMES = new Thread(DoReceiveMES);
-                    threadMES.IsBackground = true;
-                    threadMES.Start();
+                    threadBarCode = new Thread(DoReceiveBarCode);
+                    threadBarCode.IsBackground = true;
+                    threadBarCode.Start();
 
                 }
                 catch (Exception)
                 {
                     // port will not be open, therefore will become null
-                    MessageBox.Show("無法開啟MES Port!");
+                    MessageBox.Show("無法開啟BarCode Port!");
                     Application.Exit();
                 }
             }
@@ -184,7 +201,7 @@ namespace EM02_E_HalfTester
             _EM02Port = new SerialPort()
             {
                 PortName = sPort,
-                BaudRate = 9600,
+                BaudRate = 115200,
                 Parity = Parity.None,
                 DataBits = 8,
                 StopBits = StopBits.One,
@@ -197,11 +214,11 @@ namespace EM02_E_HalfTester
                 {
                     _EM02Port.Open();
                     //開啟 Serial Port
-                    MES_receiving = true;
+                    EM02_receiving = true;
                     //開啟執行續做接收動作
-                    threadMES = new Thread(DoReceiveEM02);
-                    threadMES.IsBackground = true;
-                    threadMES.Start();
+                    threadEM02 = new Thread(DoReceiveEM02);
+                    threadEM02.IsBackground = true;
+                    threadEM02.Start();
 
                 }
                 catch (Exception)
@@ -241,21 +258,21 @@ namespace EM02_E_HalfTester
         }
 
 
-        private void DoReceiveMES()
+        private void DoReceiveBarCode()
         {
             Byte[] buffer = new Byte[256];
 
             try
             {
-                while (MES_receiving)
+                while (BarCode_receiving)
                 {
-                    if (_MESPort?.BytesToRead >= 1 && _MESPort.BytesToWrite == 0)
+                    if (_BarCodePort?.BytesToRead >= 1 && _BarCodePort.BytesToWrite == 0)
                     {
-                        Int32 length = _MESPort.Read(buffer, 0, buffer.Length);
+                        Int32 length = _BarCodePort.Read(buffer, 0, buffer.Length);
 
                         string buf = Encoding.ASCII.GetString(buffer);
                         Array.Resize(ref buffer, length);
-                        GoGetMESData d = new GoGetMESData(MESShow);
+                        GoGetBarCodeData d = new GoGetBarCodeData(BarCodeShow);
                         this.Invoke(d, new Object[] { buffer });
                         Array.Resize(ref buffer, length);
                     }
@@ -311,7 +328,59 @@ namespace EM02_E_HalfTester
             ringOutputEM02 = (ringOutputEM02 + 1) & (lenBufEM02 - 1);
             return byData;
         }
+        private int SearchEM02LineFeed()
+        {
+            if (ringCountEM02 > 0)
+            {
+                for (int i = 0; i <= ringCountEM02; i++)
+                {
+                    int iOp = (ringOutputEM02 + i) & (lenBufEM02 - 1);
+                    if (ringBufferEM02[iOp] == 0x0a)
+                    {
+                        return i + 1;
+                    }
+                }
+                return 0;
 
+            }
+            else
+            {
+                return 0;   // nothing in there
+            }
+        }
+        private int  SearchEM02Tail() // tail is 0x1b 0x5b 0x6d  [ESC][m
+        {
+
+            int iCntSearch = ringCountEM02;
+            int iIdxSearch = 0;
+            int iOp = 0;
+            while (iCntSearch >=3)
+            {
+                iOp = (ringOutputEM02 + iIdxSearch) & (lenBufEM02 - 1);
+                iIdxSearch++;
+                iCntSearch--;
+                if (ringBufferEM02[iOp] == 0x1b)
+                {  
+                    iCntSearch--;
+                    iOp = (ringOutputEM02 + iIdxSearch) & (lenBufEM02 - 1);
+                    iIdxSearch++;
+                    if (ringBufferEM02[iOp] == 0x5b)
+                    { 
+                        
+                        iOp = (ringOutputEM02 + iIdxSearch) & (lenBufEM02 - 1);
+                        iIdxSearch++;
+                        iCntSearch--;
+                        if (ringBufferEM02[iOp] == 0x6d)
+                        {
+                            return iIdxSearch + 1;
+                        }
+                    }
+                   
+                }
+            }
+            return 0;
+
+        }
         private void SetRingUT5526(byte byData)
         {
             ringBufferUT5526[ringInputUT5526] = byData;
@@ -341,20 +410,42 @@ namespace EM02_E_HalfTester
             _UT5526Port?.Write(byBCC, 0, 1);
             _UT5526Port?.Write(endChar, 0, 1);
         }
-        private void setRingMES(byte byData)
+
+        private void SetRingBarCode(byte byData)
         {
-            ringBufferMES[ringInputMES] = byData;
-            ringCountMES++;
-            ringInputMES = (ringInputMES + 1) & (lenBufMES - 1);
+            ringBufferBarCode[ringInputBarCode] = byData;
+            ringCountBarCode++;
+            ringInputBarCode = (ushort)((ringInputBarCode + 1) & (lenBufBarCode - 1));
         }
-        private byte getRingMES()
+        private byte GetRingBarCode()
         {
-            byte byData = ringBufferMES[ringOutputMES];
-            ringCountMES--;
-            if (ringCountMES < 0) ringCountMES = 0;
-            ringOutputMES = (ringOutputUT5526 + 1) & (lenBufMES - 1);
+            byte byData = ringBufferBarCode[ringOutputBarCode];
+            ringCountBarCode--;
+            if (ringCountBarCode < 0) ringCountBarCode = 0;
+            ringOutputBarCode = (ushort)((ringOutputBarCode + 1) & (lenBufBarCode - 1));
             return byData;
         }
+        private int SearchBarCodeLineFeed()
+        {
+            if (ringCountBarCode > 0)
+            {
+                for (int i = 0; i < ringCountBarCode; i++)
+                {
+                    int iOp = (ringOutputBarCode + i) & (lenBufBarCode - 1);
+                    if (ringBufferBarCode[iOp] == 0x0a)
+                    {
+                        return i + 1;
+                    }
+                }
+                return 0;
+
+            }
+            else
+            {
+                return 0;   // nothing in there
+            }
+        }
+       
         public void EM02Show(byte[] buffer)
         {
 
@@ -375,13 +466,13 @@ namespace EM02_E_HalfTester
             }
         }
 
-        public void MESShow(byte[] buffer)
+        public void BarCodeShow(byte[] buffer)
         {
             //  byte[] buf = Encoding.ASCII.GetBytes(buffer);
             byte[] buf = buffer;
             for (int i = 0; i < buf.Length; i++)
             {
-                setRingMES(buf[i]);
+                SetRingBarCode(buf[i]);
             }
 
         }
@@ -401,11 +492,226 @@ namespace EM02_E_HalfTester
         {
            
             timer1.Interval = 10;
-            EventHandler timer1_Tick = Timer1_Tick;
+             EventHandler timer1_Tick = timer1_Tick_1;
             this.timer1.Tick += new EventHandler(timer1_Tick);
             timer1.Enabled = true;
 
         }
+        private void procEM02GM(int iLFCRPos)
+        {
+          //  lblLength.Text = ringCountEM02.ToString();
+        
+                byte[] buf = new byte[iLFCRPos];
+                for (int i = 0; i < iLFCRPos; i++)
+                {
+                    buf[i] = GetRingEM02();
+                }
+                var str = System.Text.Encoding.Default.GetString(buf);
+                string[] strTokens = str.Split(',');
+                switch (strTokens[0])
+                {
+                    case "FACTORY":
+                        lblEM02.Text = strTokens[1];
+                        break;
+                    case "BOOT":
+                        lblEM02.Text = strTokens[1];
+                        break;
+                    case "DEV":
+                        lblEM02.Text = strTokens[1];
+                        break;
+                    case "CAN":
+                        lblEM02.Text = strTokens[1];
+                        break;
+                    case "INIT":
+                        lblEM02.Text = strTokens[1];
+                        break;
+                    case "SD":
+                        lblEM02.Text = strTokens[1];
+                        break;
+                    default:
+                        iStateEM02 = 0;
+                        break;
+                }
+          
+        }
+
+        private List<EM02DBGTYPE> GetCar_type()
+        {
+            return car_type;
+        }
+
+        private void  procEM02(List<EM02DBGTYPE> car_type) 
+        {
+            const byte ESC = 0x1b;
+              
+            switch (iStateEM02)
+            {
+                case 0:
+
+                    if(ringCountEM02 >= 14)
+                    {
+                      
+                        do {
+                            if( GetRingEM02() == ESC)
+                            {
+                                if (GetRingEM02() == '[')
+                                {
+                                    if (GetRingEM02() == 'm')
+                                    {
+                                        if (GetRingEM02() == ESC)
+                                        {
+                                            if (GetRingEM02() == '[')
+                                            {
+                                                if (GetRingEM02() == '1')
+                                                {
+                                                    if (GetRingEM02() == ';')
+                                                    {
+                                                        if (GetRingEM02() == '3')
+                                                        {
+                                                            if (GetRingEM02() == '3')
+                                                            {
+                                                                if (GetRingEM02() == 'm')
+                                                                {
+                                                                    if (GetRingEM02() == '$')
+                                                                    {
+                                                                        if (GetRingEM02() == 'G')
+                                                                        {
+                                                                            if (GetRingEM02() == 'M')
+                                                                            {
+                                                                                if (GetRingEM02() == ',')
+                                                                                {
+                                                                                    iCntEM02++;
+                                                                                    lblTime.Text = iCntEM02.ToString();
+                                                                                    iStateEM02++;
+                                                                                    //   iCntEM02++;
+                                                                                    //   lblTime.Text = iCntEM02.ToString();
+                                                                                    //     int iLFFound = SearchEM02LineFeed();
+                                                                                    //     if (iLFFound > 0) // already have a line 
+                                                                                    //     {
+                                                                                    //         procEM02GM(iLFFound);
+                                                                                    //    }
+                                                                                    //     else
+                                                                                    //     {  // not a line in wait next
+                                                                                    //         iStateEM02++;
+                                                                                    //     }
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+ 
+                        } while (ringCountEM02 >= 14);
+                    }
+                    break;
+                case 1:
+                    if( ringCountEM02 >= 13)
+                    {
+                        lblLength.Text = ringCountEM02.ToString();
+                        int iLFCRPos = SearchEM02Tail();
+                        if (iLFCRPos > 0)  // find a Line feed
+                        {
+                            byte[] buf = new byte[iLFCRPos];
+                            for (int i = 0; i < iLFCRPos; i++)
+                            {
+                                buf[i] = GetRingEM02();
+                            }
+                            var str = System.Text.Encoding.Default.GetString(buf);
+                            string[] strTokens = str.Split(',');
+                            switch (strTokens[0])
+                            {
+                                case "FACTORY":
+                                    lblEM02.Text = strTokens[1];
+                                    lblSoftware.Text = strTokens[1];
+                                    lblFirmware.Text = strTokens[2];
+                                    lblCarModel.Text = car_type.Find(x => x.code == strTokens[3]).name;
+                                    lblGPS.Text = gpsStatus.Find(x => x.code == strTokens[4]).name;
+                                    lblSpeed.Text = strTokens[5];
+                                    lblGSensor.Text = gSensorStatus.Find(x => x.code == strTokens[6]).name;
+                                    lblACC.Text = strTokens[7];
+                                    lblSDCard.Text = sdCardStatus.Find(x => x.code == strTokens[9]).name;
+                                    lblFrontCAM.Text = cameraStatus.Find(x => x.code == strTokens[10]).name;
+                                    lblRearCAM.Text = cameraStatus.Find(x => x.code == strTokens[11]).name;
+                                    break;
+                                case "BOOT":
+                                    lblEM02.Text = strTokens[1];
+                                    break;
+                                case "DEV":
+                                    lblEM02.Text = strTokens[1];
+                                    break;
+                                case "CAN":
+                                    lblEM02.Text = strTokens[1];
+                                    break;
+                                case "INIT":
+                                    lblEM02.Text = strTokens[1];
+                                    break;
+                                case "SD":
+                                    lblEM02.Text = strTokens[1];
+                                    break;
+                                default:
+                                    iStateEM02 = 0;
+                                    break;
+                            }
+                            iStateEM02=0;
+                        }
+                    }
+                   
+                    break;
+                case 2:
+                    iStateEM02 = 0;
+                    break;
+                 default:
+                    iStateEM02 = 0;
+                    break;
+            }
+        }  
+
+
+        private void procBarcode()
+        {
+            if (bErrorBarcode)
+            {
+                iStateBarCode = 0;
+                return;
+            }
+            switch (iStateBarCode)
+            {
+                case 0:
+                    if (ringCountBarCode >= 20)    // EM02 SN ==> 20 byte with 0a 0d
+                    {
+                        int iTemp = SearchBarCodeLineFeed();
+                        if (iTemp >= 18)    // it is SN��
+                        {
+                            byte[] bySN = new byte[iTemp + 1];
+                            for (int i = 0; i < iTemp; i++)
+                            {
+                                bySN[i] = GetRingBarCode();
+                            }
+                            string strSN = System.Text.Encoding.Default.GetString(bySN);
+                            lblSN.Text = strSN;
+                            iStateBarCode++;
+                      
+                        }
+
+                    }
+                    break;
+                default:
+                    iStateBarCode = 0;
+                    break;
+
+            }
+        }
+
+
         private void ProcUT5526()
         {
             const byte SOH = 0x01;
@@ -420,10 +726,7 @@ namespace EM02_E_HalfTester
             }
 
 
-
-
             if (iCntWaitUT5526 > 0) iCntWaitUT5526--;
-            //    pictureBoxButton1.Image = Resource1.led_a;
             switch (iStateUT5526)
             {
                 case 0:
@@ -492,15 +795,6 @@ namespace EM02_E_HalfTester
                 case 3:
                     if (iCntWaitUT5526 == 0)
                     {
-                    //    string strComData = "01MORDVO";  // read current channel data
-                    //    byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
-                    //    byte[] byBCC = new byte[1];
-                    //    byBCC[0] = UTBus_LRC(cmdStr, 8);
-                    //    _UT5526Port?.Write(leadChar, 0, 1);
-                    //    _UT5526Port?.Write(strComData);
-                    //    _UT5526Port?.Write(byBCC, 0, 1);
-                     //   _UT5526Port?.Write(endChar, 0, 1);
-                     //  iCntWaitUT5526 = 60;
                         iStateUT5526++;
                     }
                     break;
@@ -521,10 +815,7 @@ namespace EM02_E_HalfTester
                                 byTemp = GetRingUT5526(); // bcc code
                                 byTemp = GetRingUT5526(); // end code
                                 iStateUT5526++;
-                                if (collectData.Count <= iIdxGetUT5526)
-                                {
-                                    int iTest = iCntGetUT5526;
-                                }
+                                
                                 collectData[iIdxGetUT5526].PreviousData = collectData[iIdxGetUT5526].CurrentData;
                                 collectData[iIdxGetUT5526].CurrentData = iInt * 100 + iDot;
                                 if (iIdxGetUT5526 > 0) // skip dummy read 
@@ -553,9 +844,9 @@ namespace EM02_E_HalfTester
                                 if (iCntGetUT5526 == 0)
                                 {
                                  
-                                  // MessageBox.Show("Done");
                                     bWaitACC = true;
                                     pbPushButton.Visible= true;
+                                    pbPushButton.Image = Resource1.red_button_spam;
                                     iCntGetUT5526 = 1;
                                     iIdxGetUT5526 = 0;
                                 }
@@ -587,9 +878,6 @@ namespace EM02_E_HalfTester
                 iCurrentGetUT5526 = 0;
                 return;
             }
-
-
-          
 
             if (iCntWaitUT5526 > 0) iCntWaitUT5526--;
             //    pictureBoxButton1.Image = Resource1.led_a;
@@ -707,7 +995,8 @@ namespace EM02_E_HalfTester
                                 if (collectData[iIdxGetUT5526].CurrentData <= 100)
                                 {
                                     bWaitACC = false;
-                                    pbPushButton.Visible = false;
+                                   // pbPushButton.Visible = false;
+                                    pbPushButton.Image = Resource1.pass;
                                     iIdxGetUT5526 = 0;
                                 } else
                                 {
@@ -729,9 +1018,11 @@ namespace EM02_E_HalfTester
             }
 
         }
-        private void Timer1_Tick(object Sender, EventArgs e)
-        {
 
+        private void timer1_Tick_1(object sender, EventArgs e)
+        {
+            procBarcode();
+            procEM02(GetCar_type());
             if (bWaitACC == false)
             {
                 ProcUT5526();
@@ -740,19 +1031,20 @@ namespace EM02_E_HalfTester
             {
                 ProcUT5526ACC();
             }
-          
-         
+
         }
+
 
         private void FmMain_Load(object sender, EventArgs e)
         {
-     
+
             imgDigiNormal = new Image[10];
             imgDigiNormalDot = new Image[10];
             imgDigiError = new Image[10];
             imgDigiErrorDot = new Image[10];
             ringBufferUT5526 = new byte[lenBufUT5526];
             ringBufferEM02 = new byte[lenBufEM02];
+            ringBufferBarCode = new byte[lenBufBarCode];
 
             foreach (Control ctrl in this.Controls)
             {
@@ -811,8 +1103,41 @@ namespace EM02_E_HalfTester
                         }
                     }
                 }
-        
+
             }
+
+            car_type.Add(new EM02DBGTYPE() { code = "1", name = "AZ" });
+            car_type.Add(new EM02DBGTYPE() { code = "2", name = "RE" });
+            car_type.Add(new EM02DBGTYPE() { code = "3", name = "NS" });
+            car_type.Add(new EM02DBGTYPE() { code = "4", name = "SR" });
+            car_type.Add(new EM02DBGTYPE() { code = "5", name = "DE" });
+            car_type.Add(new EM02DBGTYPE() { code = "6", name = "JD" });
+            car_type.Add(new EM02DBGTYPE() { code = "7", name = "NPZ" });
+
+            gpsStatus.Add(new EM02DBGTYPE() { code = "-1", name = "尚未抓取到NEMA資料" });
+            gpsStatus.Add(new EM02DBGTYPE() { code = "0", name = "已正確抓取到NEMA資料" });
+            gpsStatus.Add(new EM02DBGTYPE() { code = "1", name = "時間校正完成" });
+            gpsStatus.Add(new EM02DBGTYPE() { code = "2", name = "定位完成" });
+
+            gSensorStatus.Add(new EM02DBGTYPE() { code = "0", name = "未偵測到裝置" });
+            gSensorStatus.Add(new EM02DBGTYPE() { code = "1", name = "有偵測到裝置" });
+
+            sdCardStatus.Add(new EM02DBGTYPE() { code = "0", name = "未插卡" });
+            sdCardStatus.Add(new EM02DBGTYPE() { code = "1", name = "插入偵測" });
+            sdCardStatus.Add(new EM02DBGTYPE() { code = "2", name = "卡片異常" });
+            sdCardStatus.Add(new EM02DBGTYPE() { code = "3", name = "檔案系統確認中" });
+            sdCardStatus.Add(new EM02DBGTYPE() { code = "4", name = "檔案系統確認失敗" });
+            sdCardStatus.Add(new EM02DBGTYPE() { code = "5", name = "檔案系統出現例外" });
+            sdCardStatus.Add(new EM02DBGTYPE() { code = "6", name = "SD卡掛載完成" });
+            sdCardStatus.Add(new EM02DBGTYPE() { code = "7", name = "SD卡掛載失敗" });
+            sdCardStatus.Add(new EM02DBGTYPE() { code = "8", name = "SD卡閒置" });
+
+            cameraStatus.Add(new EM02DBGTYPE() { code = "0", name = "1080P25" });
+            cameraStatus.Add(new EM02DBGTYPE() { code = "1", name = "1080P30" });
+            cameraStatus.Add(new EM02DBGTYPE() { code = "2", name = "720P25" });
+            cameraStatus.Add(new EM02DBGTYPE() { code = "3", name = "720P30" });
+            cameraStatus.Add(new EM02DBGTYPE() { code = "4", name = "720P60" });
+            cameraStatus.Add(new EM02DBGTYPE() { code = "5", name = "無連接" });
 
             imgDigiNormal[0] = Resource1._0;
             imgDigiNormal[1] = Resource1._1;
@@ -866,7 +1191,7 @@ namespace EM02_E_HalfTester
             var results = Array.Find(allkeys, s => s.Equals("UT5526"));
             if (results == null)
             {
-                config.AppSettings.Settings.Add("UT5526", "COM5");
+                config.AppSettings.Settings.Add("UT5526", "COM6");
             }
             else
             {
@@ -876,21 +1201,21 @@ namespace EM02_E_HalfTester
             results = Array.Find(allkeys, s => s.Equals("EM02"));
             if (results == null)
             {
-                config.AppSettings.Settings.Add("EM02", "COM4");
+                config.AppSettings.Settings.Add("EM02", "COM7");
             }
             else
             {
                 comEM02 = config.AppSettings.Settings["EM02"].Value;
 
             }
-            results = Array.Find(allkeys, s => s.Equals("MES"));
+            results = Array.Find(allkeys, s => s.Equals("BarCode"));
             if (results == null)
             {
-                config.AppSettings.Settings.Add("MES", "COM2");
+                config.AppSettings.Settings.Add("BarCode", "COM4");
             }
             else
             {
-                comMES = config.AppSettings.Settings["MES"].Value;
+                comBarCode = config.AppSettings.Settings["BarCode"].Value;
 
             }
             config.Save(ConfigurationSaveMode.Modified);
@@ -898,11 +1223,11 @@ namespace EM02_E_HalfTester
 
 
             string[] ports = SerialPort.GetPortNames();
-            cbMES.Items.AddRange(ports);
+            cbBarCode.Items.AddRange(ports);
             cbUT5526.Items.AddRange(ports);
             cbEM02.Items.AddRange(ports);
 
-            cbMES.SelectedItem = cbMES;
+            cbBarCode.SelectedItem =  comBarCode;
             cbEM02.SelectedItem = comEM02;
             cbUT5526.SelectedItem = comUT5526;
 
@@ -913,7 +1238,9 @@ namespace EM02_E_HalfTester
 
             InitializeTimer();
           //  initComBarcode("COM3");
-            initComUT5526("COM6");
+            initComUT5526(comUT5526);
+            initComBarCode(comBarCode);
+            initComEM02(comEM02);
 
             if (bErrorUT5526 == false)
             {
@@ -1069,9 +1396,9 @@ namespace EM02_E_HalfTester
             {
                 _UT5526Port.Close();
             }
-            if (_MESPort?.IsOpen == true)
+            if (_BarCodePort?.IsOpen == true)
             {
-                _MESPort.Close();
+                _BarCodePort.Close();
             }
             Environment.Exit(Environment.ExitCode);
 
@@ -1085,15 +1412,15 @@ namespace EM02_E_HalfTester
      
             timer1.Enabled = true;
             bCmdReadSend = true;
-            iCntGetUT5526 = 25;
+            iCntGetUT5526 = 19;
           
         }
 
         private void resetComPorts()
         {
-            if (_MESPort?.IsOpen == true)
+            if (_BarCodePort?.IsOpen == true)
             {
-                _MESPort?.Close();
+                _BarCodePort?.Close();
             };
             if (_EM02Port?.IsOpen == true)
             {
@@ -1106,14 +1433,32 @@ namespace EM02_E_HalfTester
       
             initComEM02(comEM02);
             initComUT5526(comUT5526);
+            initComBarCode(comBarCode);
+          
         }
         private void btnSaveSetting_Click(object sender, EventArgs e)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-            config.AppSettings.Settings.Remove("MES");
-            config.AppSettings.Settings.Add("MES", cbMES.SelectedItem.ToString());
-            config.Save(ConfigurationSaveMode.Modified);
-            MessageBox.Show("Com Port ��s����!");
+            if(cbBarCode.SelectedItem.ToString() != "")
+            {
+                config.AppSettings.Settings.Remove("BarCode");
+                config.AppSettings.Settings.Add("BarCode", cbBarCode.SelectedItem.ToString());
+                config.Save(ConfigurationSaveMode.Modified);
+            }
+            if (cbUT5526.SelectedItem.ToString() != "")
+            {
+                config.AppSettings.Settings.Remove("UT5526");
+                config.AppSettings.Settings.Add("UT5526", cbUT5526.SelectedItem.ToString());
+                config.Save(ConfigurationSaveMode.Modified);
+            }
+            if (cbEM02.SelectedItem.ToString() != "")
+            {
+                config.AppSettings.Settings.Remove("EM02");
+                config.AppSettings.Settings.Add("EM02", cbEM02.SelectedItem.ToString());
+                config.Save(ConfigurationSaveMode.Modified);
+            }
+          
+            MessageBox.Show("Com Port 更新! 請重新開機!");
         }
 
         private void btnGetSetting_Click(object sender, EventArgs e)
@@ -1121,12 +1466,14 @@ namespace EM02_E_HalfTester
             Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
             comEM02 = config.AppSettings.Settings["EM02"].Value;
             comUT5526 = config.AppSettings.Settings["UT5526"].Value;
-            comEM02 = config.AppSettings.Settings["MES"].Value;
-            cbMES.SelectedItem = comMES;
+            comBarCode = config.AppSettings.Settings["BarCode"].Value;
+            cbBarCode.SelectedItem = comBarCode;
             cbUT5526.SelectedItem = comUT5526;
             cbEM02.SelectedItem = comEM02;
-            MessageBox.Show("Com Port Ū��OK!");
+            MessageBox.Show("Com Port 重新設定OK!");
             resetComPorts();
         }
+
+       
     }
 }
