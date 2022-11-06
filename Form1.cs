@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Dynamic;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
@@ -9,6 +13,7 @@ using System.Reflection.Emit;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Windows.Forms;
 
 
@@ -85,10 +90,14 @@ namespace EM02_E_HalfTester
         private byte[] leadChar = new byte[1];
         private byte[] endChar = new byte[1];
 
-        private bool bCmdReadSend = false;
+        string strLogFilename = "";
+        StreamWriter file ;
 
+        private bool bSerialNO = false;  // serial no in already
+        private bool bReadUT5526 = false;
+        private int iErrors = 0;
+     
 
-      
         string comUT5526 = "";
         string comEM02 = "";
         string comBarCode = "";
@@ -100,13 +109,15 @@ namespace EM02_E_HalfTester
             public string code { get; set; }
             public string name { get; set; }
         }
-        private List<EM02DBGTYPE> car_type = new List<EM02DBGTYPE>();
 
+
+        private List<EM02DBGTYPE> car_type = new List<EM02DBGTYPE>();
         private List<EM02DBGTYPE> gpsStatus = new List<EM02DBGTYPE>();
         private List<EM02DBGTYPE> gSensorStatus = new List<EM02DBGTYPE>();
         private List<EM02DBGTYPE> sdCardStatus = new List<EM02DBGTYPE>();
         private List<EM02DBGTYPE> cameraStatus = new List<EM02DBGTYPE>();
        
+        private List<EM02DBGTYPE> em02DataField = new List<EM02DBGTYPE>();
 
         class ChannelData
         {
@@ -115,10 +126,64 @@ namespace EM02_E_HalfTester
             public int PreviousData { get; set; }
             public int CurrentData { get; set; }
             public int StandardData { get; set; }
+            public string fieldName { get; set; }
         }
 
 
         private List<ChannelData> collectData = new List<ChannelData>();
+
+
+        class DynamicConverter : JsonConverter<Dynamic>
+        {
+          
+            public override Dynamic ReadJson(JsonReader reader, Type objectType, [AllowNull] Dynamic existingValue, bool hasExistingValue, Newtonsoft.Json.JsonSerializer serializer)
+            {
+                throw new NotImplementedException();
+            }
+
+
+            public override void WriteJson(JsonWriter writer, [AllowNull] Dynamic value, Newtonsoft.Json.JsonSerializer serializer)
+            {
+                writer.WriteStartObject();
+                foreach (var kvp in value._dictionary)
+                {
+                    writer.WriteValue(kvp.Key);
+                    writer.WriteValue(kvp.Value);
+                }
+                writer.WriteEndObject();
+            }
+        }
+
+        class Dynamic : DynamicObject
+        {
+            internal Dictionary<string, object> _dictionary = new Dictionary<string, object>();
+            public object this[string propertyName]
+            {
+                get { return _dictionary[propertyName]; }
+                set { AddProperty(propertyName, value); }
+            }
+            public override bool TryGetMember(GetMemberBinder binder, out object result)
+            {
+                 return _dictionary.TryGetValue(binder.Name, out result);
+            }
+
+            public override bool TrySetMember(SetMemberBinder binder, object value)
+            {
+                AddProperty(binder.Name, value);
+                return true;
+            }
+           
+             public void AddProperty(string name, object value)
+             {
+                _dictionary[name] = value;
+             }
+        }
+
+
+     
+
+        Dynamic em02TestDatas = new Dynamic();
+
 
 
         public fmMain()
@@ -240,8 +305,6 @@ namespace EM02_E_HalfTester
                     if (_UT5526Port?.BytesToRead >= 1 && _UT5526Port.BytesToWrite == 0)
                     {
                         Int32 length = _UT5526Port.Read(buffer, 0, buffer.Length);
-
-                        string buf = Encoding.ASCII.GetString(buffer);
                         Array.Resize(ref buffer, length);
                         GoGetUT5526Data d = new GoGetUT5526Data(UT5526Show);
                         this.Invoke(d, new Object[] { buffer });
@@ -269,8 +332,6 @@ namespace EM02_E_HalfTester
                     if (_BarCodePort?.BytesToRead >= 1 && _BarCodePort.BytesToWrite == 0)
                     {
                         Int32 length = _BarCodePort.Read(buffer, 0, buffer.Length);
-
-                        string buf = Encoding.ASCII.GetString(buffer);
                         Array.Resize(ref buffer, length);
                         GoGetBarCodeData d = new GoGetBarCodeData(BarCodeShow);
                         this.Invoke(d, new Object[] { buffer });
@@ -288,7 +349,7 @@ namespace EM02_E_HalfTester
 
         private void DoReceiveEM02()
         {
-            Byte[] buffer = new Byte[256];
+            Byte[] buffer = new Byte[512];
 
             try
             {
@@ -297,15 +358,13 @@ namespace EM02_E_HalfTester
                     if (_EM02Port?.BytesToRead >= 1 && _EM02Port.BytesToWrite == 0)
                     {
                         Int32 length = _EM02Port.Read(buffer, 0, buffer.Length);
-
-                        string buf = Encoding.ASCII.GetString(buffer);
                         Array.Resize(ref buffer, length);
                         GoGetEM02Data d = new GoGetEM02Data(EM02Show);
                         this.Invoke(d, new Object[] { buffer });
                         Array.Resize(ref buffer, length);
                     }
 
-                    Thread.Sleep(10);
+                    Thread.Sleep(2);
                 }
             }
             catch (Exception ex)
@@ -322,11 +381,17 @@ namespace EM02_E_HalfTester
         }
         private byte GetRingEM02()
         {
-            byte byData = ringBufferEM02[ringOutputEM02];
-            ringCountEM02--;
-            if (ringCountEM02 < 0) ringCountEM02 = 0;
-            ringOutputEM02 = (ringOutputEM02 + 1) & (lenBufEM02 - 1);
-            return byData;
+            if (ringCountEM02 == 0)
+            {
+                return 0;
+            }
+                byte byData = ringBufferEM02[ringOutputEM02];
+                ringCountEM02--;
+                if (ringCountEM02 < 0) ringCountEM02 = 0;
+                ringOutputEM02 = (ringOutputEM02 + 1) & (lenBufEM02 - 1);
+                return byData;
+            
+            
         }
         private int SearchEM02LineFeed()
         {
@@ -458,7 +523,7 @@ namespace EM02_E_HalfTester
 
         public void UT5526Show(byte[] buffer)
         {
-            //  byte[] buf = Encoding.ASCII.GetBytes(buffer);
+          
             byte[] buf = buffer;
             for (int i = 0; i < buf.Length; i++)
             {
@@ -468,7 +533,7 @@ namespace EM02_E_HalfTester
 
         public void BarCodeShow(byte[] buffer)
         {
-            //  byte[] buf = Encoding.ASCII.GetBytes(buffer);
+           
             byte[] buf = buffer;
             for (int i = 0; i < buf.Length; i++)
             {
@@ -499,7 +564,6 @@ namespace EM02_E_HalfTester
         }
         private void procEM02GM(int iLFCRPos)
         {
-          //  lblLength.Text = ringCountEM02.ToString();
         
                 byte[] buf = new byte[iLFCRPos];
                 for (int i = 0; i < iLFCRPos; i++)
@@ -535,12 +599,10 @@ namespace EM02_E_HalfTester
           
         }
 
-        private List<EM02DBGTYPE> GetCar_type()
-        {
-            return car_type;
-        }
+   
 
-        private void  procEM02(List<EM02DBGTYPE> car_type) 
+
+        private void  procEM02() 
         {
             const byte ESC = 0x1b;
               
@@ -548,16 +610,10 @@ namespace EM02_E_HalfTester
             {
                 case 0:
 
-                    if(ringCountEM02 >= 14)
+                    if(ringCountEM02 >= 11)
                     {
                       
-                        do {
-                            if( GetRingEM02() == ESC)
-                            {
-                                if (GetRingEM02() == '[')
-                                {
-                                    if (GetRingEM02() == 'm')
-                                    {
+                        do {                      
                                         if (GetRingEM02() == ESC)
                                         {
                                             if (GetRingEM02() == '[')
@@ -583,17 +639,6 @@ namespace EM02_E_HalfTester
                                                                                     iCntEM02++;
                                                                                     lblTime.Text = iCntEM02.ToString();
                                                                                     iStateEM02++;
-                                                                                    //   iCntEM02++;
-                                                                                    //   lblTime.Text = iCntEM02.ToString();
-                                                                                    //     int iLFFound = SearchEM02LineFeed();
-                                                                                    //     if (iLFFound > 0) // already have a line 
-                                                                                    //     {
-                                                                                    //         procEM02GM(iLFFound);
-                                                                                    //    }
-                                                                                    //     else
-                                                                                    //     {  // not a line in wait next
-                                                                                    //         iStateEM02++;
-                                                                                    //     }
                                                                                     break;
                                                                                 }
                                                                             }
@@ -606,11 +651,7 @@ namespace EM02_E_HalfTester
                                                 }
                                             }
                                         }
-                                    }
-                                }
-                            }
- 
-                        } while (ringCountEM02 >= 14);
+                        } while (ringCountEM02 >= 11);
                     }
                     break;
                 case 1:
@@ -627,10 +668,16 @@ namespace EM02_E_HalfTester
                             }
                             var str = System.Text.Encoding.Default.GetString(buf);
                             string[] strTokens = str.Split(',');
+                            
                             switch (strTokens[0])
                             {
                                 case "FACTORY":
-                                    lblEM02.Text = strTokens[1];
+                                    startReadUT5526();
+                                    lblEM02.Text = strTokens[0];
+                                    if (strTokens[1] == "SD")
+                                    {
+                                        break;
+                                    }
                                     lblSoftware.Text = strTokens[1];
                                     lblFirmware.Text = strTokens[2];
                                     lblCarModel.Text = car_type.Find(x => x.code == strTokens[3]).name;
@@ -641,21 +688,29 @@ namespace EM02_E_HalfTester
                                     lblSDCard.Text = sdCardStatus.Find(x => x.code == strTokens[9]).name;
                                     lblFrontCAM.Text = cameraStatus.Find(x => x.code == strTokens[10]).name;
                                     lblRearCAM.Text = cameraStatus.Find(x => x.code == strTokens[11]).name;
+                                    em02TestDatas["dateTest"] = DateTime.Now.ToString();
+                                    em02TestDatas["SN"] = lblSN.Text;
+                                    em02TestDatas["SoftwareVersion"] = lblSoftware.Text;
+                                    em02TestDatas["FirmwareVersion"] = lblFirmware.Text;
+                                    
                                     break;
                                 case "BOOT":
-                                    lblEM02.Text = strTokens[1];
+                                    lblEM02.Text = strTokens[0];
+                                        startReadUT5526();
+                                   
                                     break;
                                 case "DEV":
-                                    lblEM02.Text = strTokens[1];
+                                    lblEM02.Text = strTokens[0];
                                     break;
                                 case "CAN":
-                                    lblEM02.Text = strTokens[1];
+                                    lblEM02.Text = strTokens[0];
                                     break;
                                 case "INIT":
-                                    lblEM02.Text = strTokens[1];
+                                    startReadUT5526();
+                                    lblEM02.Text = strTokens[0];
                                     break;
                                 case "SD":
-                                    lblEM02.Text = strTokens[1];
+                                    lblEM02.Text = strTokens[0];
                                     break;
                                 default:
                                     iStateEM02 = 0;
@@ -698,6 +753,10 @@ namespace EM02_E_HalfTester
                             }
                             string strSN = System.Text.Encoding.Default.GetString(bySN);
                             lblSN.Text = strSN;
+                            if (strSN.Contains("EM02"))
+                            {
+                                bSerialNO = true;
+                            }
                             iStateBarCode++;
                       
                         }
@@ -830,15 +889,20 @@ namespace EM02_E_HalfTester
                                                 iCurrentData = (iCurrentData > 999) ? iCurrentData / 10 : iCurrentData;
                                                 int iOffset = iCurrentData - (collectData[iIdxGetUT5526].StandardData);
                                                 if (iOffset < 0) iOffset = 0 - (iOffset);
-                                                bool bErr = (iOffset > (collectData[iIdxGetUT5526].StandardData / 10)) ? true : false;
 
+                                                bool bErr = (iOffset > (collectData[iIdxGetUT5526].StandardData / 10)) ? true : false;
+                                                if (collectData[iIdxGetUT5526].StandardData == 0)
+                                                {
+                                                    bErr = false;
+                                                }
+                                                iErrors = (bErr) ? (iErrors + 1) : iErrors;
+                                                em02TestDatas[ctrl.Text] = iCurrentData.ToString();
                                                 DisplayGroup((GroupBox)ctrl, collectData[iIdxGetUT5526].CurrentData, bErr);
                                             }
                                         }
                                     }
 
                                 }
-
 
                                 iIdxGetUT5526++;  // move to next
                                 if (iCntGetUT5526 == 0)
@@ -981,11 +1045,11 @@ namespace EM02_E_HalfTester
                                             {
                                                 int iCurrentData = collectData[iIdxGetUT5526].CurrentData;
                                                 iCurrentData = (iCurrentData > 999) ? iCurrentData / 10 : iCurrentData;
-                                                int iOffset = iCurrentData - (collectData[iIdxGetUT5526].StandardData);
-                                                if (iOffset < 0) iOffset = 0 - (iOffset);
-                                                bool bErr = (iOffset > (collectData[iIdxGetUT5526].StandardData / 10)) ? true : false;
-
-                                                DisplayGroup((GroupBox)ctrl, collectData[iIdxGetUT5526].CurrentData, bErr);
+                                              //  int iOffset = iCurrentData - (collectData[iIdxGetUT5526].StandardData);
+                                              //  if (iOffset < 0) iOffset = 0 - (iOffset);
+                                              //  bool bErr = (iOffset > (collectData[iIdxGetUT5526].StandardData / 10)) ? true : false;
+                                             //   
+                                                DisplayGroup((GroupBox)ctrl, collectData[iIdxGetUT5526].CurrentData, false);
                                             }
                                         }
                                     }
@@ -995,9 +1059,19 @@ namespace EM02_E_HalfTester
                                 if (collectData[iIdxGetUT5526].CurrentData <= 100)
                                 {
                                     bWaitACC = false;
-                                   // pbPushButton.Visible = false;
-                                    pbPushButton.Image = Resource1.pass;
+                                
+                                    pbPushButton.Image = (iErrors == 0) ? Resource1.pass : Resource1.fail;
+                                    iCntGetUT5526 = 0;
                                     iIdxGetUT5526 = 0;
+                                    bSerialNO = false;
+                                  
+                                    var output = Newtonsoft.Json.JsonConvert.SerializeObject(em02TestDatas._dictionary);
+                                    using (StreamWriter sw = File.AppendText(strLogFilename))
+                                    {
+                                        sw.WriteLine(output.ToString());
+                                        sw.Close();
+                                    }
+                                  
                                 } else
                                 {
                                     iCntGetUT5526 = 1;
@@ -1022,7 +1096,11 @@ namespace EM02_E_HalfTester
         private void timer1_Tick_1(object sender, EventArgs e)
         {
             procBarcode();
-            procEM02(GetCar_type());
+            if(bSerialNO == true)
+            {
+                procEM02();
+            }
+        
             if (bWaitACC == false)
             {
                 ProcUT5526();
@@ -1033,8 +1111,7 @@ namespace EM02_E_HalfTester
             }
 
         }
-
-
+     
         private void FmMain_Load(object sender, EventArgs e)
         {
 
@@ -1045,6 +1122,10 @@ namespace EM02_E_HalfTester
             ringBufferUT5526 = new byte[lenBufUT5526];
             ringBufferEM02 = new byte[lenBufEM02];
             ringBufferBarCode = new byte[lenBufBarCode];
+
+
+           strLogFilename = String.Format("EM02-F-Log-{0}.csv",DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss"));
+            
 
             foreach (Control ctrl in this.Controls)
             {
@@ -1099,6 +1180,7 @@ namespace EM02_E_HalfTester
                                     collectData.Add(new ChannelData() { ChannelName = "Dummy", CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0, StandardData = iStandard });
                                 }
                                 collectData.Add(new ChannelData() { ChannelName = ctrlGp.Text, CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0, StandardData = iStandard });
+                                em02TestDatas[ctrlGp.Text] = "0.0";
                             }
                         }
                     }
@@ -1106,6 +1188,7 @@ namespace EM02_E_HalfTester
 
             }
 
+            car_type.Add(new EM02DBGTYPE() { code = "0", name = "UNKNOW" });
             car_type.Add(new EM02DBGTYPE() { code = "1", name = "AZ" });
             car_type.Add(new EM02DBGTYPE() { code = "2", name = "RE" });
             car_type.Add(new EM02DBGTYPE() { code = "3", name = "NS" });
@@ -1138,6 +1221,27 @@ namespace EM02_E_HalfTester
             cameraStatus.Add(new EM02DBGTYPE() { code = "3", name = "720P30" });
             cameraStatus.Add(new EM02DBGTYPE() { code = "4", name = "720P60" });
             cameraStatus.Add(new EM02DBGTYPE() { code = "5", name = "無連接" });
+
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Standby 5V", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Standby3V3", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Rear CAM Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+            em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
+
+
 
             imgDigiNormal[0] = Resource1._0;
             imgDigiNormal[1] = Resource1._1;
@@ -1187,6 +1291,8 @@ namespace EM02_E_HalfTester
 
             string[] allkeys = config.AppSettings.Settings.AllKeys;
 
+
+ 
 
             var results = Array.Find(allkeys, s => s.Equals("UT5526"));
             if (results == null)
@@ -1321,7 +1427,7 @@ namespace EM02_E_HalfTester
                 int iLeft = iData / 100;
                 int iMid = (iData - (iLeft * 100)) / 10;
                 int iRight = iData % 10;
-                bErr = false;
+         
                 if (iRight == 0 && iLeft == 0 && iMid == 0)
                 {
                     DisplayPictureBoxDot(pbL, 10, bErr);
@@ -1404,15 +1510,23 @@ namespace EM02_E_HalfTester
 
         }
 
+        private void startReadUT5526()
+        {
+            if (bReadUT5526 == false)
+            {
+                ResetLedDisplay();
+                iIdxGetUT5526 = 0;
+                iCntGetUT5526 = 19;
+                bReadUT5526 = true;
+            } else
+            {
+
+            }
+        
+        }
         private void BtnRead_Click(object sender, EventArgs e)
         {
-         
-            ResetLedDisplay();
-            iIdxGetUT5526 = 0;
-     
-            timer1.Enabled = true;
-            bCmdReadSend = true;
-            iCntGetUT5526 = 19;
+            startReadUT5526();
           
         }
 
@@ -1474,6 +1588,41 @@ namespace EM02_E_HalfTester
             resetComPorts();
         }
 
-       
+
+        private void clearEM02Msg()
+        {
+            lblACC.Text = "-";
+            lblCarModel.Text = "-";
+            lblFirmware.Text = "-";
+            lblFrontCAM.Text = "-"; 
+            lblGPS.Text = "-";  
+            lblGSensor.Text = "-";
+            lblRearCAM.Text = "-";
+            lblSDCard.Text = "-";
+            lblSoftware.Text = "-";
+            lblSpeed.Text = "-";
+            
+        }
+        private void pbPushButton_DoubleClick(object sender, EventArgs e)
+        {
+            PictureBox pb = (PictureBox) sender;
+            if(bWaitACC == true )
+            {
+                bWaitACC = false;
+                pb.Image = Resource1.fail;
+                iErrors = 0;
+            }
+            if( iErrors == 0 && bWaitACC == false)
+            {
+                pb.Image = Resource1.none;
+                bSerialNO = false;
+                pb.Visible = false;
+                iErrors = 0;
+                lblSN.Text = "-";
+                ResetLedDisplay();
+                clearEM02Msg();
+                bReadUT5526 = false;    
+            } 
+        }
     }
 }

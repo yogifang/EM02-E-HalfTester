@@ -160,6 +160,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.lblEM02 = new System.Windows.Forms.Label();
             this.lblLength = new System.Windows.Forms.Label();
+            this.btnFilename = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -255,7 +256,7 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Tag = "1";
-            this.groupBox1.Text = "Rear CAM Power";
+            this.groupBox1.Text = "Rear_CAM_Power";
             // 
             // label1
             // 
@@ -320,7 +321,7 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Tag = "2";
-            this.groupBox2.Text = "CAM2 Power";
+            this.groupBox2.Text = "CAM2_Power";
             // 
             // label2
             // 
@@ -385,7 +386,7 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Tag = "3";
-            this.groupBox3.Text = "Standby 5V";
+            this.groupBox3.Text = "Standby_5V";
             // 
             // label3
             // 
@@ -450,7 +451,7 @@
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Tag = "6";
-            this.groupBox4.Text = "Main Power";
+            this.groupBox4.Text = "Main_Power";
             // 
             // label4
             // 
@@ -897,6 +898,7 @@
             this.pbPushButton.TabIndex = 34;
             this.pbPushButton.TabStop = false;
             this.pbPushButton.Visible = false;
+            this.pbPushButton.DoubleClick += new System.EventHandler(this.pbPushButton_DoubleClick);
             // 
             // groupBox11
             // 
@@ -915,7 +917,7 @@
             this.groupBox11.TabIndex = 7;
             this.groupBox11.TabStop = false;
             this.groupBox11.Tag = "8";
-            this.groupBox11.Text = "Super Cap.";
+            this.groupBox11.Text = "Super_Cap";
             // 
             // label11
             // 
@@ -949,7 +951,7 @@
             this.pictureBox32.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox32.TabIndex = 1;
             this.pictureBox32.TabStop = false;
-            this.pictureBox32.Tag = "4";
+            this.pictureBox32.Tag = "0";
             // 
             // pictureBox33
             // 
@@ -961,7 +963,7 @@
             this.pictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox33.TabIndex = 0;
             this.pictureBox33.TabStop = false;
-            this.pictureBox33.Tag = "2";
+            this.pictureBox33.Tag = "5";
             // 
             // groupBox12
             // 
@@ -980,7 +982,7 @@
             this.groupBox12.TabIndex = 6;
             this.groupBox12.TabStop = false;
             this.groupBox12.Tag = "7";
-            this.groupBox12.Text = "Power Buffer";
+            this.groupBox12.Text = "Power_Buffer";
             // 
             // label12
             // 
@@ -1045,7 +1047,7 @@
             this.groupBox19.TabIndex = 17;
             this.groupBox19.TabStop = false;
             this.groupBox19.Tag = "18";
-            this.groupBox19.Text = "TP2825 Power";
+            this.groupBox19.Text = "TP2825_Power";
             // 
             // label19
             // 
@@ -1079,7 +1081,7 @@
             this.pictureBox56.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox56.TabIndex = 1;
             this.pictureBox56.TabStop = false;
-            this.pictureBox56.Tag = "3";
+            this.pictureBox56.Tag = "2";
             // 
             // pictureBox57
             // 
@@ -1091,7 +1093,7 @@
             this.pictureBox57.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox57.TabIndex = 0;
             this.pictureBox57.TabStop = false;
-            this.pictureBox57.Tag = "3";
+            this.pictureBox57.Tag = "1";
             // 
             // groupBox20
             // 
@@ -1110,7 +1112,7 @@
             this.groupBox20.TabIndex = 16;
             this.groupBox20.TabStop = false;
             this.groupBox20.Tag = "17";
-            this.groupBox20.Text = "LCD Power";
+            this.groupBox20.Text = "LCD_Power";
             // 
             // label20
             // 
@@ -1144,7 +1146,7 @@
             this.pictureBox59.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox59.TabIndex = 1;
             this.pictureBox59.TabStop = false;
-            this.pictureBox59.Tag = "0";
+            this.pictureBox59.Tag = "3";
             // 
             // pictureBox60
             // 
@@ -1156,7 +1158,7 @@
             this.pictureBox60.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox60.TabIndex = 0;
             this.pictureBox60.TabStop = false;
-            this.pictureBox60.Tag = "5";
+            this.pictureBox60.Tag = "3";
             // 
             // groupBox21
             // 
@@ -1175,7 +1177,7 @@
             this.groupBox21.TabIndex = 15;
             this.groupBox21.TabStop = false;
             this.groupBox21.Tag = "16";
-            this.groupBox21.Text = "LCD Back Lite";
+            this.groupBox21.Text = "LCD_Back_Lite";
             // 
             // label21
             // 
@@ -1240,7 +1242,7 @@
             this.groupBox22.TabIndex = 14;
             this.groupBox22.TabStop = false;
             this.groupBox22.Tag = "15";
-            this.groupBox22.Text = "SD Card Power";
+            this.groupBox22.Text = "SD_Card_Power";
             // 
             // label22
             // 
@@ -1370,7 +1372,7 @@
             this.groupBox24.TabIndex = 12;
             this.groupBox24.TabStop = false;
             this.groupBox24.Tag = "13";
-            this.groupBox24.Text = "SD Card Exist";
+            this.groupBox24.Text = "SD_Card_Exist";
             // 
             // label24
             // 
@@ -1404,7 +1406,7 @@
             this.pictureBox71.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox71.TabIndex = 1;
             this.pictureBox71.TabStop = false;
-            this.pictureBox71.Tag = "3";
+            this.pictureBox71.Tag = "0";
             // 
             // pictureBox72
             // 
@@ -1416,7 +1418,7 @@
             this.pictureBox72.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox72.TabIndex = 0;
             this.pictureBox72.TabStop = false;
-            this.pictureBox72.Tag = "3";
+            this.pictureBox72.Tag = "0";
             // 
             // btnTest
             // 
@@ -1862,7 +1864,7 @@
             // 
             this.lblEM02.AutoSize = true;
             this.lblEM02.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblEM02.Location = new System.Drawing.Point(990, 563);
+            this.lblEM02.Location = new System.Drawing.Point(1056, 533);
             this.lblEM02.Name = "lblEM02";
             this.lblEM02.Size = new System.Drawing.Size(12, 15);
             this.lblEM02.TabIndex = 36;
@@ -1878,12 +1880,22 @@
             this.lblLength.TabIndex = 37;
             this.lblLength.Text = "label33";
             // 
+            // btnFilename
+            // 
+            this.btnFilename.Location = new System.Drawing.Point(818, 557);
+            this.btnFilename.Name = "btnFilename";
+            this.btnFilename.Size = new System.Drawing.Size(82, 25);
+            this.btnFilename.TabIndex = 38;
+            this.btnFilename.Text = "設定檔名";
+            this.btnFilename.UseVisualStyleBackColor = true;
+            // 
             // fmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.ClientSize = new System.Drawing.Size(1150, 605);
+            this.Controls.Add(this.btnFilename);
             this.Controls.Add(this.lblLength);
             this.Controls.Add(this.lblEM02);
             this.Controls.Add(this.panel1);
@@ -2135,5 +2147,6 @@
         private Label lblSoftware;
         private Label lblEM02;
         private Label lblLength;
+        private Button btnFilename;
     }
 }
