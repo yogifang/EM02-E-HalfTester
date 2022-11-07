@@ -963,7 +963,7 @@
             this.pictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox33.TabIndex = 0;
             this.pictureBox33.TabStop = false;
-            this.pictureBox33.Tag = "5";
+            this.pictureBox33.Tag = "0";
             // 
             // groupBox12
             // 
@@ -1546,12 +1546,12 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(1067, 8);
+            this.btnRead.Location = new System.Drawing.Point(1070, 11);
             this.btnRead.Margin = new System.Windows.Forms.Padding(2);
             this.btnRead.Name = "btnRead";
-            this.btnRead.Size = new System.Drawing.Size(73, 29);
+            this.btnRead.Size = new System.Drawing.Size(73, 24);
             this.btnRead.TabIndex = 28;
-            this.btnRead.Text = "ReadVolt";
+            this.btnRead.Text = "開始測試";
             this.btnRead.UseVisualStyleBackColor = true;
             this.btnRead.Click += new System.EventHandler(this.BtnRead_Click);
             // 

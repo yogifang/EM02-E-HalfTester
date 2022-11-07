@@ -57,7 +57,7 @@ namespace EM02_E_HalfTester
         private bool bWaitACC = false;
 
 
-        private const UInt16 lenBufEM02 = 8192;
+        private const UInt16 lenBufEM02 = 256;
         private byte[] ringBufferEM02;
         private int ringCountEM02 = 0;
         private int ringOutputEM02 = 0;
@@ -68,7 +68,7 @@ namespace EM02_E_HalfTester
         private int iCntWaitEM02 = 0;
         private int iStateEM02 = 0;
         private int iCntEM02 = 0;
-
+        private int iCntCount = 0;
 
         private const UInt16 lenBufBarCode = 256;
         private byte[] ringBufferBarCode;
@@ -81,6 +81,8 @@ namespace EM02_E_HalfTester
         private int iCntWaitBarCode = 0;
         private int iStateBarCode = 0;
         private bool bErrorBarcode = false;
+        
+
 
         private string[] chanelNames;
         private Image[] imgDigiNormal;
@@ -364,7 +366,7 @@ namespace EM02_E_HalfTester
                         Array.Resize(ref buffer, length);
                     }
 
-                    Thread.Sleep(2);
+                //    Thread.Sleep(2);
                 }
             }
             catch (Exception ex)
@@ -557,8 +559,8 @@ namespace EM02_E_HalfTester
         {
            
             timer1.Interval = 10;
-             EventHandler timer1_Tick = timer1_Tick_1;
-            this.timer1.Tick += new EventHandler(timer1_Tick);
+            
+            this.timer1.Tick += new EventHandler(timer1_Tick_1);
             timer1.Enabled = true;
 
         }
@@ -609,10 +611,11 @@ namespace EM02_E_HalfTester
             switch (iStateEM02)
             {
                 case 0:
-
-                    if(ringCountEM02 >= 11)
+                   
+                    if (ringCountEM02 >= 11)
                     {
-                      
+                        lblLength.Text = iCntCount.ToString();
+                        iCntCount++;
                         do {                      
                                         if (GetRingEM02() == ESC)
                                         {
@@ -657,7 +660,7 @@ namespace EM02_E_HalfTester
                 case 1:
                     if( ringCountEM02 >= 13)
                     {
-                        lblLength.Text = ringCountEM02.ToString();
+                      //  lblLength.Text = ringCountEM02.ToString();
                         int iLFCRPos = SearchEM02Tail();
                         if (iLFCRPos > 0)  // find a Line feed
                         {
@@ -683,6 +686,9 @@ namespace EM02_E_HalfTester
                                     lblCarModel.Text = car_type.Find(x => x.code == strTokens[3]).name;
                                     lblGPS.Text = gpsStatus.Find(x => x.code == strTokens[4]).name;
                                     lblSpeed.Text = strTokens[5];
+                                   // Random ran = new Random();
+
+                                   // lblSpeed.Text = (30 + ran.Next(62)).ToString();
                                     lblGSensor.Text = gSensorStatus.Find(x => x.code == strTokens[6]).name;
                                     lblACC.Text = strTokens[7];
                                     lblSDCard.Text = sdCardStatus.Find(x => x.code == strTokens[9]).name;
@@ -693,10 +699,11 @@ namespace EM02_E_HalfTester
                                     em02TestDatas["SoftwareVersion"] = lblSoftware.Text;
                                     em02TestDatas["FirmwareVersion"] = lblFirmware.Text;
                                     
+                                    
                                     break;
                                 case "BOOT":
                                     lblEM02.Text = strTokens[0];
-                                        startReadUT5526();
+                                    startReadUT5526();
                                    
                                     break;
                                 case "DEV":
@@ -756,9 +763,19 @@ namespace EM02_E_HalfTester
                             if (strSN.Contains("EM02"))
                             {
                                 bSerialNO = true;
+                                clearComBuffer();
+                                iStateBarCode++;
+                            } else
+                            {
+                                iStateBarCode = 0; // not em02 barcode
+                            }                                                
+                        } else
+                        {
+                            while (iTemp > 0) // if not 18 byte must noise
+                            {
+                                GetRingBarCode();
+                                iTemp--;
                             }
-                            iStateBarCode++;
-                      
                         }
 
                     }
@@ -913,6 +930,7 @@ namespace EM02_E_HalfTester
                                     pbPushButton.Image = Resource1.red_button_spam;
                                     iCntGetUT5526 = 1;
                                     iIdxGetUT5526 = 0;
+                                    iStateUT5526 = 0;
                                 }
 
                             }
@@ -1064,7 +1082,7 @@ namespace EM02_E_HalfTester
                                     iCntGetUT5526 = 0;
                                     iIdxGetUT5526 = 0;
                                     bSerialNO = false;
-                                  
+                                    em02TestDatas["RESULT"] = "PASS";
                                     var output = Newtonsoft.Json.JsonConvert.SerializeObject(em02TestDatas._dictionary);
                                     using (StreamWriter sw = File.AppendText(strLogFilename))
                                     {
@@ -1095,11 +1113,15 @@ namespace EM02_E_HalfTester
 
         private void timer1_Tick_1(object sender, EventArgs e)
         {
+          //  lblLength.Text = iCntCount.ToString();
+          //  iCntCount++;
             procBarcode();
             if(bSerialNO == true)
             {
                 procEM02();
-            }
+            } 
+
+           
         
             if (bWaitACC == false)
             {
@@ -1241,8 +1263,6 @@ namespace EM02_E_HalfTester
             em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
             em02DataField.Add(new EM02DBGTYPE() { code = "Main Power", name = "fMainPower" });
 
-
-
             imgDigiNormal[0] = Resource1._0;
             imgDigiNormal[1] = Resource1._1;
             imgDigiNormal[2] = Resource1._2;
@@ -1317,7 +1337,7 @@ namespace EM02_E_HalfTester
             results = Array.Find(allkeys, s => s.Equals("BarCode"));
             if (results == null)
             {
-                config.AppSettings.Settings.Add("BarCode", "COM4");
+                config.AppSettings.Settings.Add("BarCode", "COM3");
             }
             else
             {
@@ -1325,8 +1345,6 @@ namespace EM02_E_HalfTester
 
             }
             config.Save(ConfigurationSaveMode.Modified);
-
-
 
             string[] ports = SerialPort.GetPortNames();
             cbBarCode.Items.AddRange(ports);
@@ -1336,8 +1354,6 @@ namespace EM02_E_HalfTester
             cbBarCode.SelectedItem =  comBarCode;
             cbEM02.SelectedItem = comEM02;
             cbUT5526.SelectedItem = comUT5526;
-
-
 
             leadChar[0] = 0x01;
             endChar[0] = 0x04;
@@ -1526,6 +1542,8 @@ namespace EM02_E_HalfTester
         }
         private void BtnRead_Click(object sender, EventArgs e)
         {
+           
+
             startReadUT5526();
           
         }
@@ -1549,6 +1567,24 @@ namespace EM02_E_HalfTester
             initComUT5526(comUT5526);
             initComBarCode(comBarCode);
           
+        }
+
+        private void clearComBuffer()
+        {
+            if(_EM02Port?.IsOpen == true)
+            {
+                _EM02Port.DiscardInBuffer();
+            }
+            if(_UT5526Port?.IsOpen == true)
+            {
+                _UT5526Port.DiscardInBuffer();
+            }
+            ringCountEM02 = 0;
+            ringCountUT5526 = 0;
+            ringInputEM02 = 0;
+            ringInputUT5526 = 0;
+            ringOutputEM02 = 0;
+            ringOutputUT5526 = 0;
         }
         private void btnSaveSetting_Click(object sender, EventArgs e)
         {
@@ -1602,15 +1638,29 @@ namespace EM02_E_HalfTester
             lblSoftware.Text = "-";
             lblSpeed.Text = "-";
             
+            
         }
         private void pbPushButton_DoubleClick(object sender, EventArgs e)
         {
             PictureBox pb = (PictureBox) sender;
+        
             if(bWaitACC == true )
             {
                 bWaitACC = false;
                 pb.Image = Resource1.fail;
+                bSerialNO = false;
                 iErrors = 0;
+                bReadUT5526 = false;
+                iCntGetUT5526 = 0;
+                iIdxGetUT5526 = 0;
+                em02TestDatas["RESULT"] = "FAIL";
+                var output = Newtonsoft.Json.JsonConvert.SerializeObject(em02TestDatas._dictionary);
+                using (StreamWriter sw = File.AppendText(strLogFilename))
+                {
+                    sw.WriteLine(output.ToString());
+                    sw.Close();
+                }
+                return;
             }
             if( iErrors == 0 && bWaitACC == false)
             {
@@ -1619,10 +1669,22 @@ namespace EM02_E_HalfTester
                 pb.Visible = false;
                 iErrors = 0;
                 lblSN.Text = "-";
+                bSerialNO = false;
                 ResetLedDisplay();
                 clearEM02Msg();
                 bReadUT5526 = false;    
-            } 
+            } else
+            {
+                pb.Image = Resource1.none;
+                bSerialNO = false;
+                pb.Visible = false;
+                iErrors = 0;
+                bWaitACC = false;
+                lblSN.Text = "-";
+                ResetLedDisplay();
+                clearEM02Msg();
+                bReadUT5526 = false;
+            }
         }
     }
 }
