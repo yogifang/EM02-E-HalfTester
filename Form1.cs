@@ -57,7 +57,7 @@ namespace EM02_E_HalfTester
         private bool bWaitACC = false;
 
 
-        private const UInt16 lenBufEM02 = 256;
+        private const UInt16 lenBufEM02 = 512;
         private byte[] ringBufferEM02;
         private int ringCountEM02 = 0;
         private int ringOutputEM02 = 0;
@@ -1522,12 +1522,31 @@ namespace EM02_E_HalfTester
             {
                 _BarCodePort.Close();
             }
+            if (_EM02Port?.IsOpen == true)
+            {
+                _EM02Port.Close();
+            }
             Environment.Exit(Environment.ExitCode);
 
         }
 
         private void startReadUT5526()
         {
+            string strComData = "01MORG03";  // set range = 200V
+            byte[] cmdStr = Encoding.ASCII.GetBytes(strComData);
+            byte[] byBCC = new byte[1];
+            byBCC[0] = UTBus_LRC(cmdStr, 8);
+
+            _UT5526Port?.Write(leadChar, 0, 1);
+            _UT5526Port?.Write(strComData);
+            _UT5526Port?.Write(byBCC, 0, 1);
+            _UT5526Port?.Write(endChar, 0, 1);
+
+            while(_UT5526Port?.BytesToWrite > 0)
+            {
+
+            }
+
             if (bReadUT5526 == false)
             {
                 ResetLedDisplay();
