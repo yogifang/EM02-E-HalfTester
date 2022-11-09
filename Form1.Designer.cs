@@ -160,7 +160,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.lblEM02 = new System.Windows.Forms.Label();
             this.lblLength = new System.Windows.Forms.Label();
-            this.btnFilename = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -1880,22 +1879,12 @@
             this.lblLength.TabIndex = 37;
             this.lblLength.Text = "label33";
             // 
-            // btnFilename
-            // 
-            this.btnFilename.Location = new System.Drawing.Point(818, 557);
-            this.btnFilename.Name = "btnFilename";
-            this.btnFilename.Size = new System.Drawing.Size(82, 25);
-            this.btnFilename.TabIndex = 38;
-            this.btnFilename.Text = "設定檔名";
-            this.btnFilename.UseVisualStyleBackColor = true;
-            // 
             // fmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.ClientSize = new System.Drawing.Size(1150, 605);
-            this.Controls.Add(this.btnFilename);
             this.Controls.Add(this.lblLength);
             this.Controls.Add(this.lblEM02);
             this.Controls.Add(this.panel1);
@@ -2147,6 +2136,5 @@
         private Label lblSoftware;
         private Label lblEM02;
         private Label lblLength;
-        private Button btnFilename;
     }
 }

@@ -82,8 +82,6 @@ namespace EM02_E_HalfTester
         private int iStateBarCode = 0;
         private bool bErrorBarcode = false;
         
-
-
         private string[] chanelNames;
         private Image[] imgDigiNormal;
         private Image[] imgDigiNormalDot;
@@ -99,7 +97,6 @@ namespace EM02_E_HalfTester
         private bool bReadUT5526 = false;
         private int iErrors = 0;
      
-
         string comUT5526 = "";
         string comEM02 = "";
         string comBarCode = "";
@@ -110,6 +107,8 @@ namespace EM02_E_HalfTester
         {
             public string code { get; set; }
             public string name { get; set; }
+            public Color textColor { get; set; }
+            
         }
 
 
@@ -143,7 +142,7 @@ namespace EM02_E_HalfTester
                 throw new NotImplementedException();
             }
 
-
+            
             public override void WriteJson(JsonWriter writer, [AllowNull] Dynamic value, Newtonsoft.Json.JsonSerializer serializer)
             {
                 writer.WriteStartObject();
@@ -230,7 +229,7 @@ namespace EM02_E_HalfTester
 
         private void initComBarCode(string sPort)
         {
-
+          //  lblSN.ForeColor = 
             _BarCodePort = new SerialPort()
             {
                 PortName = sPort,
@@ -684,6 +683,7 @@ namespace EM02_E_HalfTester
                                     lblSoftware.Text = strTokens[1];
                                     lblFirmware.Text = strTokens[2];
                                     lblCarModel.Text = car_type.Find(x => x.code == strTokens[3]).name;
+                                    lblCarModel.ForeColor = car_type.Find(x => x.code == strTokens[3]).textColor;
                                     lblGPS.Text = gpsStatus.Find(x => x.code == strTokens[4]).name;
                                     lblSpeed.Text = strTokens[5];
                                    // Random ran = new Random();
@@ -1210,14 +1210,14 @@ namespace EM02_E_HalfTester
 
             }
 
-            car_type.Add(new EM02DBGTYPE() { code = "0", name = "UNKNOW" });
-            car_type.Add(new EM02DBGTYPE() { code = "1", name = "AZ" });
-            car_type.Add(new EM02DBGTYPE() { code = "2", name = "RE" });
-            car_type.Add(new EM02DBGTYPE() { code = "3", name = "NS" });
-            car_type.Add(new EM02DBGTYPE() { code = "4", name = "SR" });
-            car_type.Add(new EM02DBGTYPE() { code = "5", name = "DE" });
-            car_type.Add(new EM02DBGTYPE() { code = "6", name = "JD" });
-            car_type.Add(new EM02DBGTYPE() { code = "7", name = "NPZ" });
+            car_type.Add(new EM02DBGTYPE() { code = "0", name = "UNKNOW", textColor = System.Drawing.Color.Red } );
+            car_type.Add(new EM02DBGTYPE() { code = "1", name = "AZ", textColor = System.Drawing.Color.White });
+            car_type.Add(new EM02DBGTYPE() { code = "2", name = "RE", textColor = System.Drawing.Color.White });
+            car_type.Add(new EM02DBGTYPE() { code = "3", name = "NS", textColor = System.Drawing.Color.White });
+            car_type.Add(new EM02DBGTYPE() { code = "4", name = "SR", textColor = System.Drawing.Color.White });
+            car_type.Add(new EM02DBGTYPE() { code = "5", name = "DE", textColor = System.Drawing.Color.White });
+            car_type.Add(new EM02DBGTYPE() { code = "6", name = "JD", textColor = System.Drawing.Color.White });
+            car_type.Add(new EM02DBGTYPE() { code = "7", name = "NPZ", textColor = System.Drawing.Color.White });
 
             gpsStatus.Add(new EM02DBGTYPE() { code = "-1", name = "尚未抓取到NEMA資料" });
             gpsStatus.Add(new EM02DBGTYPE() { code = "0", name = "已正確抓取到NEMA資料" });
