@@ -1317,7 +1317,7 @@ namespace EM02_E_HalfTester
             results = Array.Find(allkeys, s => s.Equals("BarCode"));
             if (results == null)
             {
-                config.AppSettings.Settings.Add("BarCode", "COM4");
+                config.AppSettings.Settings.Add("BarCode", "COM3 20");
             }
             else
             {
