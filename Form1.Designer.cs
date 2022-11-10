@@ -137,7 +137,7 @@
             this.lblSN = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.panelDisplay = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelEM02Messages = new System.Windows.Forms.Panel();
             this.lblFirmware = new System.Windows.Forms.Label();
             this.lblCarModel = new System.Windows.Forms.Label();
             this.lblGPS = new System.Windows.Forms.Label();
@@ -160,7 +160,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.lblEM02 = new System.Windows.Forms.Label();
             this.lblLength = new System.Windows.Forms.Label();
-            this.btnFilename = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -236,7 +235,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox72)).BeginInit();
             this.panelSetting.SuspendLayout();
             this.panelDisplay.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panelEM02Messages.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -963,7 +962,7 @@
             this.pictureBox33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox33.TabIndex = 0;
             this.pictureBox33.TabStop = false;
-            this.pictureBox33.Tag = "5";
+            this.pictureBox33.Tag = "0";
             // 
             // groupBox12
             // 
@@ -1429,6 +1428,7 @@
             this.btnTest.TabIndex = 24;
             this.btnTest.Text = "Test";
             this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Visible = false;
             this.btnTest.Click += new System.EventHandler(this.BtnTest_Click);
             // 
             // btnTest2
@@ -1440,6 +1440,7 @@
             this.btnTest2.TabIndex = 25;
             this.btnTest2.Text = "Test2";
             this.btnTest2.UseVisualStyleBackColor = true;
+            this.btnTest2.Visible = false;
             this.btnTest2.Click += new System.EventHandler(this.BtnTest2_Click);
             // 
             // cbBarCode
@@ -1546,13 +1547,14 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(1067, 8);
+            this.btnRead.Location = new System.Drawing.Point(1070, 11);
             this.btnRead.Margin = new System.Windows.Forms.Padding(2);
             this.btnRead.Name = "btnRead";
-            this.btnRead.Size = new System.Drawing.Size(73, 29);
+            this.btnRead.Size = new System.Drawing.Size(73, 24);
             this.btnRead.TabIndex = 28;
-            this.btnRead.Text = "ReadVolt";
+            this.btnRead.Text = "開始測試";
             this.btnRead.UseVisualStyleBackColor = true;
+            this.btnRead.Visible = false;
             this.btnRead.Click += new System.EventHandler(this.BtnRead_Click);
             // 
             // label26
@@ -1612,33 +1614,33 @@
             this.panelDisplay.Size = new System.Drawing.Size(1125, 331);
             this.panelDisplay.TabIndex = 33;
             // 
-            // panel1
+            // panelEM02Messages
             // 
-            this.panel1.Controls.Add(this.lblFirmware);
-            this.panel1.Controls.Add(this.lblCarModel);
-            this.panel1.Controls.Add(this.lblGPS);
-            this.panel1.Controls.Add(this.lblSpeed);
-            this.panel1.Controls.Add(this.lblGSensor);
-            this.panel1.Controls.Add(this.lblACC);
-            this.panel1.Controls.Add(this.lblSDCard);
-            this.panel1.Controls.Add(this.lblFrontCAM);
-            this.panel1.Controls.Add(this.lblRearCAM);
-            this.panel1.Controls.Add(this.lblSoftware);
-            this.panel1.Controls.Add(this.label32);
-            this.panel1.Controls.Add(this.label31);
-            this.panel1.Controls.Add(this.label30);
-            this.panel1.Controls.Add(this.label27);
-            this.panel1.Controls.Add(this.label18);
-            this.panel1.Controls.Add(this.label17);
-            this.panel1.Controls.Add(this.label16);
-            this.panel1.Controls.Add(this.label15);
-            this.panel1.Controls.Add(this.label14);
-            this.panel1.Controls.Add(this.label13);
-            this.panel1.Controls.Add(this.pbPushButton);
-            this.panel1.Location = new System.Drawing.Point(15, 380);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1128, 150);
-            this.panel1.TabIndex = 35;
+            this.panelEM02Messages.Controls.Add(this.lblFirmware);
+            this.panelEM02Messages.Controls.Add(this.lblCarModel);
+            this.panelEM02Messages.Controls.Add(this.lblGPS);
+            this.panelEM02Messages.Controls.Add(this.lblSpeed);
+            this.panelEM02Messages.Controls.Add(this.lblGSensor);
+            this.panelEM02Messages.Controls.Add(this.lblACC);
+            this.panelEM02Messages.Controls.Add(this.lblSDCard);
+            this.panelEM02Messages.Controls.Add(this.lblFrontCAM);
+            this.panelEM02Messages.Controls.Add(this.lblRearCAM);
+            this.panelEM02Messages.Controls.Add(this.lblSoftware);
+            this.panelEM02Messages.Controls.Add(this.label32);
+            this.panelEM02Messages.Controls.Add(this.label31);
+            this.panelEM02Messages.Controls.Add(this.label30);
+            this.panelEM02Messages.Controls.Add(this.label27);
+            this.panelEM02Messages.Controls.Add(this.label18);
+            this.panelEM02Messages.Controls.Add(this.label17);
+            this.panelEM02Messages.Controls.Add(this.label16);
+            this.panelEM02Messages.Controls.Add(this.label15);
+            this.panelEM02Messages.Controls.Add(this.label14);
+            this.panelEM02Messages.Controls.Add(this.label13);
+            this.panelEM02Messages.Controls.Add(this.pbPushButton);
+            this.panelEM02Messages.Location = new System.Drawing.Point(15, 380);
+            this.panelEM02Messages.Name = "panelEM02Messages";
+            this.panelEM02Messages.Size = new System.Drawing.Size(1128, 150);
+            this.panelEM02Messages.TabIndex = 35;
             // 
             // lblFirmware
             // 
@@ -1649,6 +1651,7 @@
             this.lblFirmware.Name = "lblFirmware";
             this.lblFirmware.Size = new System.Drawing.Size(18, 24);
             this.lblFirmware.TabIndex = 54;
+            this.lblFirmware.Tag = "002";
             this.lblFirmware.Text = "-";
             // 
             // lblCarModel
@@ -1660,6 +1663,7 @@
             this.lblCarModel.Name = "lblCarModel";
             this.lblCarModel.Size = new System.Drawing.Size(18, 24);
             this.lblCarModel.TabIndex = 53;
+            this.lblCarModel.Tag = "003";
             this.lblCarModel.Text = "-";
             // 
             // lblGPS
@@ -1671,6 +1675,7 @@
             this.lblGPS.Name = "lblGPS";
             this.lblGPS.Size = new System.Drawing.Size(18, 24);
             this.lblGPS.TabIndex = 52;
+            this.lblGPS.Tag = "004";
             this.lblGPS.Text = "-";
             // 
             // lblSpeed
@@ -1682,6 +1687,7 @@
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(18, 24);
             this.lblSpeed.TabIndex = 51;
+            this.lblSpeed.Tag = "005";
             this.lblSpeed.Text = "-";
             // 
             // lblGSensor
@@ -1693,6 +1699,7 @@
             this.lblGSensor.Name = "lblGSensor";
             this.lblGSensor.Size = new System.Drawing.Size(18, 24);
             this.lblGSensor.TabIndex = 50;
+            this.lblGSensor.Tag = "006";
             this.lblGSensor.Text = "-";
             // 
             // lblACC
@@ -1704,6 +1711,7 @@
             this.lblACC.Name = "lblACC";
             this.lblACC.Size = new System.Drawing.Size(18, 24);
             this.lblACC.TabIndex = 49;
+            this.lblACC.Tag = "008";
             this.lblACC.Text = "-";
             // 
             // lblSDCard
@@ -1715,6 +1723,7 @@
             this.lblSDCard.Name = "lblSDCard";
             this.lblSDCard.Size = new System.Drawing.Size(18, 24);
             this.lblSDCard.TabIndex = 48;
+            this.lblSDCard.Tag = "009";
             this.lblSDCard.Text = "-";
             // 
             // lblFrontCAM
@@ -1726,6 +1735,7 @@
             this.lblFrontCAM.Name = "lblFrontCAM";
             this.lblFrontCAM.Size = new System.Drawing.Size(18, 24);
             this.lblFrontCAM.TabIndex = 47;
+            this.lblFrontCAM.Tag = "010";
             this.lblFrontCAM.Text = "-";
             // 
             // lblRearCAM
@@ -1737,6 +1747,7 @@
             this.lblRearCAM.Name = "lblRearCAM";
             this.lblRearCAM.Size = new System.Drawing.Size(18, 24);
             this.lblRearCAM.TabIndex = 46;
+            this.lblRearCAM.Tag = "011";
             this.lblRearCAM.Text = "-";
             // 
             // lblSoftware
@@ -1748,6 +1759,7 @@
             this.lblSoftware.Name = "lblSoftware";
             this.lblSoftware.Size = new System.Drawing.Size(18, 24);
             this.lblSoftware.TabIndex = 45;
+            this.lblSoftware.Tag = "001";
             this.lblSoftware.Text = "-";
             // 
             // label32
@@ -1858,6 +1870,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(52, 24);
             this.label13.TabIndex = 35;
+            this.label13.Tag = "";
             this.label13.Text = "軟體:";
             // 
             // lblEM02
@@ -1880,25 +1893,15 @@
             this.lblLength.TabIndex = 37;
             this.lblLength.Text = "label33";
             // 
-            // btnFilename
-            // 
-            this.btnFilename.Location = new System.Drawing.Point(818, 557);
-            this.btnFilename.Name = "btnFilename";
-            this.btnFilename.Size = new System.Drawing.Size(82, 25);
-            this.btnFilename.TabIndex = 38;
-            this.btnFilename.Text = "設定檔名";
-            this.btnFilename.UseVisualStyleBackColor = true;
-            // 
             // fmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.ClientSize = new System.Drawing.Size(1150, 605);
-            this.Controls.Add(this.btnFilename);
             this.Controls.Add(this.lblLength);
             this.Controls.Add(this.lblEM02);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelEM02Messages);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblSN);
             this.Controls.Add(this.label26);
@@ -2007,8 +2010,8 @@
             this.panelSetting.ResumeLayout(false);
             this.panelSetting.PerformLayout();
             this.panelDisplay.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelEM02Messages.ResumeLayout(false);
+            this.panelEM02Messages.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2124,7 +2127,7 @@
         private Button btnGetSetting;
         private Button btnSaveSetting;
         private PictureBox pbPushButton;
-        private Panel panel1;
+        private Panel panelEM02Messages;
         private Label label32;
         private Label label31;
         private Label label30;
@@ -2147,6 +2150,5 @@
         private Label lblSoftware;
         private Label lblEM02;
         private Label lblLength;
-        private Button btnFilename;
     }
 }
