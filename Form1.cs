@@ -709,7 +709,7 @@ namespace EM02_E_HalfTester
                                     break;
                                 case "BOOT":
                                     lblEM02.Text = strTokens[0];
-                                    startReadUT5526();
+                                //    startReadUT5526();
                                    
                                     break;
                                 case "DEV":
@@ -719,7 +719,7 @@ namespace EM02_E_HalfTester
                                     lblEM02.Text = strTokens[0];
                                     break;
                                 case "INIT":
-                                    startReadUT5526();
+                                 //   startReadUT5526();
                                     lblEM02.Text = strTokens[0];
                                     break;
                                 case "SD":
@@ -771,7 +771,11 @@ namespace EM02_E_HalfTester
                             {
                                 bSerialNO = true;
                                 clearComBuffer();
+                                clearEM02Msg();
                                 iStateBarCode++;
+                                iStateUT5526 = 0;
+                                iStateEM02 = 0;
+                             //   iCntGetUT5526 = 0;
                             } else
                             {
                                 iStateBarCode = 0; // not em02 barcode
@@ -1085,22 +1089,7 @@ namespace EM02_E_HalfTester
                                     iIdxGetUT5526 = 0;
                                     bSerialNO = false;
                                     lblACC.ForeColor = colorOK;
-                            //        em02TestDatas["RESULT"] = "PASS";
-                           //         collectErrors();
-                                    //   var obj = Newtonsoft.Json.JsonConvert
-                            //        TestResult tstResult = new TestResult()
-                             //       {
-                             //           allErrors = testResults,
-                             //           voltages = em02TestDatas._dictionary 
-
-                             //       };
-                              //      var result = Newtonsoft.Json.JsonConvert.SerializeObject(tstResult);
-                               
-                             //       using (StreamWriter sw = File.AppendText(strLogFilename))
-                             //       {
-                             //           sw.WriteLine(result.ToString() );
-                             //           sw.Close();
-                              //      }
+                            
                                   
                                 } else
                                 {
@@ -1129,11 +1118,12 @@ namespace EM02_E_HalfTester
             procBarcode();
     //        if(bSerialNO == true)
     //        {
-                procEM02();
+           //     procEM02();
      //       } 
 
             if(bSerialNO == true)
             {
+                procEM02();
                 if (bWaitACC == false)
                 {
                     ProcUT5526();

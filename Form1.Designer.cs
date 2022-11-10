@@ -1554,7 +1554,6 @@
             this.btnRead.TabIndex = 28;
             this.btnRead.Text = "開始測試";
             this.btnRead.UseVisualStyleBackColor = true;
-            this.btnRead.Visible = false;
             this.btnRead.Click += new System.EventHandler(this.BtnRead_Click);
             // 
             // label26
