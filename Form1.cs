@@ -1245,18 +1245,18 @@ namespace EM02_E_HalfTester
             cameraStatus.Add(new EM02DBGTYPE() { code = "4", name = "720P60", textColor = colorOK });
             cameraStatus.Add(new EM02DBGTYPE() { code = "5", name = "無連接", textColor = colorError });
 
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM001", description = "軟體版本錯誤" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM002", description = "軔體版本錯誤" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM003", description = "車型設定錯誤" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM004", description = "衛星狀態錯誤" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM005", description = "CANBUS接收錯誤" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM006", description = "GSensor NG" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM007", description = "GPIO R NG" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM008", description = "GPIO ACC NG" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM009", description = "SDCard狀態錯誤" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM010", description = "前鏡頭狀態錯誤" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM011", description = "後鏡頭狀態錯誤" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM012", description = "電壓錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0001", description = "軟體版本錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0002", description = "軔體版本錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0003", description = "車型設定錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0004", description = "衛星狀態錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0005", description = "CANBUS接收錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0006", description = "GSensor NG" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0007", description = "GPIO R NG" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0008", description = "GPIO ACC NG" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0009", description = "SDCard狀態錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_010", description = "前鏡頭狀態錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0011", description = "後鏡頭狀態錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0012", description = "電壓錯誤" });
 
             imgDigiNormal[0] = Resource1._0;
             imgDigiNormal[1] = Resource1._1;
@@ -1593,7 +1593,7 @@ namespace EM02_E_HalfTester
             if (iErrors > 0)
             {
                 em02TestDatas["RESULT"] = "FAIL";
-                testResults.Add(new EM02ERRORCODE() { errorCode = "EM012", description = this.AllErrors?.Find(x => x.errorCode == "EM012").description });
+                testResults.Add(new EM02ERRORCODE() { errorCode = "EM_0012", description = this.AllErrors?.Find(x => x.errorCode == "EM_0012").description });
                
             }
 
@@ -1611,7 +1611,7 @@ namespace EM02_E_HalfTester
                                 if (lblCtrl.ForeColor == colorError)
                                 {
                                     em02TestDatas["RESULT"] = "FAIL";
-                                    string errCode = "EM" + lblCtrl.Tag;
+                                    string errCode = "EM_" + lblCtrl.Tag;
                                     string description = AllErrors.Find(x=> x.errorCode == errCode).description;
                                     testResults.Add(new EM02ERRORCODE() { errorCode = errCode, description = description });
                                 }

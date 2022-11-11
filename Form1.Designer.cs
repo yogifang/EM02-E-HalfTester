@@ -1650,7 +1650,7 @@
             this.lblFirmware.Name = "lblFirmware";
             this.lblFirmware.Size = new System.Drawing.Size(18, 24);
             this.lblFirmware.TabIndex = 54;
-            this.lblFirmware.Tag = "002";
+            this.lblFirmware.Tag = "0002";
             this.lblFirmware.Text = "-";
             // 
             // lblCarModel
@@ -1662,7 +1662,7 @@
             this.lblCarModel.Name = "lblCarModel";
             this.lblCarModel.Size = new System.Drawing.Size(18, 24);
             this.lblCarModel.TabIndex = 53;
-            this.lblCarModel.Tag = "003";
+            this.lblCarModel.Tag = "0003";
             this.lblCarModel.Text = "-";
             // 
             // lblGPS
@@ -1674,7 +1674,7 @@
             this.lblGPS.Name = "lblGPS";
             this.lblGPS.Size = new System.Drawing.Size(18, 24);
             this.lblGPS.TabIndex = 52;
-            this.lblGPS.Tag = "004";
+            this.lblGPS.Tag = "0004";
             this.lblGPS.Text = "-";
             // 
             // lblSpeed
@@ -1686,7 +1686,7 @@
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(18, 24);
             this.lblSpeed.TabIndex = 51;
-            this.lblSpeed.Tag = "005";
+            this.lblSpeed.Tag = "0005";
             this.lblSpeed.Text = "-";
             // 
             // lblGSensor
@@ -1698,7 +1698,7 @@
             this.lblGSensor.Name = "lblGSensor";
             this.lblGSensor.Size = new System.Drawing.Size(18, 24);
             this.lblGSensor.TabIndex = 50;
-            this.lblGSensor.Tag = "006";
+            this.lblGSensor.Tag = "0006";
             this.lblGSensor.Text = "-";
             // 
             // lblACC
@@ -1710,7 +1710,7 @@
             this.lblACC.Name = "lblACC";
             this.lblACC.Size = new System.Drawing.Size(18, 24);
             this.lblACC.TabIndex = 49;
-            this.lblACC.Tag = "008";
+            this.lblACC.Tag = "0008";
             this.lblACC.Text = "-";
             // 
             // lblSDCard
@@ -1722,7 +1722,7 @@
             this.lblSDCard.Name = "lblSDCard";
             this.lblSDCard.Size = new System.Drawing.Size(18, 24);
             this.lblSDCard.TabIndex = 48;
-            this.lblSDCard.Tag = "009";
+            this.lblSDCard.Tag = "0009";
             this.lblSDCard.Text = "-";
             // 
             // lblFrontCAM
@@ -1734,7 +1734,7 @@
             this.lblFrontCAM.Name = "lblFrontCAM";
             this.lblFrontCAM.Size = new System.Drawing.Size(18, 24);
             this.lblFrontCAM.TabIndex = 47;
-            this.lblFrontCAM.Tag = "010";
+            this.lblFrontCAM.Tag = "0010";
             this.lblFrontCAM.Text = "-";
             // 
             // lblRearCAM
@@ -1746,7 +1746,7 @@
             this.lblRearCAM.Name = "lblRearCAM";
             this.lblRearCAM.Size = new System.Drawing.Size(18, 24);
             this.lblRearCAM.TabIndex = 46;
-            this.lblRearCAM.Tag = "011";
+            this.lblRearCAM.Tag = "0011";
             this.lblRearCAM.Text = "-";
             // 
             // lblSoftware
@@ -1758,7 +1758,7 @@
             this.lblSoftware.Name = "lblSoftware";
             this.lblSoftware.Size = new System.Drawing.Size(18, 24);
             this.lblSoftware.TabIndex = 45;
-            this.lblSoftware.Tag = "001";
+            this.lblSoftware.Tag = "0001";
             this.lblSoftware.Text = "-";
             // 
             // label32
