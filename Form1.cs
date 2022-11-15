@@ -1084,13 +1084,14 @@ namespace EM02_E_HalfTester
                                 {
                                     bWaitACC = false;
                                 
-                                    pbPushButton.Image = (iErrors == 0) ? Resource1.pass : Resource1.fail;
+                                   
                                     iCntGetUT5526 = 0;
                                     iIdxGetUT5526 = 0;
                                     bSerialNO = false;
                                     lblACC.ForeColor = colorOK;
-                            
-                                  
+                                    collectErrors();
+                                    pbPushButton.Image = (iErrors == 0 && testResults.Count==0) ? Resource1.pass : Resource1.fail;
+
                                 } else
                                 {
                                     iCntGetUT5526 = 1;
