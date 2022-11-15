@@ -168,7 +168,7 @@ namespace EM02_E_HalfTester
             public override void WriteJson(JsonWriter writer, [AllowNull] Dynamic value, Newtonsoft.Json.JsonSerializer serializer)
             {
                 writer.WriteStartObject();
-                foreach (var kvp in value._dictionary)
+                foreach (KeyValuePair<string, object> kvp in value._dictionary)
                 {
                     writer.WriteValue(kvp.Key);
                     writer.WriteValue(kvp.Value);
@@ -203,7 +203,7 @@ namespace EM02_E_HalfTester
         }
 
 
-        Dynamic em02TestDatas = new Dynamic();
+        Dynamic em02VoltageDatas = new Dynamic();
 
 
 
@@ -701,10 +701,10 @@ namespace EM02_E_HalfTester
                                     lblRearCAM.Text = em02Msg?.name;
                                     lblRearCAM.ForeColor = (Color)(em02Msg?.textColor);   
 
-                                    em02TestDatas["SN"] = lblSN.Text.Replace("\r" , String.Empty).Replace("\n", String.Empty);
+                                    em02VoltageDatas["SN"] = lblSN.Text.Replace("\r" , String.Empty).Replace("\n", String.Empty);
                                 
-                                    em02TestDatas["SoftwareVersion"] = lblSoftware.Text;
-                                    em02TestDatas["FirmwareVersion"] = lblFirmware.Text;
+                                    em02VoltageDatas["SoftwareVersion"] = lblSoftware.Text;
+                                    em02VoltageDatas["FirmwareVersion"] = lblFirmware.Text;
                                     
                                     break;
                                 case "BOOT":
@@ -924,7 +924,7 @@ namespace EM02_E_HalfTester
                                                     bErr = false;
                                                 }
                                                 iErrors = (bErr) ? (iErrors + 1) : iErrors;
-                                                em02TestDatas[ctrl.Text] = iCurrentData.ToString();
+                                                em02VoltageDatas[ctrl.Text] = iCurrentData.ToString();
                                                 DisplayGroup((GroupBox)ctrl, collectData[iIdxGetUT5526].CurrentData, bErr);
                                             }
                                         }
@@ -1203,7 +1203,7 @@ namespace EM02_E_HalfTester
                                     collectData.Add(new ChannelData() { ChannelName = "Dummy", CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0, StandardData = iStandard });
                                 }
                                 collectData.Add(new ChannelData() { ChannelName = ctrlGp.Text, CmdSelected = "01MOCH" + channelInt.ToString().PadLeft(2, '0'), PreviousData = 0, CurrentData = 0, StandardData = iStandard });
-                                em02TestDatas[ctrlGp.Text] = "0.0";
+                                em02VoltageDatas[ctrlGp.Text] = "0.0";
                             }
                         }
                     }
@@ -1588,11 +1588,11 @@ namespace EM02_E_HalfTester
         private void collectErrors ()
         {
             testResults.Clear(); // clear old data ;
-            em02TestDatas["RESULT"] = "PASS";
+            em02VoltageDatas["RESULT"] = "PASS";
             //    testResults.Add (new EM02ERRORCODE() {  errorCode = "Result" , descript})
             if (iErrors > 0)
             {
-                em02TestDatas["RESULT"] = "FAIL";
+                em02VoltageDatas["RESULT"] = "FAIL";
                 testResults.Add(new EM02ERRORCODE() { errorCode = "EM012", description = this.AllErrors?.Find(x => x.errorCode == "EM012").description });
                
             }
@@ -1610,7 +1610,7 @@ namespace EM02_E_HalfTester
                                 System.Windows.Forms.Label lblCtrl = (System.Windows.Forms.Label)control;
                                 if (lblCtrl.ForeColor == colorError)
                                 {
-                                    em02TestDatas["RESULT"] = "FAIL";
+                                    em02VoltageDatas["RESULT"] = "FAIL";
                                     string errCode = "EM" + lblCtrl.Tag;
                                     string description = AllErrors.Find(x=> x.errorCode == errCode).description;
                                     testResults.Add(new EM02ERRORCODE() { errorCode = errCode, description = description });
@@ -1725,7 +1725,7 @@ namespace EM02_E_HalfTester
                 TestResult tstResult = new TestResult()
                 {
                     allErrors = testResults,
-                    voltages = em02TestDatas._dictionary
+                    voltages = em02VoltageDatas._dictionary
 
                 };
                 var result = Newtonsoft.Json.JsonConvert.SerializeObject(tstResult);
@@ -1740,12 +1740,12 @@ namespace EM02_E_HalfTester
             }
             if( iErrors == 0 && bWaitACC == false)
             {
-                em02TestDatas["RESULT"] = "pass";
+                em02VoltageDatas["RESULT"] = "pass";
                 collectErrors();
                 TestResult tstResult = new TestResult()
                 {
                     allErrors = testResults,
-                    voltages = em02TestDatas._dictionary
+                    voltages = em02VoltageDatas._dictionary
 
                 };
                 var result = Newtonsoft.Json.JsonConvert.SerializeObject(tstResult);
@@ -1771,13 +1771,13 @@ namespace EM02_E_HalfTester
             {
 
                 //   testResults.Add 
-                em02TestDatas["RESULT"] = "FAIL";
+                em02VoltageDatas["RESULT"] = "FAIL";
                 collectErrors();
                 //   var obj = Newtonsoft.Json.JsonConvert
                 TestResult tstResult = new TestResult()
                 {
                     allErrors = testResults,
-                    voltages = em02TestDatas._dictionary
+                    voltages = em02VoltageDatas._dictionary
 
                 };
                 var result = Newtonsoft.Json.JsonConvert.SerializeObject(tstResult);
