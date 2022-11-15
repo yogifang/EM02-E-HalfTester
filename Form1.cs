@@ -1254,7 +1254,7 @@ namespace EM02_E_HalfTester
             AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0007", description = "GPIO R NG" });
             AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0008", description = "GPIO ACC NG" });
             AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0009", description = "SDCard狀態錯誤" });
-            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_010", description = "前鏡頭狀態錯誤" });
+            AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0010", description = "前鏡頭狀態錯誤" });
             AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0011", description = "後鏡頭狀態錯誤" });
             AllErrors.Add(new EM02ERRORCODE() { errorCode = "EM_0012", description = "電壓錯誤" });
 
