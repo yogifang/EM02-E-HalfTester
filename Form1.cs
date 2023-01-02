@@ -40,6 +40,11 @@ namespace EM02_E_HalfTester
         delegate void GoGetEM02Data(byte[] buffer);
         private Thread threadEM02;
 
+        private SerialPort? _MESPort;
+        private bool MES_receiving = false;
+        delegate void GoGetMESData(byte[] buffer);
+        private Thread threadMES;
+
         private const UInt16 lenBufUT5526 = 256;
         private byte[] ringBufferUT5526;
         private int ringCountUT5526 = 0;
@@ -60,10 +65,7 @@ namespace EM02_E_HalfTester
         private int ringCountEM02 = 0;
         private int ringOutputEM02 = 0;
         private int ringInputEM02 = 0;
-        private int iIdxReadBarEM02 = 0;  // current read channel 
-        private int iCntReadEM02 = 0;  // read how many channels
-        private int iCurrentReadEM02 = 0;
-        private int iCntWaitEM02 = 0;
+  
         private int iStateEM02 = 0;
         private int iCntEM02 = 0;
         private int iCntCount = 0;
@@ -73,12 +75,19 @@ namespace EM02_E_HalfTester
         private int ringCountBarCode = 0;
         private int ringOutputBarCode = 0;
         private int ringInputBarCode = 0;
-        private int iIdxReadBarCode = 0;  // current read channel 
-        private int iCntReadBarCode = 0;  // read how many channels
-        private int iCurrentReadBarCode = 0;
-        private int iCntWaitBarCode = 0;
+       
         private int iStateBarCode = 0;
         private bool bErrorBarcode = false;
+
+        private const UInt16 lenBufMES = 256;
+        private byte[] ringBufferMES;
+        private int ringCountMES = 0;
+        private int ringOutputMES = 0;
+        private int ringInputMES = 0;
+
+        private int iStateMES = 0;
+        private bool bErrorMES = false;
+
 
         private string[] chanelNames;
         private Image[] imgDigiNormal;
@@ -100,6 +109,7 @@ namespace EM02_E_HalfTester
         string comUT5526 = "";
         string comEM02 = "";
         string comBarCode = "";
+        string comMES = "";
         DateTime time00;
         DateTime time01;
 
@@ -281,6 +291,40 @@ namespace EM02_E_HalfTester
                 }
             }
         }
+        private void initComMES(string sPort)
+        {
+            //  lblSN.ForeColor = 
+            _MESPort = new SerialPort()
+            {
+                PortName = sPort,
+                BaudRate = 9600,
+                Parity = Parity.None,
+                DataBits = 8,
+                StopBits = StopBits.One,
+                Handshake = Handshake.None
+            };
+
+            if (_MESPort.IsOpen == false)
+            {
+                try
+                {
+                    _MESPort.Open();
+                   
+                    BarCode_receiving = true;
+                   
+                    threadMES = new Thread(DoReceiveMES);
+                    threadMES.IsBackground = true;
+                    threadMES.Start();
+
+                }
+                catch (Exception)
+                {
+                    // port will not be open, therefore will become null
+                    MessageBox.Show("無法開啟 MES Port!");
+                    Application.Exit();
+                }
+            }
+        }
 
         private void initComEM02(string sPort)
         {
@@ -332,7 +376,7 @@ namespace EM02_E_HalfTester
                         Array.Resize(ref buffer, length);
                     }
 
-                    Thread.Sleep(10);
+                  //  Thread.Sleep(1);
                 }
             }
             catch (Exception ex)
@@ -393,7 +437,31 @@ namespace EM02_E_HalfTester
                 MessageBox.Show(ex.Message);
             }
         }
+        private void DoReceiveMES()
+        {
+            Byte[] buffer = new Byte[512];
 
+            try
+            {
+                while (MES_receiving)
+                {
+                    if (_MESPort?.BytesToRead >= 1 && _MESPort.BytesToWrite == 0)
+                    {
+                        Int32 length = _MESPort.Read(buffer, 0, buffer.Length);
+                        Array.Resize(ref buffer, length);
+                        GoGetMESData d = new GoGetMESData(MESShow);
+                        this.Invoke(d, new Object[] { buffer });
+                        Array.Resize(ref buffer, length);
+                    }
+
+                    //    Thread.Sleep(2);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void SetRingEM02(byte byData)
         {
             ringBufferEM02[ringInputEM02] = byData;
@@ -414,26 +482,7 @@ namespace EM02_E_HalfTester
             
             
         }
-        private int SearchEM02LineFeed()
-        {
-            if (ringCountEM02 > 0)
-            {
-                for (int i = 0; i <= ringCountEM02; i++)
-                {
-                    int iOp = (ringOutputEM02 + i) & (lenBufEM02 - 1);
-                    if (ringBufferEM02[iOp] == 0x0a)
-                    {
-                        return i + 1;
-                    }
-                }
-                return 0;
-
-            }
-            else
-            {
-                return 0;   // nothing in there
-            }
-        }
+    
         private int  SearchEM02Tail() // tail is 0x1b 0x5b 0x6d  [ESC][m
         {
 
@@ -531,7 +580,23 @@ namespace EM02_E_HalfTester
                 return 0;   // nothing in there
             }
         }
-       
+
+        private void SetRingMES(byte byData)
+        {
+            ringBufferMES[ringInputMES] = byData;
+            ringCountMES++;
+            ringInputMES = (ushort)((ringInputMES + 1) & (lenBufMES - 1));
+        }
+        private byte GetRingMES()
+        {
+            byte byData = ringBufferMES[ringOutputMES];
+            ringCountMES--;
+            if (ringCountMES < 0) ringCountMES = 0;
+            ringOutputMES = (ushort)((ringOutputMES + 1) & (lenBufMES - 1));
+            return byData;
+        }
+
+
         public void EM02Show(byte[] buffer)
         {
 
@@ -559,6 +624,16 @@ namespace EM02_E_HalfTester
             for (int i = 0; i < buf.Length; i++)
             {
                 SetRingBarCode(buf[i]);
+            }
+
+        }
+        public void MESShow(byte[] buffer)
+        {
+
+            byte[] buf = buffer;
+            for (int i = 0; i < buf.Length; i++)
+            {
+                SetRingMES(buf[i]);
             }
 
         }
@@ -1337,6 +1412,16 @@ namespace EM02_E_HalfTester
                 comBarCode = config.AppSettings.Settings["BarCode"].Value;
 
             }
+            results = Array.Find(allkeys, s => s.Equals("MES"));
+            if (results == null)
+            {
+                config.AppSettings.Settings.Add("MES", "COM9");
+            }
+            else
+            {
+               comMES = config.AppSettings.Settings["MES"].Value;
+
+            }
             results = Array.Find(allkeys, s => s.Equals("SoftwareVersion"));
             SoftwareVersion = (results == null) ? "" : config.AppSettings.Settings["SoftwareVersion"].Value;
 
@@ -1350,10 +1435,12 @@ namespace EM02_E_HalfTester
             cbBarCode.Items.AddRange(ports);
             cbUT5526.Items.AddRange(ports);
             cbEM02.Items.AddRange(ports);
+            cbMES.Items.AddRange(ports);
 
             cbBarCode.SelectedItem =  comBarCode;
             cbEM02.SelectedItem = comEM02;
             cbUT5526.SelectedItem = comUT5526;
+            cbMES.SelectedItem = comMES;
 
             leadChar[0] = 0x01;
             endChar[0] = 0x04;
@@ -1663,7 +1750,12 @@ namespace EM02_E_HalfTester
                 config.AppSettings.Settings.Add("EM02", cbEM02.SelectedItem.ToString());
                 config.Save(ConfigurationSaveMode.Modified);
             }
-          
+            if (cbMES.SelectedItem.ToString() != "")
+            {
+                config.AppSettings.Settings.Remove("MES");
+                config.AppSettings.Settings.Add("MES", cbMES.SelectedItem.ToString());
+                config.Save(ConfigurationSaveMode.Modified);
+            }
             MessageBox.Show("Com Port 更新! 請重新開機!");
         }
 

@@ -160,6 +160,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.lblEM02 = new System.Windows.Forms.Label();
             this.lblLength = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.cbMES = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -1466,6 +1468,8 @@
             // 
             this.panelSetting.BackColor = System.Drawing.SystemColors.ControlText;
             this.panelSetting.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelSetting.Controls.Add(this.cbMES);
+            this.panelSetting.Controls.Add(this.label33);
             this.panelSetting.Controls.Add(this.btnGetSetting);
             this.panelSetting.Controls.Add(this.btnSaveSetting);
             this.panelSetting.Controls.Add(this.cbEM02);
@@ -1478,13 +1482,13 @@
             this.panelSetting.Location = new System.Drawing.Point(15, 550);
             this.panelSetting.Margin = new System.Windows.Forms.Padding(2);
             this.panelSetting.Name = "panelSetting";
-            this.panelSetting.Size = new System.Drawing.Size(765, 37);
+            this.panelSetting.Size = new System.Drawing.Size(826, 37);
             this.panelSetting.TabIndex = 27;
             // 
             // btnGetSetting
             // 
             this.btnGetSetting.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnGetSetting.Location = new System.Drawing.Point(660, 7);
+            this.btnGetSetting.Location = new System.Drawing.Point(744, 7);
             this.btnGetSetting.Name = "btnGetSetting";
             this.btnGetSetting.Size = new System.Drawing.Size(74, 23);
             this.btnGetSetting.TabIndex = 7;
@@ -1495,7 +1499,7 @@
             // btnSaveSetting
             // 
             this.btnSaveSetting.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnSaveSetting.Location = new System.Drawing.Point(576, 7);
+            this.btnSaveSetting.Location = new System.Drawing.Point(657, 7);
             this.btnSaveSetting.Name = "btnSaveSetting";
             this.btnSaveSetting.Size = new System.Drawing.Size(78, 23);
             this.btnSaveSetting.TabIndex = 6;
@@ -1892,6 +1896,25 @@
             this.lblLength.TabIndex = 37;
             this.lblLength.Text = "label33";
             // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(473, 11);
+            this.label33.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(36, 15);
+            this.label33.TabIndex = 8;
+            this.label33.Text = "MES:";
+            // 
+            // cbMES
+            // 
+            this.cbMES.FormattingEnabled = true;
+            this.cbMES.Location = new System.Drawing.Point(513, 8);
+            this.cbMES.Margin = new System.Windows.Forms.Padding(2);
+            this.cbMES.Name = "cbMES";
+            this.cbMES.Size = new System.Drawing.Size(72, 23);
+            this.cbMES.TabIndex = 9;
+            // 
             // fmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1912,7 +1935,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "fmMain";
-            this.Text = "金戰神EM02-E半測系統V1.1";
+            this.Text = "金戰神EM02-E半測系統V1.2";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FmMain_FormClosed);
             this.Load += new System.EventHandler(this.FmMain_Load);
             this.groupBox1.ResumeLayout(false);
@@ -2149,5 +2172,7 @@
         private Label lblSoftware;
         private Label lblEM02;
         private Label lblLength;
+        private ComboBox cbMES;
+        private Label label33;
     }
 }
