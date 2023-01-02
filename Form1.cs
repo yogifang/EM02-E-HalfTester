@@ -310,8 +310,7 @@ namespace EM02_E_HalfTester
                 {
                     _MESPort.Open();
                    
-                    BarCode_receiving = true;
-                   
+                    MES_receiving = true;   
                     threadMES = new Thread(DoReceiveMES);
                     threadMES.IsBackground = true;
                     threadMES.Start();
@@ -445,7 +444,7 @@ namespace EM02_E_HalfTester
             {
                 while (MES_receiving)
                 {
-                    if (_MESPort?.BytesToRead >= 1 && _MESPort.BytesToWrite == 0)
+                    if (_MESPort?.BytesToRead > 18 && _MESPort.BytesToWrite == 0)
                     {
                         Int32 length = _MESPort.Read(buffer, 0, buffer.Length);
                         Array.Resize(ref buffer, length);
