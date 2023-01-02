@@ -291,7 +291,7 @@ namespace EM02_E_HalfTester
                 }
             }
         }
-        private void initComMES(string sPort)
+        private void InitComMES(string sPort)
         {
             //  lblSN.ForeColor = 
             _MESPort = new SerialPort()
@@ -530,10 +530,7 @@ namespace EM02_E_HalfTester
             ringOutputUT5526 = (ringOutputUT5526 + 1) & (lenBufUT5526 - 1);
             return byData;
         }
-        private byte CheckTopByteUT5526()
-        {
-            return ringBufferUT5526[ringOutputUT5526];
-        }
+       
         private void SetUT5526VoltRange()
         {
             string strComData = "01MORG03";  // set range = 200V
@@ -596,7 +593,26 @@ namespace EM02_E_HalfTester
             return byData;
         }
 
+        private int SearchMESLineFeed()
+        {
+            if (ringCountMES > 0)
+            {
+                for (int i = 0; i < ringCountMES; i++)
+                {
+                    int iOp = (ringOutputMES + i) & (lenBufMES - 1);
+                    if (ringBufferMES[iOp] == 0x0a)
+                    {
+                        return i + 1;
+                    }
+                }
+                return 0;
 
+            }
+            else
+            {
+                return 0;   // nothing in there
+            }
+        }
         public void EM02Show(byte[] buffer)
         {
 
@@ -873,6 +889,61 @@ namespace EM02_E_HalfTester
             }
         }
 
+        private void procMES()
+        {
+            if (bErrorMES)
+            {
+                iStateMES = 0;
+                return;
+            }
+            switch (iStateMES)
+            {
+                case 0:
+                    if (ringCountMES >= 20)    // EM02 SN ==> 20 byte with 0a 0d
+                    {
+                        int iTemp = SearchMESLineFeed();
+                        if (iTemp >= 18)    // it is SN��
+                        {
+                            byte[] bySN = new byte[iTemp + 1];
+                            for (int i = 0; i < iTemp; i++)
+                            {
+                                bySN[i] = GetRingMES();
+                            }
+                            string strSN = System.Text.Encoding.Default.GetString(bySN);
+
+                            lblSN.Text = strSN;
+                            if (strSN.Contains("EM02"))
+                            {
+                                bSerialNO = true;
+                                clearComBuffer();
+                                clearEM02Msg();
+                                iStateBarCode++;
+                                iStateUT5526 = 0;
+                                iStateEM02 = 0;
+                                //   iCntGetUT5526 = 0;
+                            }
+                            else
+                            {
+                                iStateBarCode = 0; // not em02 barcode
+                            }
+                        }
+                        else
+                        {
+                            while (iTemp > 0) // if not 18 byte must noise
+                            {
+                                GetRingMES();
+                                iTemp--;
+                            }
+                        }
+
+                    }
+                    break;
+                default:
+                    iStateMES = 0;
+                    break;
+
+            }
+        }
 
         private void ProcUT5526()
         {
@@ -1192,6 +1263,7 @@ namespace EM02_E_HalfTester
         {
          
             procBarcode();
+            procMES();
     //        if(bSerialNO == true)
     //        {
            //     procEM02();
@@ -1223,6 +1295,7 @@ namespace EM02_E_HalfTester
             ringBufferUT5526 = new byte[lenBufUT5526];
             ringBufferEM02 = new byte[lenBufEM02];
             ringBufferBarCode = new byte[lenBufBarCode];
+            ringBufferMES= new byte[lenBufMES];
 
            strLogFilename = @"./mesdata/"+String.Format("EM02F-Log-{0}.csv",DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss"));
             
@@ -1449,6 +1522,7 @@ namespace EM02_E_HalfTester
             initComUT5526(comUT5526);
             initComBarCode(comBarCode);
             initComEM02(comEM02);
+            InitComMES(comMES);
 
             if (bErrorUT5526 == false)
             {
