@@ -1064,6 +1064,10 @@ namespace EM02_E_HalfTester
                                                 if (iOffset < 0) iOffset = 0 - (iOffset);
 
                                                 bool bErr = (iOffset > (collectData[iIdxGetUT5526].StandardData / 10)) ? true : false;
+                                                if (collectData[iIdxGetUT5526].ChannelName == "LCD_Back_Lite")
+                                                {
+                                                    bErr = (iOffset > (collectData[iIdxGetUT5526].StandardData / 5)) ? true : false;
+                                                }
                                                 if (collectData[iIdxGetUT5526].StandardData == 0)
                                                 {
                                                     bErr = false;

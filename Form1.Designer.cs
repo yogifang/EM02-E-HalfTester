@@ -125,6 +125,8 @@
             this.cbBarCode = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.panelSetting = new System.Windows.Forms.Panel();
+            this.cbMES = new System.Windows.Forms.ComboBox();
+            this.label33 = new System.Windows.Forms.Label();
             this.btnGetSetting = new System.Windows.Forms.Button();
             this.btnSaveSetting = new System.Windows.Forms.Button();
             this.cbEM02 = new System.Windows.Forms.ComboBox();
@@ -160,8 +162,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.lblEM02 = new System.Windows.Forms.Label();
             this.lblLength = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.cbMES = new System.Windows.Forms.ComboBox();
+            this.checkMES = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -1212,7 +1213,7 @@
             this.pictureBox62.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox62.TabIndex = 1;
             this.pictureBox62.TabStop = false;
-            this.pictureBox62.Tag = "8";
+            this.pictureBox62.Tag = "0";
             // 
             // pictureBox63
             // 
@@ -1224,7 +1225,7 @@
             this.pictureBox63.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox63.TabIndex = 0;
             this.pictureBox63.TabStop = false;
-            this.pictureBox63.Tag = "2";
+            this.pictureBox63.Tag = "3";
             // 
             // groupBox22
             // 
@@ -1484,6 +1485,25 @@
             this.panelSetting.Name = "panelSetting";
             this.panelSetting.Size = new System.Drawing.Size(826, 37);
             this.panelSetting.TabIndex = 27;
+            // 
+            // cbMES
+            // 
+            this.cbMES.FormattingEnabled = true;
+            this.cbMES.Location = new System.Drawing.Point(513, 8);
+            this.cbMES.Margin = new System.Windows.Forms.Padding(2);
+            this.cbMES.Name = "cbMES";
+            this.cbMES.Size = new System.Drawing.Size(72, 23);
+            this.cbMES.TabIndex = 9;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(473, 11);
+            this.label33.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(36, 15);
+            this.label33.TabIndex = 8;
+            this.label33.Text = "MES:";
             // 
             // btnGetSetting
             // 
@@ -1896,24 +1916,20 @@
             this.lblLength.TabIndex = 37;
             this.lblLength.Text = "label33";
             // 
-            // label33
+            // checkMES
             // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(473, 11);
-            this.label33.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(36, 15);
-            this.label33.TabIndex = 8;
-            this.label33.Text = "MES:";
-            // 
-            // cbMES
-            // 
-            this.cbMES.FormattingEnabled = true;
-            this.cbMES.Location = new System.Drawing.Point(513, 8);
-            this.cbMES.Margin = new System.Windows.Forms.Padding(2);
-            this.cbMES.Name = "cbMES";
-            this.cbMES.Size = new System.Drawing.Size(72, 23);
-            this.cbMES.TabIndex = 9;
+            this.checkMES.AutoSize = true;
+            this.checkMES.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.checkMES.Checked = true;
+            this.checkMES.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkMES.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.checkMES.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.checkMES.Location = new System.Drawing.Point(674, 11);
+            this.checkMES.Name = "checkMES";
+            this.checkMES.Size = new System.Drawing.Size(98, 24);
+            this.checkMES.TabIndex = 38;
+            this.checkMES.Text = "MES 連線";
+            this.checkMES.UseVisualStyleBackColor = false;
             // 
             // fmMain
             // 
@@ -1921,6 +1937,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.ClientSize = new System.Drawing.Size(1150, 605);
+            this.Controls.Add(this.checkMES);
             this.Controls.Add(this.lblLength);
             this.Controls.Add(this.lblEM02);
             this.Controls.Add(this.panelEM02Messages);
@@ -1935,7 +1952,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "fmMain";
-            this.Text = "金戰神EM02-E半測系統V1.2";
+            this.Text = "金戰神EM02-E半測系統V1.3";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FmMain_FormClosed);
             this.Load += new System.EventHandler(this.FmMain_Load);
             this.groupBox1.ResumeLayout(false);
@@ -2174,5 +2191,6 @@
         private Label lblLength;
         private ComboBox cbMES;
         private Label label33;
+        private CheckBox checkMES;
     }
 }
