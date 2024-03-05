@@ -763,8 +763,16 @@ namespace EM02_E_HalfTester
 
                                     em02Msg = gpsStatus.Find(x => x.code == strTokens[4]);
                                     lblGPS.Text = em02Msg?.name;
-                                    lblGPS.ForeColor = (Color)(em02Msg?.textColor);
-
+                                    if(em02Msg != null)
+                                    {
+                                        lblGPS.ForeColor = (Color)(em02Msg?.textColor);
+                                    }
+                                   
+                                    if(cbModelG.Checked == true)
+                                    {
+                                        lblGPS.Text = "This Model Has No GPS Module.";
+                                        lblGPS.ForeColor = colorOK;
+                                    }
 
                                     lblSpeed.Text = strTokens[5];
                                     lblSpeed.ForeColor = (lblSpeed.Text == "000" && lblSpeed.Text != "-") ? colorGoing : colorOK;
@@ -808,7 +816,7 @@ namespace EM02_E_HalfTester
                                     break;
                                 case "CAN":
                                     lblEM02.Text = strTokens[0];
-                                  // startReadUT5526();
+                                   startReadUT5526();
                                     break;
                                 case "INIT":
                                     //   startReadUT5526();

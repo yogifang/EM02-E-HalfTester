@@ -163,6 +163,7 @@
             lblEM02 = new Label();
             lblLength = new Label();
             checkMES = new CheckBox();
+            cbModelG = new CheckBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -250,11 +251,9 @@
             groupBox1.Controls.Add(pictureBox1);
             groupBox1.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox1.ForeColor = SystemColors.Control;
-            groupBox1.Location = new Point(563, 13);
-            groupBox1.Margin = new Padding(2);
+            groupBox1.Location = new Point(724, 16);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(2);
-            groupBox1.Size = new Size(170, 90);
+            groupBox1.Size = new Size(219, 114);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Tag = "1";
@@ -263,20 +262,18 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(150, 68);
-            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.Location = new Point(193, 86);
             label1.Name = "label1";
-            label1.Size = new Size(20, 20);
+            label1.Size = new Size(26, 25);
             label1.TabIndex = 3;
             label1.Text = "V";
             // 
             // pictureBox3
             // 
             pictureBox3.Image = Resource1._0;
-            pictureBox3.Location = new Point(96, 24);
-            pictureBox3.Margin = new Padding(2);
+            pictureBox3.Location = new Point(123, 30);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(42, 56);
+            pictureBox3.Size = new Size(54, 71);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 2;
             pictureBox3.TabStop = false;
@@ -285,10 +282,9 @@
             // pictureBox2
             // 
             pictureBox2.Image = Resource1.none;
-            pictureBox2.Location = new Point(50, 24);
-            pictureBox2.Margin = new Padding(2);
+            pictureBox2.Location = new Point(64, 30);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(42, 56);
+            pictureBox2.Size = new Size(54, 71);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
@@ -297,10 +293,9 @@
             // pictureBox1
             // 
             pictureBox1.Image = Resource1.none;
-            pictureBox1.Location = new Point(4, 24);
-            pictureBox1.Margin = new Padding(2);
+            pictureBox1.Location = new Point(5, 30);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(42, 56);
+            pictureBox1.Size = new Size(54, 71);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -315,11 +310,9 @@
             groupBox2.Controls.Add(pictureBox6);
             groupBox2.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox2.ForeColor = SystemColors.Control;
-            groupBox2.Location = new Point(747, 13);
-            groupBox2.Margin = new Padding(2);
+            groupBox2.Location = new Point(960, 16);
             groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new Padding(2);
-            groupBox2.Size = new Size(170, 90);
+            groupBox2.Size = new Size(219, 114);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Tag = "2";
@@ -328,20 +321,18 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(150, 68);
-            label2.Margin = new Padding(2, 0, 2, 0);
+            label2.Location = new Point(193, 86);
             label2.Name = "label2";
-            label2.Size = new Size(20, 20);
+            label2.Size = new Size(26, 25);
             label2.TabIndex = 3;
             label2.Text = "V";
             // 
             // pictureBox4
             // 
             pictureBox4.Image = Resource1._0;
-            pictureBox4.Location = new Point(96, 24);
-            pictureBox4.Margin = new Padding(2);
+            pictureBox4.Location = new Point(123, 30);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(42, 56);
+            pictureBox4.Size = new Size(54, 71);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 2;
             pictureBox4.TabStop = false;
@@ -350,10 +341,9 @@
             // pictureBox5
             // 
             pictureBox5.Image = Resource1.none;
-            pictureBox5.Location = new Point(50, 24);
-            pictureBox5.Margin = new Padding(2);
+            pictureBox5.Location = new Point(64, 30);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(42, 56);
+            pictureBox5.Size = new Size(54, 71);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 1;
             pictureBox5.TabStop = false;
@@ -362,10 +352,9 @@
             // pictureBox6
             // 
             pictureBox6.Image = Resource1.none;
-            pictureBox6.Location = new Point(4, 24);
-            pictureBox6.Margin = new Padding(2);
+            pictureBox6.Location = new Point(5, 30);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(42, 56);
+            pictureBox6.Size = new Size(54, 71);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 0;
             pictureBox6.TabStop = false;
@@ -380,11 +369,9 @@
             groupBox3.Controls.Add(pictureBox9);
             groupBox3.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox3.ForeColor = SystemColors.Control;
-            groupBox3.Location = new Point(195, 13);
-            groupBox3.Margin = new Padding(2);
+            groupBox3.Location = new Point(251, 16);
             groupBox3.Name = "groupBox3";
-            groupBox3.Padding = new Padding(2);
-            groupBox3.Size = new Size(170, 90);
+            groupBox3.Size = new Size(219, 114);
             groupBox3.TabIndex = 2;
             groupBox3.TabStop = false;
             groupBox3.Tag = "3";
@@ -393,20 +380,18 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(150, 68);
-            label3.Margin = new Padding(2, 0, 2, 0);
+            label3.Location = new Point(193, 86);
             label3.Name = "label3";
-            label3.Size = new Size(20, 20);
+            label3.Size = new Size(26, 25);
             label3.TabIndex = 3;
             label3.Text = "V";
             // 
             // pictureBox7
             // 
             pictureBox7.Image = Resource1._0;
-            pictureBox7.Location = new Point(96, 25);
-            pictureBox7.Margin = new Padding(2);
+            pictureBox7.Location = new Point(123, 32);
             pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(42, 56);
+            pictureBox7.Size = new Size(54, 71);
             pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox7.TabIndex = 2;
             pictureBox7.TabStop = false;
@@ -415,10 +400,9 @@
             // pictureBox8
             // 
             pictureBox8.Image = Resource1.none;
-            pictureBox8.Location = new Point(50, 25);
-            pictureBox8.Margin = new Padding(2);
+            pictureBox8.Location = new Point(64, 32);
             pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(42, 56);
+            pictureBox8.Size = new Size(54, 71);
             pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox8.TabIndex = 1;
             pictureBox8.TabStop = false;
@@ -427,10 +411,9 @@
             // pictureBox9
             // 
             pictureBox9.Image = Resource1.none;
-            pictureBox9.Location = new Point(4, 24);
-            pictureBox9.Margin = new Padding(2);
+            pictureBox9.Location = new Point(5, 30);
             pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(42, 56);
+            pictureBox9.Size = new Size(54, 71);
             pictureBox9.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox9.TabIndex = 0;
             pictureBox9.TabStop = false;
@@ -445,11 +428,9 @@
             groupBox4.Controls.Add(pictureBox12);
             groupBox4.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox4.ForeColor = SystemColors.Control;
-            groupBox4.Location = new Point(11, 13);
-            groupBox4.Margin = new Padding(2);
+            groupBox4.Location = new Point(14, 16);
             groupBox4.Name = "groupBox4";
-            groupBox4.Padding = new Padding(2);
-            groupBox4.Size = new Size(170, 90);
+            groupBox4.Size = new Size(219, 114);
             groupBox4.TabIndex = 5;
             groupBox4.TabStop = false;
             groupBox4.Tag = "6";
@@ -458,20 +439,18 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(150, 68);
-            label4.Margin = new Padding(2, 0, 2, 0);
+            label4.Location = new Point(193, 86);
             label4.Name = "label4";
-            label4.Size = new Size(20, 20);
+            label4.Size = new Size(26, 25);
             label4.TabIndex = 3;
             label4.Text = "V";
             // 
             // pictureBox10
             // 
             pictureBox10.Image = Resource1._0;
-            pictureBox10.Location = new Point(96, 25);
-            pictureBox10.Margin = new Padding(2);
+            pictureBox10.Location = new Point(123, 32);
             pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(42, 56);
+            pictureBox10.Size = new Size(54, 71);
             pictureBox10.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox10.TabIndex = 2;
             pictureBox10.TabStop = false;
@@ -480,10 +459,9 @@
             // pictureBox11
             // 
             pictureBox11.Image = Resource1.none;
-            pictureBox11.Location = new Point(50, 24);
-            pictureBox11.Margin = new Padding(2);
+            pictureBox11.Location = new Point(64, 30);
             pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(42, 56);
+            pictureBox11.Size = new Size(54, 71);
             pictureBox11.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox11.TabIndex = 1;
             pictureBox11.TabStop = false;
@@ -492,10 +470,9 @@
             // pictureBox12
             // 
             pictureBox12.Image = Resource1.none;
-            pictureBox12.Location = new Point(4, 24);
-            pictureBox12.Margin = new Padding(2);
+            pictureBox12.Location = new Point(5, 30);
             pictureBox12.Name = "pictureBox12";
-            pictureBox12.Size = new Size(42, 56);
+            pictureBox12.Size = new Size(54, 71);
             pictureBox12.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox12.TabIndex = 0;
             pictureBox12.TabStop = false;
@@ -510,11 +487,9 @@
             groupBox5.Controls.Add(pictureBox15);
             groupBox5.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox5.ForeColor = SystemColors.Control;
-            groupBox5.Location = new Point(930, 217);
-            groupBox5.Margin = new Padding(2);
+            groupBox5.Location = new Point(1196, 275);
             groupBox5.Name = "groupBox5";
-            groupBox5.Padding = new Padding(2);
-            groupBox5.Size = new Size(170, 90);
+            groupBox5.Size = new Size(219, 114);
             groupBox5.TabIndex = 4;
             groupBox5.TabStop = false;
             groupBox5.Tag = "5";
@@ -523,20 +498,18 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(150, 68);
-            label5.Margin = new Padding(2, 0, 2, 0);
+            label5.Location = new Point(193, 86);
             label5.Name = "label5";
-            label5.Size = new Size(20, 20);
+            label5.Size = new Size(26, 25);
             label5.TabIndex = 3;
             label5.Text = "V";
             // 
             // pictureBox13
             // 
             pictureBox13.Image = Resource1._0;
-            pictureBox13.Location = new Point(96, 23);
-            pictureBox13.Margin = new Padding(2);
+            pictureBox13.Location = new Point(123, 29);
             pictureBox13.Name = "pictureBox13";
-            pictureBox13.Size = new Size(42, 56);
+            pictureBox13.Size = new Size(54, 71);
             pictureBox13.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox13.TabIndex = 2;
             pictureBox13.TabStop = false;
@@ -545,10 +518,9 @@
             // pictureBox14
             // 
             pictureBox14.Image = Resource1.none;
-            pictureBox14.Location = new Point(50, 23);
-            pictureBox14.Margin = new Padding(2);
+            pictureBox14.Location = new Point(64, 29);
             pictureBox14.Name = "pictureBox14";
-            pictureBox14.Size = new Size(42, 56);
+            pictureBox14.Size = new Size(54, 71);
             pictureBox14.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox14.TabIndex = 1;
             pictureBox14.TabStop = false;
@@ -557,10 +529,9 @@
             // pictureBox15
             // 
             pictureBox15.Image = Resource1.none;
-            pictureBox15.Location = new Point(4, 24);
-            pictureBox15.Margin = new Padding(2);
+            pictureBox15.Location = new Point(5, 30);
             pictureBox15.Name = "pictureBox15";
-            pictureBox15.Size = new Size(42, 56);
+            pictureBox15.Size = new Size(54, 71);
             pictureBox15.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox15.TabIndex = 0;
             pictureBox15.TabStop = false;
@@ -575,11 +546,9 @@
             groupBox6.Controls.Add(pictureBox18);
             groupBox6.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox6.ForeColor = SystemColors.Control;
-            groupBox6.Location = new Point(379, 13);
-            groupBox6.Margin = new Padding(2);
+            groupBox6.Location = new Point(487, 16);
             groupBox6.Name = "groupBox6";
-            groupBox6.Padding = new Padding(2);
-            groupBox6.Size = new Size(170, 90);
+            groupBox6.Size = new Size(219, 114);
             groupBox6.TabIndex = 3;
             groupBox6.TabStop = false;
             groupBox6.Tag = "4";
@@ -588,20 +557,18 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(150, 68);
-            label6.Margin = new Padding(2, 0, 2, 0);
+            label6.Location = new Point(193, 86);
             label6.Name = "label6";
-            label6.Size = new Size(20, 20);
+            label6.Size = new Size(26, 25);
             label6.TabIndex = 3;
             label6.Text = "V";
             // 
             // pictureBox16
             // 
             pictureBox16.Image = Resource1._0;
-            pictureBox16.Location = new Point(96, 24);
-            pictureBox16.Margin = new Padding(2);
+            pictureBox16.Location = new Point(123, 30);
             pictureBox16.Name = "pictureBox16";
-            pictureBox16.Size = new Size(42, 56);
+            pictureBox16.Size = new Size(54, 71);
             pictureBox16.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox16.TabIndex = 2;
             pictureBox16.TabStop = false;
@@ -610,10 +577,9 @@
             // pictureBox17
             // 
             pictureBox17.Image = Resource1.none;
-            pictureBox17.Location = new Point(50, 24);
-            pictureBox17.Margin = new Padding(2);
+            pictureBox17.Location = new Point(64, 30);
             pictureBox17.Name = "pictureBox17";
-            pictureBox17.Size = new Size(42, 56);
+            pictureBox17.Size = new Size(54, 71);
             pictureBox17.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox17.TabIndex = 1;
             pictureBox17.TabStop = false;
@@ -622,10 +588,9 @@
             // pictureBox18
             // 
             pictureBox18.Image = Resource1.none;
-            pictureBox18.Location = new Point(4, 24);
-            pictureBox18.Margin = new Padding(2);
+            pictureBox18.Location = new Point(5, 30);
             pictureBox18.Name = "pictureBox18";
-            pictureBox18.Size = new Size(42, 56);
+            pictureBox18.Size = new Size(54, 71);
             pictureBox18.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox18.TabIndex = 0;
             pictureBox18.TabStop = false;
@@ -640,11 +605,9 @@
             groupBox7.Controls.Add(pictureBox21);
             groupBox7.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox7.ForeColor = SystemColors.Control;
-            groupBox7.Location = new Point(12, 115);
-            groupBox7.Margin = new Padding(2);
+            groupBox7.Location = new Point(15, 146);
             groupBox7.Name = "groupBox7";
-            groupBox7.Padding = new Padding(2);
-            groupBox7.Size = new Size(170, 90);
+            groupBox7.Size = new Size(219, 114);
             groupBox7.TabIndex = 11;
             groupBox7.TabStop = false;
             groupBox7.Tag = "12";
@@ -653,20 +616,18 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(150, 68);
-            label7.Margin = new Padding(2, 0, 2, 0);
+            label7.Location = new Point(193, 86);
             label7.Name = "label7";
-            label7.Size = new Size(20, 20);
+            label7.Size = new Size(26, 25);
             label7.TabIndex = 3;
             label7.Text = "V";
             // 
             // pictureBox19
             // 
             pictureBox19.Image = Resource1._0;
-            pictureBox19.Location = new Point(96, 24);
-            pictureBox19.Margin = new Padding(2);
+            pictureBox19.Location = new Point(123, 30);
             pictureBox19.Name = "pictureBox19";
-            pictureBox19.Size = new Size(42, 56);
+            pictureBox19.Size = new Size(54, 71);
             pictureBox19.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox19.TabIndex = 2;
             pictureBox19.TabStop = false;
@@ -675,10 +636,9 @@
             // pictureBox20
             // 
             pictureBox20.Image = Resource1.none;
-            pictureBox20.Location = new Point(50, 24);
-            pictureBox20.Margin = new Padding(2);
+            pictureBox20.Location = new Point(64, 30);
             pictureBox20.Name = "pictureBox20";
-            pictureBox20.Size = new Size(42, 56);
+            pictureBox20.Size = new Size(54, 71);
             pictureBox20.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox20.TabIndex = 1;
             pictureBox20.TabStop = false;
@@ -687,10 +647,9 @@
             // pictureBox21
             // 
             pictureBox21.Image = Resource1.none;
-            pictureBox21.Location = new Point(4, 24);
-            pictureBox21.Margin = new Padding(2);
+            pictureBox21.Location = new Point(5, 30);
             pictureBox21.Name = "pictureBox21";
-            pictureBox21.Size = new Size(42, 56);
+            pictureBox21.Size = new Size(54, 71);
             pictureBox21.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox21.TabIndex = 0;
             pictureBox21.TabStop = false;
@@ -705,11 +664,9 @@
             groupBox8.Controls.Add(pictureBox24);
             groupBox8.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox8.ForeColor = SystemColors.Control;
-            groupBox8.Location = new Point(195, 115);
-            groupBox8.Margin = new Padding(2);
+            groupBox8.Location = new Point(251, 146);
             groupBox8.Name = "groupBox8";
-            groupBox8.Padding = new Padding(2);
-            groupBox8.Size = new Size(180, 90);
+            groupBox8.Size = new Size(231, 114);
             groupBox8.TabIndex = 10;
             groupBox8.TabStop = false;
             groupBox8.Tag = "11";
@@ -718,20 +675,18 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(150, 68);
-            label8.Margin = new Padding(2, 0, 2, 0);
+            label8.Location = new Point(193, 86);
             label8.Name = "label8";
-            label8.Size = new Size(20, 20);
+            label8.Size = new Size(26, 25);
             label8.TabIndex = 3;
             label8.Text = "V";
             // 
             // pictureBox22
             // 
             pictureBox22.Image = Resource1._0;
-            pictureBox22.Location = new Point(96, 24);
-            pictureBox22.Margin = new Padding(2);
+            pictureBox22.Location = new Point(123, 30);
             pictureBox22.Name = "pictureBox22";
-            pictureBox22.Size = new Size(42, 56);
+            pictureBox22.Size = new Size(54, 71);
             pictureBox22.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox22.TabIndex = 2;
             pictureBox22.TabStop = false;
@@ -740,10 +695,9 @@
             // pictureBox23
             // 
             pictureBox23.Image = Resource1.none;
-            pictureBox23.Location = new Point(50, 25);
-            pictureBox23.Margin = new Padding(2);
+            pictureBox23.Location = new Point(64, 32);
             pictureBox23.Name = "pictureBox23";
-            pictureBox23.Size = new Size(42, 56);
+            pictureBox23.Size = new Size(54, 71);
             pictureBox23.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox23.TabIndex = 1;
             pictureBox23.TabStop = false;
@@ -752,10 +706,9 @@
             // pictureBox24
             // 
             pictureBox24.Image = Resource1.none;
-            pictureBox24.Location = new Point(4, 24);
-            pictureBox24.Margin = new Padding(2);
+            pictureBox24.Location = new Point(5, 30);
             pictureBox24.Name = "pictureBox24";
-            pictureBox24.Size = new Size(42, 56);
+            pictureBox24.Size = new Size(54, 71);
             pictureBox24.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox24.TabIndex = 0;
             pictureBox24.TabStop = false;
@@ -770,11 +723,9 @@
             groupBox9.Controls.Add(pictureBox27);
             groupBox9.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox9.ForeColor = SystemColors.Control;
-            groupBox9.Location = new Point(379, 115);
-            groupBox9.Margin = new Padding(2);
+            groupBox9.Location = new Point(487, 146);
             groupBox9.Name = "groupBox9";
-            groupBox9.Padding = new Padding(2);
-            groupBox9.Size = new Size(170, 90);
+            groupBox9.Size = new Size(219, 114);
             groupBox9.TabIndex = 9;
             groupBox9.TabStop = false;
             groupBox9.Tag = "10";
@@ -783,20 +734,18 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(150, 68);
-            label9.Margin = new Padding(2, 0, 2, 0);
+            label9.Location = new Point(193, 86);
             label9.Name = "label9";
-            label9.Size = new Size(20, 20);
+            label9.Size = new Size(26, 25);
             label9.TabIndex = 3;
             label9.Text = "V";
             // 
             // pictureBox25
             // 
             pictureBox25.Image = Resource1._0;
-            pictureBox25.Location = new Point(96, 24);
-            pictureBox25.Margin = new Padding(2);
+            pictureBox25.Location = new Point(123, 30);
             pictureBox25.Name = "pictureBox25";
-            pictureBox25.Size = new Size(42, 56);
+            pictureBox25.Size = new Size(54, 71);
             pictureBox25.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox25.TabIndex = 2;
             pictureBox25.TabStop = false;
@@ -805,10 +754,9 @@
             // pictureBox26
             // 
             pictureBox26.Image = Resource1.none;
-            pictureBox26.Location = new Point(50, 24);
-            pictureBox26.Margin = new Padding(2);
+            pictureBox26.Location = new Point(64, 30);
             pictureBox26.Name = "pictureBox26";
-            pictureBox26.Size = new Size(42, 56);
+            pictureBox26.Size = new Size(54, 71);
             pictureBox26.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox26.TabIndex = 1;
             pictureBox26.TabStop = false;
@@ -817,10 +765,9 @@
             // pictureBox27
             // 
             pictureBox27.Image = Resource1.none;
-            pictureBox27.Location = new Point(4, 24);
-            pictureBox27.Margin = new Padding(2);
+            pictureBox27.Location = new Point(5, 30);
             pictureBox27.Name = "pictureBox27";
-            pictureBox27.Size = new Size(42, 56);
+            pictureBox27.Size = new Size(54, 71);
             pictureBox27.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox27.TabIndex = 0;
             pictureBox27.TabStop = false;
@@ -835,11 +782,9 @@
             groupBox10.Controls.Add(pictureBox30);
             groupBox10.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox10.ForeColor = SystemColors.Control;
-            groupBox10.Location = new Point(563, 115);
-            groupBox10.Margin = new Padding(2);
+            groupBox10.Location = new Point(724, 146);
             groupBox10.Name = "groupBox10";
-            groupBox10.Padding = new Padding(2);
-            groupBox10.Size = new Size(170, 90);
+            groupBox10.Size = new Size(219, 114);
             groupBox10.TabIndex = 8;
             groupBox10.TabStop = false;
             groupBox10.Tag = "9";
@@ -848,20 +793,18 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(150, 68);
-            label10.Margin = new Padding(2, 0, 2, 0);
+            label10.Location = new Point(193, 86);
             label10.Name = "label10";
-            label10.Size = new Size(20, 20);
+            label10.Size = new Size(26, 25);
             label10.TabIndex = 3;
             label10.Text = "V";
             // 
             // pictureBox28
             // 
             pictureBox28.Image = Resource1._0;
-            pictureBox28.Location = new Point(96, 25);
-            pictureBox28.Margin = new Padding(2);
+            pictureBox28.Location = new Point(123, 32);
             pictureBox28.Name = "pictureBox28";
-            pictureBox28.Size = new Size(42, 56);
+            pictureBox28.Size = new Size(54, 71);
             pictureBox28.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox28.TabIndex = 2;
             pictureBox28.TabStop = false;
@@ -870,10 +813,9 @@
             // pictureBox29
             // 
             pictureBox29.Image = Resource1.none;
-            pictureBox29.Location = new Point(50, 24);
-            pictureBox29.Margin = new Padding(2);
+            pictureBox29.Location = new Point(64, 30);
             pictureBox29.Name = "pictureBox29";
-            pictureBox29.Size = new Size(42, 56);
+            pictureBox29.Size = new Size(54, 71);
             pictureBox29.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox29.TabIndex = 1;
             pictureBox29.TabStop = false;
@@ -882,10 +824,9 @@
             // pictureBox30
             // 
             pictureBox30.Image = Resource1.none;
-            pictureBox30.Location = new Point(4, 24);
-            pictureBox30.Margin = new Padding(2);
+            pictureBox30.Location = new Point(5, 30);
             pictureBox30.Name = "pictureBox30";
-            pictureBox30.Size = new Size(42, 56);
+            pictureBox30.Size = new Size(54, 71);
             pictureBox30.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox30.TabIndex = 0;
             pictureBox30.TabStop = false;
@@ -893,9 +834,10 @@
             // 
             // pbPushButton
             // 
-            pbPushButton.Location = new Point(957, 10);
+            pbPushButton.Location = new Point(1230, 13);
+            pbPushButton.Margin = new Padding(4);
             pbPushButton.Name = "pbPushButton";
-            pbPushButton.Size = new Size(147, 126);
+            pbPushButton.Size = new Size(189, 160);
             pbPushButton.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPushButton.TabIndex = 34;
             pbPushButton.TabStop = false;
@@ -911,11 +853,9 @@
             groupBox11.Controls.Add(pictureBox33);
             groupBox11.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox11.ForeColor = SystemColors.Control;
-            groupBox11.Location = new Point(746, 217);
-            groupBox11.Margin = new Padding(2);
+            groupBox11.Location = new Point(959, 275);
             groupBox11.Name = "groupBox11";
-            groupBox11.Padding = new Padding(2);
-            groupBox11.Size = new Size(170, 90);
+            groupBox11.Size = new Size(219, 114);
             groupBox11.TabIndex = 7;
             groupBox11.TabStop = false;
             groupBox11.Tag = "8";
@@ -924,20 +864,18 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(150, 68);
-            label11.Margin = new Padding(2, 0, 2, 0);
+            label11.Location = new Point(193, 86);
             label11.Name = "label11";
-            label11.Size = new Size(20, 20);
+            label11.Size = new Size(26, 25);
             label11.TabIndex = 3;
             label11.Text = "V";
             // 
             // pictureBox31
             // 
             pictureBox31.Image = Resource1._0;
-            pictureBox31.Location = new Point(97, 24);
-            pictureBox31.Margin = new Padding(2);
+            pictureBox31.Location = new Point(125, 30);
             pictureBox31.Name = "pictureBox31";
-            pictureBox31.Size = new Size(42, 56);
+            pictureBox31.Size = new Size(54, 71);
             pictureBox31.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox31.TabIndex = 2;
             pictureBox31.TabStop = false;
@@ -946,10 +884,9 @@
             // pictureBox32
             // 
             pictureBox32.Image = Resource1.none;
-            pictureBox32.Location = new Point(51, 24);
-            pictureBox32.Margin = new Padding(2);
+            pictureBox32.Location = new Point(66, 30);
             pictureBox32.Name = "pictureBox32";
-            pictureBox32.Size = new Size(42, 56);
+            pictureBox32.Size = new Size(54, 71);
             pictureBox32.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox32.TabIndex = 1;
             pictureBox32.TabStop = false;
@@ -958,10 +895,9 @@
             // pictureBox33
             // 
             pictureBox33.Image = Resource1.none;
-            pictureBox33.Location = new Point(4, 24);
-            pictureBox33.Margin = new Padding(2);
+            pictureBox33.Location = new Point(5, 30);
             pictureBox33.Name = "pictureBox33";
-            pictureBox33.Size = new Size(42, 56);
+            pictureBox33.Size = new Size(54, 71);
             pictureBox33.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox33.TabIndex = 0;
             pictureBox33.TabStop = false;
@@ -976,11 +912,9 @@
             groupBox12.Controls.Add(pictureBox36);
             groupBox12.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox12.ForeColor = SystemColors.Control;
-            groupBox12.Location = new Point(563, 217);
-            groupBox12.Margin = new Padding(2);
+            groupBox12.Location = new Point(724, 275);
             groupBox12.Name = "groupBox12";
-            groupBox12.Padding = new Padding(2);
-            groupBox12.Size = new Size(170, 90);
+            groupBox12.Size = new Size(219, 114);
             groupBox12.TabIndex = 6;
             groupBox12.TabStop = false;
             groupBox12.Tag = "7";
@@ -989,20 +923,18 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(150, 68);
-            label12.Margin = new Padding(2, 0, 2, 0);
+            label12.Location = new Point(193, 86);
             label12.Name = "label12";
-            label12.Size = new Size(20, 20);
+            label12.Size = new Size(26, 25);
             label12.TabIndex = 3;
             label12.Text = "V";
             // 
             // pictureBox34
             // 
             pictureBox34.Image = Resource1._0;
-            pictureBox34.Location = new Point(96, 23);
-            pictureBox34.Margin = new Padding(2);
+            pictureBox34.Location = new Point(123, 29);
             pictureBox34.Name = "pictureBox34";
-            pictureBox34.Size = new Size(42, 56);
+            pictureBox34.Size = new Size(54, 71);
             pictureBox34.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox34.TabIndex = 2;
             pictureBox34.TabStop = false;
@@ -1011,10 +943,9 @@
             // pictureBox35
             // 
             pictureBox35.Image = Resource1.none;
-            pictureBox35.Location = new Point(50, 23);
-            pictureBox35.Margin = new Padding(2);
+            pictureBox35.Location = new Point(64, 29);
             pictureBox35.Name = "pictureBox35";
-            pictureBox35.Size = new Size(42, 56);
+            pictureBox35.Size = new Size(54, 71);
             pictureBox35.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox35.TabIndex = 1;
             pictureBox35.TabStop = false;
@@ -1023,10 +954,9 @@
             // pictureBox36
             // 
             pictureBox36.Image = Resource1.none;
-            pictureBox36.Location = new Point(4, 24);
-            pictureBox36.Margin = new Padding(2);
+            pictureBox36.Location = new Point(5, 30);
             pictureBox36.Name = "pictureBox36";
-            pictureBox36.Size = new Size(42, 56);
+            pictureBox36.Size = new Size(54, 71);
             pictureBox36.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox36.TabIndex = 0;
             pictureBox36.TabStop = false;
@@ -1041,11 +971,9 @@
             groupBox19.Controls.Add(pictureBox57);
             groupBox19.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox19.ForeColor = SystemColors.Control;
-            groupBox19.Location = new Point(931, 13);
-            groupBox19.Margin = new Padding(2);
+            groupBox19.Location = new Point(1197, 16);
             groupBox19.Name = "groupBox19";
-            groupBox19.Padding = new Padding(2);
-            groupBox19.Size = new Size(170, 90);
+            groupBox19.Size = new Size(219, 114);
             groupBox19.TabIndex = 17;
             groupBox19.TabStop = false;
             groupBox19.Tag = "18";
@@ -1054,20 +982,18 @@
             // label19
             // 
             label19.AutoSize = true;
-            label19.Location = new Point(150, 68);
-            label19.Margin = new Padding(2, 0, 2, 0);
+            label19.Location = new Point(193, 86);
             label19.Name = "label19";
-            label19.Size = new Size(20, 20);
+            label19.Size = new Size(26, 25);
             label19.TabIndex = 3;
             label19.Text = "V";
             // 
             // pictureBox55
             // 
             pictureBox55.Image = Resource1._0;
-            pictureBox55.Location = new Point(96, 24);
-            pictureBox55.Margin = new Padding(2);
+            pictureBox55.Location = new Point(123, 30);
             pictureBox55.Name = "pictureBox55";
-            pictureBox55.Size = new Size(42, 56);
+            pictureBox55.Size = new Size(54, 71);
             pictureBox55.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox55.TabIndex = 2;
             pictureBox55.TabStop = false;
@@ -1076,10 +1002,9 @@
             // pictureBox56
             // 
             pictureBox56.Image = Resource1.none;
-            pictureBox56.Location = new Point(50, 24);
-            pictureBox56.Margin = new Padding(2);
+            pictureBox56.Location = new Point(64, 30);
             pictureBox56.Name = "pictureBox56";
-            pictureBox56.Size = new Size(42, 56);
+            pictureBox56.Size = new Size(54, 71);
             pictureBox56.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox56.TabIndex = 1;
             pictureBox56.TabStop = false;
@@ -1088,10 +1013,9 @@
             // pictureBox57
             // 
             pictureBox57.Image = Resource1.none;
-            pictureBox57.Location = new Point(4, 24);
-            pictureBox57.Margin = new Padding(2);
+            pictureBox57.Location = new Point(5, 30);
             pictureBox57.Name = "pictureBox57";
-            pictureBox57.Size = new Size(42, 56);
+            pictureBox57.Size = new Size(54, 71);
             pictureBox57.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox57.TabIndex = 0;
             pictureBox57.TabStop = false;
@@ -1106,11 +1030,9 @@
             groupBox20.Controls.Add(pictureBox60);
             groupBox20.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox20.ForeColor = SystemColors.Control;
-            groupBox20.Location = new Point(746, 115);
-            groupBox20.Margin = new Padding(2);
+            groupBox20.Location = new Point(959, 146);
             groupBox20.Name = "groupBox20";
-            groupBox20.Padding = new Padding(2);
-            groupBox20.Size = new Size(170, 90);
+            groupBox20.Size = new Size(219, 114);
             groupBox20.TabIndex = 16;
             groupBox20.TabStop = false;
             groupBox20.Tag = "17";
@@ -1119,20 +1041,18 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Location = new Point(150, 68);
-            label20.Margin = new Padding(2, 0, 2, 0);
+            label20.Location = new Point(193, 86);
             label20.Name = "label20";
-            label20.Size = new Size(20, 20);
+            label20.Size = new Size(26, 25);
             label20.TabIndex = 3;
             label20.Text = "V";
             // 
             // pictureBox58
             // 
             pictureBox58.Image = Resource1._0;
-            pictureBox58.Location = new Point(97, 24);
-            pictureBox58.Margin = new Padding(2);
+            pictureBox58.Location = new Point(125, 30);
             pictureBox58.Name = "pictureBox58";
-            pictureBox58.Size = new Size(42, 56);
+            pictureBox58.Size = new Size(54, 71);
             pictureBox58.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox58.TabIndex = 2;
             pictureBox58.TabStop = false;
@@ -1141,10 +1061,9 @@
             // pictureBox59
             // 
             pictureBox59.Image = Resource1.none;
-            pictureBox59.Location = new Point(50, 24);
-            pictureBox59.Margin = new Padding(2);
+            pictureBox59.Location = new Point(64, 30);
             pictureBox59.Name = "pictureBox59";
-            pictureBox59.Size = new Size(42, 56);
+            pictureBox59.Size = new Size(54, 71);
             pictureBox59.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox59.TabIndex = 1;
             pictureBox59.TabStop = false;
@@ -1153,10 +1072,9 @@
             // pictureBox60
             // 
             pictureBox60.Image = Resource1.none;
-            pictureBox60.Location = new Point(4, 24);
-            pictureBox60.Margin = new Padding(2);
+            pictureBox60.Location = new Point(5, 30);
             pictureBox60.Name = "pictureBox60";
-            pictureBox60.Size = new Size(42, 56);
+            pictureBox60.Size = new Size(54, 71);
             pictureBox60.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox60.TabIndex = 0;
             pictureBox60.TabStop = false;
@@ -1171,11 +1089,9 @@
             groupBox21.Controls.Add(pictureBox63);
             groupBox21.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox21.ForeColor = SystemColors.Control;
-            groupBox21.Location = new Point(930, 115);
-            groupBox21.Margin = new Padding(2);
+            groupBox21.Location = new Point(1196, 146);
             groupBox21.Name = "groupBox21";
-            groupBox21.Padding = new Padding(2);
-            groupBox21.Size = new Size(170, 90);
+            groupBox21.Size = new Size(219, 114);
             groupBox21.TabIndex = 15;
             groupBox21.TabStop = false;
             groupBox21.Tag = "16";
@@ -1184,20 +1100,18 @@
             // label21
             // 
             label21.AutoSize = true;
-            label21.Location = new Point(150, 68);
-            label21.Margin = new Padding(2, 0, 2, 0);
+            label21.Location = new Point(193, 86);
             label21.Name = "label21";
-            label21.Size = new Size(20, 20);
+            label21.Size = new Size(26, 25);
             label21.TabIndex = 3;
             label21.Text = "V";
             // 
             // pictureBox61
             // 
             pictureBox61.Image = Resource1._0;
-            pictureBox61.Location = new Point(96, 24);
-            pictureBox61.Margin = new Padding(2);
+            pictureBox61.Location = new Point(123, 30);
             pictureBox61.Name = "pictureBox61";
-            pictureBox61.Size = new Size(42, 56);
+            pictureBox61.Size = new Size(54, 71);
             pictureBox61.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox61.TabIndex = 2;
             pictureBox61.TabStop = false;
@@ -1206,10 +1120,9 @@
             // pictureBox62
             // 
             pictureBox62.Image = Resource1.none;
-            pictureBox62.Location = new Point(50, 24);
-            pictureBox62.Margin = new Padding(2);
+            pictureBox62.Location = new Point(64, 30);
             pictureBox62.Name = "pictureBox62";
-            pictureBox62.Size = new Size(42, 56);
+            pictureBox62.Size = new Size(54, 71);
             pictureBox62.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox62.TabIndex = 1;
             pictureBox62.TabStop = false;
@@ -1218,10 +1131,9 @@
             // pictureBox63
             // 
             pictureBox63.Image = Resource1.none;
-            pictureBox63.Location = new Point(4, 24);
-            pictureBox63.Margin = new Padding(2);
+            pictureBox63.Location = new Point(5, 30);
             pictureBox63.Name = "pictureBox63";
-            pictureBox63.Size = new Size(42, 56);
+            pictureBox63.Size = new Size(54, 71);
             pictureBox63.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox63.TabIndex = 0;
             pictureBox63.TabStop = false;
@@ -1236,11 +1148,9 @@
             groupBox22.Controls.Add(pictureBox66);
             groupBox22.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox22.ForeColor = SystemColors.Control;
-            groupBox22.Location = new Point(195, 217);
-            groupBox22.Margin = new Padding(2);
+            groupBox22.Location = new Point(251, 275);
             groupBox22.Name = "groupBox22";
-            groupBox22.Padding = new Padding(2);
-            groupBox22.Size = new Size(170, 90);
+            groupBox22.Size = new Size(219, 114);
             groupBox22.TabIndex = 14;
             groupBox22.TabStop = false;
             groupBox22.Tag = "15";
@@ -1249,20 +1159,18 @@
             // label22
             // 
             label22.AutoSize = true;
-            label22.Location = new Point(150, 68);
-            label22.Margin = new Padding(2, 0, 2, 0);
+            label22.Location = new Point(193, 86);
             label22.Name = "label22";
-            label22.Size = new Size(20, 20);
+            label22.Size = new Size(26, 25);
             label22.TabIndex = 3;
             label22.Text = "V";
             // 
             // pictureBox64
             // 
             pictureBox64.Image = Resource1._0;
-            pictureBox64.Location = new Point(96, 25);
-            pictureBox64.Margin = new Padding(2);
+            pictureBox64.Location = new Point(123, 32);
             pictureBox64.Name = "pictureBox64";
-            pictureBox64.Size = new Size(42, 56);
+            pictureBox64.Size = new Size(54, 71);
             pictureBox64.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox64.TabIndex = 2;
             pictureBox64.TabStop = false;
@@ -1271,10 +1179,9 @@
             // pictureBox65
             // 
             pictureBox65.Image = Resource1.none;
-            pictureBox65.Location = new Point(50, 23);
-            pictureBox65.Margin = new Padding(2);
+            pictureBox65.Location = new Point(64, 29);
             pictureBox65.Name = "pictureBox65";
-            pictureBox65.Size = new Size(42, 56);
+            pictureBox65.Size = new Size(54, 71);
             pictureBox65.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox65.TabIndex = 1;
             pictureBox65.TabStop = false;
@@ -1283,10 +1190,9 @@
             // pictureBox66
             // 
             pictureBox66.Image = Resource1.none;
-            pictureBox66.Location = new Point(4, 24);
-            pictureBox66.Margin = new Padding(2);
+            pictureBox66.Location = new Point(5, 30);
             pictureBox66.Name = "pictureBox66";
-            pictureBox66.Size = new Size(42, 56);
+            pictureBox66.Size = new Size(54, 71);
             pictureBox66.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox66.TabIndex = 0;
             pictureBox66.TabStop = false;
@@ -1301,11 +1207,9 @@
             groupBox23.Controls.Add(pictureBox69);
             groupBox23.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox23.ForeColor = SystemColors.Control;
-            groupBox23.Location = new Point(379, 217);
-            groupBox23.Margin = new Padding(2);
+            groupBox23.Location = new Point(487, 275);
             groupBox23.Name = "groupBox23";
-            groupBox23.Padding = new Padding(2);
-            groupBox23.Size = new Size(170, 90);
+            groupBox23.Size = new Size(219, 114);
             groupBox23.TabIndex = 13;
             groupBox23.TabStop = false;
             groupBox23.Tag = "14";
@@ -1314,20 +1218,18 @@
             // label23
             // 
             label23.AutoSize = true;
-            label23.Location = new Point(150, 68);
-            label23.Margin = new Padding(2, 0, 2, 0);
+            label23.Location = new Point(193, 86);
             label23.Name = "label23";
-            label23.Size = new Size(20, 20);
+            label23.Size = new Size(26, 25);
             label23.TabIndex = 3;
             label23.Text = "V";
             // 
             // pictureBox67
             // 
             pictureBox67.Image = Resource1._0;
-            pictureBox67.Location = new Point(96, 23);
-            pictureBox67.Margin = new Padding(2);
+            pictureBox67.Location = new Point(123, 29);
             pictureBox67.Name = "pictureBox67";
-            pictureBox67.Size = new Size(42, 56);
+            pictureBox67.Size = new Size(54, 71);
             pictureBox67.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox67.TabIndex = 2;
             pictureBox67.TabStop = false;
@@ -1336,10 +1238,9 @@
             // pictureBox68
             // 
             pictureBox68.Image = Resource1.none;
-            pictureBox68.Location = new Point(50, 23);
-            pictureBox68.Margin = new Padding(2);
+            pictureBox68.Location = new Point(64, 29);
             pictureBox68.Name = "pictureBox68";
-            pictureBox68.Size = new Size(42, 56);
+            pictureBox68.Size = new Size(54, 71);
             pictureBox68.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox68.TabIndex = 1;
             pictureBox68.TabStop = false;
@@ -1348,10 +1249,9 @@
             // pictureBox69
             // 
             pictureBox69.Image = Resource1.none;
-            pictureBox69.Location = new Point(4, 24);
-            pictureBox69.Margin = new Padding(2);
+            pictureBox69.Location = new Point(5, 30);
             pictureBox69.Name = "pictureBox69";
-            pictureBox69.Size = new Size(42, 56);
+            pictureBox69.Size = new Size(54, 71);
             pictureBox69.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox69.TabIndex = 0;
             pictureBox69.TabStop = false;
@@ -1366,11 +1266,9 @@
             groupBox24.Controls.Add(pictureBox72);
             groupBox24.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox24.ForeColor = SystemColors.Control;
-            groupBox24.Location = new Point(12, 216);
-            groupBox24.Margin = new Padding(2);
+            groupBox24.Location = new Point(15, 274);
             groupBox24.Name = "groupBox24";
-            groupBox24.Padding = new Padding(2);
-            groupBox24.Size = new Size(170, 90);
+            groupBox24.Size = new Size(219, 114);
             groupBox24.TabIndex = 12;
             groupBox24.TabStop = false;
             groupBox24.Tag = "13";
@@ -1379,20 +1277,18 @@
             // label24
             // 
             label24.AutoSize = true;
-            label24.Location = new Point(150, 68);
-            label24.Margin = new Padding(2, 0, 2, 0);
+            label24.Location = new Point(193, 86);
             label24.Name = "label24";
-            label24.Size = new Size(20, 20);
+            label24.Size = new Size(26, 25);
             label24.TabIndex = 3;
             label24.Text = "V";
             // 
             // pictureBox70
             // 
             pictureBox70.Image = Resource1._0;
-            pictureBox70.Location = new Point(95, 24);
-            pictureBox70.Margin = new Padding(2);
+            pictureBox70.Location = new Point(122, 30);
             pictureBox70.Name = "pictureBox70";
-            pictureBox70.Size = new Size(42, 56);
+            pictureBox70.Size = new Size(54, 71);
             pictureBox70.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox70.TabIndex = 2;
             pictureBox70.TabStop = false;
@@ -1401,10 +1297,9 @@
             // pictureBox71
             // 
             pictureBox71.Image = Resource1.none;
-            pictureBox71.Location = new Point(49, 24);
-            pictureBox71.Margin = new Padding(2);
+            pictureBox71.Location = new Point(63, 30);
             pictureBox71.Name = "pictureBox71";
-            pictureBox71.Size = new Size(42, 56);
+            pictureBox71.Size = new Size(54, 71);
             pictureBox71.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox71.TabIndex = 1;
             pictureBox71.TabStop = false;
@@ -1413,10 +1308,9 @@
             // pictureBox72
             // 
             pictureBox72.Image = Resource1.none;
-            pictureBox72.Location = new Point(4, 24);
-            pictureBox72.Margin = new Padding(2);
+            pictureBox72.Location = new Point(5, 30);
             pictureBox72.Name = "pictureBox72";
-            pictureBox72.Size = new Size(42, 56);
+            pictureBox72.Size = new Size(54, 71);
             pictureBox72.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox72.TabIndex = 0;
             pictureBox72.TabStop = false;
@@ -1424,10 +1318,9 @@
             // 
             // btnTest
             // 
-            btnTest.Location = new Point(786, 8);
-            btnTest.Margin = new Padding(2);
+            btnTest.Location = new Point(1079, 9);
             btnTest.Name = "btnTest";
-            btnTest.Size = new Size(68, 30);
+            btnTest.Size = new Size(87, 38);
             btnTest.TabIndex = 24;
             btnTest.Text = "Test";
             btnTest.UseVisualStyleBackColor = true;
@@ -1436,10 +1329,9 @@
             // 
             // btnTest2
             // 
-            btnTest2.Location = new Point(858, 8);
-            btnTest2.Margin = new Padding(2);
+            btnTest2.Location = new Point(1172, 9);
             btnTest2.Name = "btnTest2";
-            btnTest2.Size = new Size(59, 30);
+            btnTest2.Size = new Size(76, 38);
             btnTest2.TabIndex = 25;
             btnTest2.Text = "Test2";
             btnTest2.UseVisualStyleBackColor = true;
@@ -1449,19 +1341,17 @@
             // cbBarCode
             // 
             cbBarCode.FormattingEnabled = true;
-            cbBarCode.Location = new Point(77, 7);
-            cbBarCode.Margin = new Padding(2);
+            cbBarCode.Location = new Point(99, 9);
             cbBarCode.Name = "cbBarCode";
-            cbBarCode.Size = new Size(72, 23);
+            cbBarCode.Size = new Size(91, 27);
             cbBarCode.TabIndex = 1;
             // 
             // label25
             // 
             label25.AutoSize = true;
-            label25.Location = new Point(17, 11);
-            label25.Margin = new Padding(2, 0, 2, 0);
+            label25.Location = new Point(22, 14);
             label25.Name = "label25";
-            label25.Size = new Size(59, 15);
+            label25.Size = new Size(72, 19);
             label25.TabIndex = 0;
             label25.Text = "BarCode:";
             // 
@@ -1480,37 +1370,35 @@
             panelSetting.Controls.Add(cbBarCode);
             panelSetting.Controls.Add(label25);
             panelSetting.ForeColor = SystemColors.ControlLightLight;
-            panelSetting.Location = new Point(15, 550);
-            panelSetting.Margin = new Padding(2);
+            panelSetting.Location = new Point(19, 697);
             panelSetting.Name = "panelSetting";
-            panelSetting.Size = new Size(826, 37);
+            panelSetting.Size = new Size(1061, 46);
             panelSetting.TabIndex = 27;
             // 
             // cbMES
             // 
             cbMES.FormattingEnabled = true;
-            cbMES.Location = new Point(513, 8);
-            cbMES.Margin = new Padding(2);
+            cbMES.Location = new Point(660, 10);
             cbMES.Name = "cbMES";
-            cbMES.Size = new Size(72, 23);
+            cbMES.Size = new Size(91, 27);
             cbMES.TabIndex = 9;
             // 
             // label33
             // 
             label33.AutoSize = true;
-            label33.Location = new Point(473, 11);
-            label33.Margin = new Padding(2, 0, 2, 0);
+            label33.Location = new Point(608, 14);
             label33.Name = "label33";
-            label33.Size = new Size(36, 15);
+            label33.Size = new Size(43, 19);
             label33.TabIndex = 8;
             label33.Text = "MES:";
             // 
             // btnGetSetting
             // 
             btnGetSetting.ForeColor = SystemColors.ActiveCaptionText;
-            btnGetSetting.Location = new Point(744, 7);
+            btnGetSetting.Location = new Point(957, 9);
+            btnGetSetting.Margin = new Padding(4);
             btnGetSetting.Name = "btnGetSetting";
-            btnGetSetting.Size = new Size(74, 23);
+            btnGetSetting.Size = new Size(95, 29);
             btnGetSetting.TabIndex = 7;
             btnGetSetting.Text = "讀取設定";
             btnGetSetting.UseVisualStyleBackColor = true;
@@ -1519,9 +1407,10 @@
             // btnSaveSetting
             // 
             btnSaveSetting.ForeColor = SystemColors.ActiveCaptionText;
-            btnSaveSetting.Location = new Point(657, 7);
+            btnSaveSetting.Location = new Point(845, 9);
+            btnSaveSetting.Margin = new Padding(4);
             btnSaveSetting.Name = "btnSaveSetting";
-            btnSaveSetting.Size = new Size(78, 23);
+            btnSaveSetting.Size = new Size(100, 29);
             btnSaveSetting.TabIndex = 6;
             btnSaveSetting.Text = "儲存設定";
             btnSaveSetting.UseVisualStyleBackColor = true;
@@ -1530,38 +1419,34 @@
             // cbEM02
             // 
             cbEM02.FormattingEnabled = true;
-            cbEM02.Location = new Point(380, 7);
-            cbEM02.Margin = new Padding(2);
+            cbEM02.Location = new Point(489, 9);
             cbEM02.Name = "cbEM02";
-            cbEM02.Size = new Size(72, 23);
+            cbEM02.Size = new Size(91, 27);
             cbEM02.TabIndex = 5;
             // 
             // label29
             // 
             label29.AutoSize = true;
-            label29.Location = new Point(328, 10);
-            label29.Margin = new Padding(2, 0, 2, 0);
+            label29.Location = new Point(422, 13);
             label29.Name = "label29";
-            label29.Size = new Size(48, 15);
+            label29.Size = new Size(58, 19);
             label29.TabIndex = 4;
             label29.Text = "EM-02:";
             // 
             // cbUT5526
             // 
             cbUT5526.FormattingEnabled = true;
-            cbUT5526.Location = new Point(235, 7);
-            cbUT5526.Margin = new Padding(2);
+            cbUT5526.Location = new Point(302, 9);
             cbUT5526.Name = "cbUT5526";
-            cbUT5526.Size = new Size(72, 23);
+            cbUT5526.Size = new Size(91, 27);
             cbUT5526.TabIndex = 3;
             // 
             // label28
             // 
             label28.AutoSize = true;
-            label28.Location = new Point(177, 10);
-            label28.Margin = new Padding(2, 0, 2, 0);
+            label28.Location = new Point(228, 13);
             label28.Name = "label28";
-            label28.Size = new Size(54, 15);
+            label28.Size = new Size(67, 19);
             label28.TabIndex = 2;
             label28.Text = "UT5526:";
             // 
@@ -1571,10 +1456,9 @@
             // 
             // btnRead
             // 
-            btnRead.Location = new Point(1070, 11);
-            btnRead.Margin = new Padding(2);
+            btnRead.Location = new Point(1376, 14);
             btnRead.Name = "btnRead";
-            btnRead.Size = new Size(73, 24);
+            btnRead.Size = new Size(94, 30);
             btnRead.TabIndex = 28;
             btnRead.Text = "開始測試";
             btnRead.UseVisualStyleBackColor = true;
@@ -1585,9 +1469,10 @@
             label26.AutoSize = true;
             label26.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             label26.ForeColor = SystemColors.ButtonHighlight;
-            label26.Location = new Point(15, 14);
+            label26.Location = new Point(19, 18);
+            label26.Margin = new Padding(4, 0, 4, 0);
             label26.Name = "label26";
-            label26.Size = new Size(40, 24);
+            label26.Size = new Size(52, 30);
             label26.TabIndex = 29;
             label26.Text = "SN:";
             // 
@@ -1596,9 +1481,10 @@
             lblSN.AutoSize = true;
             lblSN.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblSN.ForeColor = SystemColors.ButtonHighlight;
-            lblSN.Location = new Point(60, 14);
+            lblSN.Location = new Point(77, 18);
+            lblSN.Margin = new Padding(4, 0, 4, 0);
             lblSN.Name = "lblSN";
-            lblSN.Size = new Size(18, 24);
+            lblSN.Size = new Size(23, 30);
             lblSN.TabIndex = 31;
             lblSN.Text = "-";
             // 
@@ -1606,9 +1492,10 @@
             // 
             lblTime.AutoSize = true;
             lblTime.ForeColor = SystemColors.Control;
-            lblTime.Location = new Point(932, 21);
+            lblTime.Location = new Point(1280, 697);
+            lblTime.Margin = new Padding(4, 0, 4, 0);
             lblTime.Name = "lblTime";
-            lblTime.Size = new Size(12, 15);
+            lblTime.Size = new Size(15, 19);
             lblTime.TabIndex = 32;
             lblTime.Text = "-";
             // 
@@ -1632,9 +1519,10 @@
             panelDisplay.Controls.Add(groupBox22);
             panelDisplay.Controls.Add(groupBox20);
             panelDisplay.Controls.Add(groupBox21);
-            panelDisplay.Location = new Point(15, 43);
+            panelDisplay.Location = new Point(19, 54);
+            panelDisplay.Margin = new Padding(4);
             panelDisplay.Name = "panelDisplay";
-            panelDisplay.Size = new Size(1125, 331);
+            panelDisplay.Size = new Size(1446, 419);
             panelDisplay.TabIndex = 33;
             // 
             // panelEM02Messages
@@ -1660,9 +1548,10 @@
             panelEM02Messages.Controls.Add(label14);
             panelEM02Messages.Controls.Add(label13);
             panelEM02Messages.Controls.Add(pbPushButton);
-            panelEM02Messages.Location = new Point(15, 380);
+            panelEM02Messages.Location = new Point(19, 481);
+            panelEM02Messages.Margin = new Padding(4);
             panelEM02Messages.Name = "panelEM02Messages";
-            panelEM02Messages.Size = new Size(1128, 150);
+            panelEM02Messages.Size = new Size(1450, 190);
             panelEM02Messages.TabIndex = 35;
             // 
             // lblFirmware
@@ -1670,9 +1559,10 @@
             lblFirmware.AutoSize = true;
             lblFirmware.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblFirmware.ForeColor = SystemColors.ButtonHighlight;
-            lblFirmware.Location = new Point(57, 40);
+            lblFirmware.Location = new Point(73, 51);
+            lblFirmware.Margin = new Padding(4, 0, 4, 0);
             lblFirmware.Name = "lblFirmware";
-            lblFirmware.Size = new Size(18, 24);
+            lblFirmware.Size = new Size(23, 30);
             lblFirmware.TabIndex = 54;
             lblFirmware.Tag = "0002";
             lblFirmware.Text = "-";
@@ -1682,9 +1572,10 @@
             lblCarModel.AutoSize = true;
             lblCarModel.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblCarModel.ForeColor = SystemColors.ButtonHighlight;
-            lblCarModel.Location = new Point(57, 64);
+            lblCarModel.Location = new Point(73, 81);
+            lblCarModel.Margin = new Padding(4, 0, 4, 0);
             lblCarModel.Name = "lblCarModel";
-            lblCarModel.Size = new Size(18, 24);
+            lblCarModel.Size = new Size(23, 30);
             lblCarModel.TabIndex = 53;
             lblCarModel.Tag = "0003";
             lblCarModel.Text = "-";
@@ -1694,9 +1585,10 @@
             lblGPS.AutoSize = true;
             lblGPS.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblGPS.ForeColor = SystemColors.ButtonHighlight;
-            lblGPS.Location = new Point(57, 88);
+            lblGPS.Location = new Point(73, 111);
+            lblGPS.Margin = new Padding(4, 0, 4, 0);
             lblGPS.Name = "lblGPS";
-            lblGPS.Size = new Size(18, 24);
+            lblGPS.Size = new Size(23, 30);
             lblGPS.TabIndex = 52;
             lblGPS.Tag = "0004";
             lblGPS.Text = "-";
@@ -1706,9 +1598,10 @@
             lblSpeed.AutoSize = true;
             lblSpeed.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblSpeed.ForeColor = SystemColors.ButtonHighlight;
-            lblSpeed.Location = new Point(57, 115);
+            lblSpeed.Location = new Point(73, 146);
+            lblSpeed.Margin = new Padding(4, 0, 4, 0);
             lblSpeed.Name = "lblSpeed";
-            lblSpeed.Size = new Size(18, 24);
+            lblSpeed.Size = new Size(23, 30);
             lblSpeed.TabIndex = 51;
             lblSpeed.Tag = "0005";
             lblSpeed.Text = "-";
@@ -1718,9 +1611,10 @@
             lblGSensor.AutoSize = true;
             lblGSensor.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblGSensor.ForeColor = SystemColors.ButtonHighlight;
-            lblGSensor.Location = new Point(491, 16);
+            lblGSensor.Location = new Point(631, 20);
+            lblGSensor.Margin = new Padding(4, 0, 4, 0);
             lblGSensor.Name = "lblGSensor";
-            lblGSensor.Size = new Size(18, 24);
+            lblGSensor.Size = new Size(23, 30);
             lblGSensor.TabIndex = 50;
             lblGSensor.Tag = "0006";
             lblGSensor.Text = "-";
@@ -1730,9 +1624,10 @@
             lblACC.AutoSize = true;
             lblACC.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblACC.ForeColor = SystemColors.ButtonHighlight;
-            lblACC.Location = new Point(491, 40);
+            lblACC.Location = new Point(631, 51);
+            lblACC.Margin = new Padding(4, 0, 4, 0);
             lblACC.Name = "lblACC";
-            lblACC.Size = new Size(18, 24);
+            lblACC.Size = new Size(23, 30);
             lblACC.TabIndex = 49;
             lblACC.Tag = "0008";
             lblACC.Text = "-";
@@ -1742,9 +1637,10 @@
             lblSDCard.AutoSize = true;
             lblSDCard.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblSDCard.ForeColor = SystemColors.ButtonHighlight;
-            lblSDCard.Location = new Point(491, 64);
+            lblSDCard.Location = new Point(631, 81);
+            lblSDCard.Margin = new Padding(4, 0, 4, 0);
             lblSDCard.Name = "lblSDCard";
-            lblSDCard.Size = new Size(18, 24);
+            lblSDCard.Size = new Size(23, 30);
             lblSDCard.TabIndex = 48;
             lblSDCard.Tag = "0009";
             lblSDCard.Text = "-";
@@ -1754,9 +1650,10 @@
             lblFrontCAM.AutoSize = true;
             lblFrontCAM.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblFrontCAM.ForeColor = SystemColors.ButtonHighlight;
-            lblFrontCAM.Location = new Point(491, 88);
+            lblFrontCAM.Location = new Point(631, 111);
+            lblFrontCAM.Margin = new Padding(4, 0, 4, 0);
             lblFrontCAM.Name = "lblFrontCAM";
-            lblFrontCAM.Size = new Size(18, 24);
+            lblFrontCAM.Size = new Size(23, 30);
             lblFrontCAM.TabIndex = 47;
             lblFrontCAM.Tag = "0010";
             lblFrontCAM.Text = "-";
@@ -1766,9 +1663,10 @@
             lblRearCAM.AutoSize = true;
             lblRearCAM.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblRearCAM.ForeColor = SystemColors.ButtonHighlight;
-            lblRearCAM.Location = new Point(491, 112);
+            lblRearCAM.Location = new Point(631, 142);
+            lblRearCAM.Margin = new Padding(4, 0, 4, 0);
             lblRearCAM.Name = "lblRearCAM";
-            lblRearCAM.Size = new Size(18, 24);
+            lblRearCAM.Size = new Size(23, 30);
             lblRearCAM.TabIndex = 46;
             lblRearCAM.Tag = "0011";
             lblRearCAM.Text = "-";
@@ -1778,9 +1676,10 @@
             lblSoftware.AutoSize = true;
             lblSoftware.Font = new Font("Microsoft JhengHei UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             lblSoftware.ForeColor = SystemColors.ButtonHighlight;
-            lblSoftware.Location = new Point(57, 16);
+            lblSoftware.Location = new Point(73, 20);
+            lblSoftware.Margin = new Padding(4, 0, 4, 0);
             lblSoftware.Name = "lblSoftware";
-            lblSoftware.Size = new Size(18, 24);
+            lblSoftware.Size = new Size(23, 30);
             lblSoftware.TabIndex = 45;
             lblSoftware.Tag = "0001";
             lblSoftware.Text = "-";
@@ -1790,9 +1689,10 @@
             label32.AutoSize = true;
             label32.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label32.ForeColor = SystemColors.ButtonFace;
-            label32.Location = new Point(3, 64);
+            label32.Location = new Point(4, 81);
+            label32.Margin = new Padding(4, 0, 4, 0);
             label32.Name = "label32";
-            label32.Size = new Size(52, 24);
+            label32.Size = new Size(67, 30);
             label32.TabIndex = 44;
             label32.Text = "車型:";
             // 
@@ -1801,9 +1701,10 @@
             label31.AutoSize = true;
             label31.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label31.ForeColor = SystemColors.ButtonFace;
-            label31.Location = new Point(3, 88);
+            label31.Location = new Point(4, 111);
+            label31.Margin = new Padding(4, 0, 4, 0);
             label31.Name = "label31";
-            label31.Size = new Size(52, 24);
+            label31.Size = new Size(67, 30);
             label31.TabIndex = 43;
             label31.Text = "衛星:";
             // 
@@ -1812,9 +1713,10 @@
             label30.AutoSize = true;
             label30.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label30.ForeColor = SystemColors.ButtonFace;
-            label30.Location = new Point(3, 115);
+            label30.Location = new Point(4, 146);
+            label30.Margin = new Padding(4, 0, 4, 0);
             label30.Name = "label30";
-            label30.Size = new Size(52, 24);
+            label30.Size = new Size(67, 30);
             label30.TabIndex = 42;
             label30.Text = "車速:";
             // 
@@ -1823,9 +1725,10 @@
             label27.AutoSize = true;
             label27.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label27.ForeColor = SystemColors.ButtonFace;
-            label27.Location = new Point(397, 16);
+            label27.Location = new Point(510, 20);
+            label27.Margin = new Padding(4, 0, 4, 0);
             label27.Name = "label27";
-            label27.Size = new Size(98, 24);
+            label27.Size = new Size(125, 30);
             label27.TabIndex = 41;
             label27.Text = "G-Sensor:";
             // 
@@ -1834,9 +1737,10 @@
             label18.AutoSize = true;
             label18.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label18.ForeColor = SystemColors.ButtonFace;
-            label18.Location = new Point(442, 40);
+            label18.Location = new Point(568, 51);
+            label18.Margin = new Padding(4, 0, 4, 0);
             label18.Name = "label18";
-            label18.Size = new Size(53, 24);
+            label18.Size = new Size(68, 30);
             label18.TabIndex = 40;
             label18.Text = "ACC:";
             // 
@@ -1845,9 +1749,10 @@
             label17.AutoSize = true;
             label17.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label17.ForeColor = SystemColors.ButtonFace;
-            label17.Location = new Point(432, 64);
+            label17.Location = new Point(555, 81);
+            label17.Margin = new Padding(4, 0, 4, 0);
             label17.Name = "label17";
-            label17.Size = new Size(63, 24);
+            label17.Size = new Size(81, 30);
             label17.TabIndex = 39;
             label17.Text = "SD 卡:";
             // 
@@ -1856,9 +1761,10 @@
             label16.AutoSize = true;
             label16.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label16.ForeColor = SystemColors.ButtonFace;
-            label16.Location = new Point(424, 88);
+            label16.Location = new Point(545, 111);
+            label16.Margin = new Padding(4, 0, 4, 0);
             label16.Name = "label16";
-            label16.Size = new Size(71, 24);
+            label16.Size = new Size(91, 30);
             label16.TabIndex = 38;
             label16.Text = "前鏡頭:";
             // 
@@ -1867,9 +1773,10 @@
             label15.AutoSize = true;
             label15.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label15.ForeColor = SystemColors.ButtonFace;
-            label15.Location = new Point(424, 112);
+            label15.Location = new Point(545, 142);
+            label15.Margin = new Padding(4, 0, 4, 0);
             label15.Name = "label15";
-            label15.Size = new Size(71, 24);
+            label15.Size = new Size(91, 30);
             label15.TabIndex = 37;
             label15.Text = "後鏡頭:";
             // 
@@ -1878,9 +1785,10 @@
             label14.AutoSize = true;
             label14.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label14.ForeColor = SystemColors.ButtonFace;
-            label14.Location = new Point(3, 40);
+            label14.Location = new Point(4, 51);
+            label14.Margin = new Padding(4, 0, 4, 0);
             label14.Name = "label14";
-            label14.Size = new Size(52, 24);
+            label14.Size = new Size(67, 30);
             label14.TabIndex = 36;
             label14.Text = "軔體:";
             // 
@@ -1889,9 +1797,10 @@
             label13.AutoSize = true;
             label13.Font = new Font("Microsoft JhengHei UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label13.ForeColor = SystemColors.ButtonFace;
-            label13.Location = new Point(3, 16);
+            label13.Location = new Point(4, 20);
+            label13.Margin = new Padding(4, 0, 4, 0);
             label13.Name = "label13";
-            label13.Size = new Size(52, 24);
+            label13.Size = new Size(67, 30);
             label13.TabIndex = 35;
             label13.Tag = "";
             label13.Text = "軟體:";
@@ -1900,9 +1809,10 @@
             // 
             lblEM02.AutoSize = true;
             lblEM02.ForeColor = SystemColors.ButtonFace;
-            lblEM02.Location = new Point(1056, 533);
+            lblEM02.Location = new Point(1362, 724);
+            lblEM02.Margin = new Padding(4, 0, 4, 0);
             lblEM02.Name = "lblEM02";
-            lblEM02.Size = new Size(12, 15);
+            lblEM02.Size = new Size(15, 19);
             lblEM02.TabIndex = 36;
             lblEM02.Text = "-";
             // 
@@ -1910,9 +1820,10 @@
             // 
             lblLength.AutoSize = true;
             lblLength.ForeColor = SystemColors.ButtonHighlight;
-            lblLength.Location = new Point(995, 23);
+            lblLength.Location = new Point(1332, 697);
+            lblLength.Margin = new Padding(4, 0, 4, 0);
             lblLength.Name = "lblLength";
-            lblLength.Size = new Size(49, 15);
+            lblLength.Size = new Size(60, 19);
             lblLength.TabIndex = 37;
             lblLength.Text = "label33";
             // 
@@ -1924,19 +1835,35 @@
             checkMES.CheckState = CheckState.Checked;
             checkMES.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             checkMES.ForeColor = SystemColors.ControlLight;
-            checkMES.Location = new Point(674, 11);
+            checkMES.Location = new Point(807, 13);
+            checkMES.Margin = new Padding(4);
             checkMES.Name = "checkMES";
-            checkMES.Size = new Size(98, 24);
+            checkMES.Size = new Size(122, 29);
             checkMES.TabIndex = 38;
             checkMES.Text = "MES 連線";
             checkMES.UseVisualStyleBackColor = false;
             // 
+            // cbModelG
+            // 
+            cbModelG.AutoSize = true;
+            cbModelG.BackColor = SystemColors.ActiveCaptionText;
+            cbModelG.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            cbModelG.ForeColor = SystemColors.ControlLight;
+            cbModelG.Location = new Point(936, 13);
+            cbModelG.Margin = new Padding(4);
+            cbModelG.Name = "cbModelG";
+            cbModelG.Size = new Size(113, 29);
+            cbModelG.TabIndex = 39;
+            cbModelG.Text = "EM02-G";
+            cbModelG.UseVisualStyleBackColor = false;
+            // 
             // fmMain
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlText;
-            ClientSize = new Size(1150, 605);
+            ClientSize = new Size(1479, 766);
+            Controls.Add(cbModelG);
             Controls.Add(checkMES);
             Controls.Add(lblLength);
             Controls.Add(lblEM02);
@@ -1950,9 +1877,8 @@
             Controls.Add(btnTest);
             Controls.Add(panelDisplay);
             FormBorderStyle = FormBorderStyle.Fixed3D;
-            Margin = new Padding(2);
             Name = "fmMain";
-            Text = "金戰神EM02-E半測系統V1.6";
+            Text = "金戰神EM02-E半測系統V1.7";
             FormClosed += FmMain_FormClosed;
             Load += FmMain_Load;
             groupBox1.ResumeLayout(false);
@@ -2191,5 +2117,6 @@
         private ComboBox cbMES;
         private Label label33;
         private CheckBox checkMES;
+        private CheckBox cbModelG;
     }
 }
