@@ -163,7 +163,7 @@
             lblEM02 = new Label();
             lblLength = new Label();
             checkMES = new CheckBox();
-            cbModelG = new CheckBox();
+            cbNoGPS = new CheckBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -1318,7 +1318,7 @@
             // 
             // btnTest
             // 
-            btnTest.Location = new Point(1079, 9);
+            btnTest.Location = new Point(1156, 9);
             btnTest.Name = "btnTest";
             btnTest.Size = new Size(87, 38);
             btnTest.TabIndex = 24;
@@ -1329,7 +1329,7 @@
             // 
             // btnTest2
             // 
-            btnTest2.Location = new Point(1172, 9);
+            btnTest2.Location = new Point(1249, 9);
             btnTest2.Name = "btnTest2";
             btnTest2.Size = new Size(76, 38);
             btnTest2.TabIndex = 25;
@@ -1835,7 +1835,7 @@
             checkMES.CheckState = CheckState.Checked;
             checkMES.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             checkMES.ForeColor = SystemColors.ControlLight;
-            checkMES.Location = new Point(807, 13);
+            checkMES.Location = new Point(743, 13);
             checkMES.Margin = new Padding(4);
             checkMES.Name = "checkMES";
             checkMES.Size = new Size(122, 29);
@@ -1843,19 +1843,19 @@
             checkMES.Text = "MES 連線";
             checkMES.UseVisualStyleBackColor = false;
             // 
-            // cbModelG
+            // cbNoGPS
             // 
-            cbModelG.AutoSize = true;
-            cbModelG.BackColor = SystemColors.ActiveCaptionText;
-            cbModelG.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            cbModelG.ForeColor = SystemColors.ControlLight;
-            cbModelG.Location = new Point(936, 13);
-            cbModelG.Margin = new Padding(4);
-            cbModelG.Name = "cbModelG";
-            cbModelG.Size = new Size(113, 29);
-            cbModelG.TabIndex = 39;
-            cbModelG.Text = "EM02-G";
-            cbModelG.UseVisualStyleBackColor = false;
+            cbNoGPS.AutoSize = true;
+            cbNoGPS.BackColor = SystemColors.ActiveCaptionText;
+            cbNoGPS.Font = new Font("Microsoft JhengHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            cbNoGPS.ForeColor = SystemColors.ControlLight;
+            cbNoGPS.Location = new Point(873, 13);
+            cbNoGPS.Margin = new Padding(4);
+            cbNoGPS.Name = "cbNoGPS";
+            cbNoGPS.Size = new Size(115, 29);
+            cbNoGPS.TabIndex = 39;
+            cbNoGPS.Text = "NO-GPS";
+            cbNoGPS.UseVisualStyleBackColor = false;
             // 
             // fmMain
             // 
@@ -1863,7 +1863,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlText;
             ClientSize = new Size(1479, 766);
-            Controls.Add(cbModelG);
+            Controls.Add(cbNoGPS);
             Controls.Add(checkMES);
             Controls.Add(lblLength);
             Controls.Add(lblEM02);
@@ -1878,7 +1878,7 @@
             Controls.Add(panelDisplay);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Name = "fmMain";
-            Text = "金戰神EM02-E半測系統V1.7";
+            Text = "金戰神EM02-E半測系統V1.8";
             FormClosed += FmMain_FormClosed;
             Load += FmMain_Load;
             groupBox1.ResumeLayout(false);
@@ -2117,6 +2117,6 @@
         private ComboBox cbMES;
         private Label label33;
         private CheckBox checkMES;
-        private CheckBox cbModelG;
+        private CheckBox cbNoGPS;
     }
 }

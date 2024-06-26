@@ -768,7 +768,7 @@ namespace EM02_E_HalfTester
                                         lblGPS.ForeColor = (Color)(em02Msg?.textColor);
                                     }
                                    
-                                    if(cbModelG.Checked == true)
+                                    if(cbNoGPS.Checked == true)
                                     {
                                         lblGPS.Text = "This Model Has No GPS Module.";
                                         lblGPS.ForeColor = colorOK;
