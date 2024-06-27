@@ -1878,7 +1878,7 @@
             Controls.Add(panelDisplay);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Name = "fmMain";
-            Text = "金戰神EM02-E半測系統V1.8";
+            Text = "金戰神EM02-E半測系統V1.9";
             FormClosed += FmMain_FormClosed;
             Load += FmMain_Load;
             groupBox1.ResumeLayout(false);

@@ -746,7 +746,7 @@ namespace EM02_E_HalfTester
                             switch (strTokens[0])
                             {
                                 case "FACTORY":
-                                    startReadUT5526();
+                                   // startReadUT5526();
                                     lblEM02.Text = strTokens[0];
                                     if (strTokens[1] == "SD")
                                     {
@@ -816,10 +816,10 @@ namespace EM02_E_HalfTester
                                     break;
                                 case "CAN":
                                     lblEM02.Text = strTokens[0];
-                                   startReadUT5526();
+                                  // startReadUT5526();
                                     break;
                                 case "INIT":
-                                    //   startReadUT5526();
+                                    startReadUT5526();
                                     lblEM02.Text = strTokens[0];
                                     break;
                                 case "SD":
